@@ -57,6 +57,9 @@ namespace ShoppingCartCA.Models
                     case "My Purchase":
                         HeaderLinks.Add(CreateViewPurchase());
                         break;
+                    case "My Cart":
+                        HeaderLinks.Add(CreateCart());
+                        break;
                 }
             }
         }
@@ -87,7 +90,7 @@ namespace ShoppingCartCA.Models
             {
                 Title = "Continue Shopping",
                 Controller = "Home",
-                Action = "Logout"
+                Action = "Index"
             };
         }
 
