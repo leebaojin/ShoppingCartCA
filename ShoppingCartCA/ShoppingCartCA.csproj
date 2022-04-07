@@ -10,9 +10,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Order\" />
-  </ItemGroup>
-
 </Project>
