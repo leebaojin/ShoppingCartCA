@@ -61,6 +61,7 @@ namespace ShoppingCartCA
             if (!dbContext.Database.CanConnect())
             {
                 dbContext.Database.EnsureCreated();
+                new DB(dbContext, env).Seed();
             }
         }
     }

@@ -14,18 +14,21 @@
 </head>
 <body>
     <header>
-        <table>
-            <tr>
-                <td class="header-col1">
-                    Hi, @layoutheader.User &nbsp &nbsp &nbsp | &nbsp
-                    @foreach (HeaderLink header in layoutheader.HeaderLinks)
-                    {
-                        @:@Html.ActionLink(header.Title, header.Action, header.Controller) &nbsp | &nbsp
-                    }
-                </td>
-                <td class="header-col2">@Html.ActionLink("Cart: "+layoutheader.CartSize,layoutheader.CartLink.Action,layoutheader.CartLink.Controller) </td>
-            </tr>
-        </table>
+        <hr />
+        <div class="headerdiv">
+            <table class="headertable">
+                <tr>
+                    <td class="header-col1">
+                        Hi, @layoutheader.User &nbsp &nbsp &nbsp | &nbsp
+                        @foreach (HeaderLink header in layoutheader.HeaderLinks)
+                        {
+                            @:@Html.ActionLink(header.Title, header.Action, header.Controller) &nbsp | &nbsp
+                        }
+                    </td>
+                    <td class="header-col2">@Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller) </td>
+                </tr>
+            </table>
+        </div>
         <hr />
     </header>
     <div class="container">
