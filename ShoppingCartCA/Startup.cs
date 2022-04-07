@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ShoppingCartCA.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace ShoppingCartCA
 {
@@ -32,7 +33,7 @@ namespace ShoppingCartCA
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, [FromServices] DBContext dbContext)
+        public void Configure(IApplicationBuilder app, [FromServices] IWebHostEnvironment env, [FromServices] DBContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +58,7 @@ namespace ShoppingCartCA
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
             if (!dbContext.Database.CanConnect())
             {

@@ -27,12 +27,12 @@ namespace ShoppingCartCA.Models
         public string Desc { get; set; }
 
         //image link of the object "~/pictures/dotnet_paypal.jpg
-        [MaxLength(50)]
+        [MaxLength(300)]
         [Required]
         public string Img { get; set; }
 
         //image link of the download file "~/document/dotnet_paypal.pdf
-        [MaxLength(50)]
+        [MaxLength(300)]
         [Required]
         public string DownloadFile { get; set; }
 

@@ -1,4 +1,21 @@
 ﻿@{
     Layout = "_ShopLayout";
     ViewData["Title"] = "Cart";
+    Product cartitem = (Product)ViewData["cartdata"];
+    List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
 }
+<h1>My Cart</h1>
+<br>
+<div>
+    @if(allcartitem.Count == 0)
+            {
+@:<p>No Items In Cart</p>
+            }
+            else
+            {
+        <table class="carttable">
+            
+        </table>
+            }
+</div>
+
