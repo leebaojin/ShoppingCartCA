@@ -109,8 +109,8 @@ namespace ShoppingCartCA.Models
             return new HeaderLink()
             {
                 Title = "Checkout",
-                Controller = "Cart",
-                Action = "Checkout"
+                Controller = "Checkout",
+                Action = "Index"
             };
         }
 
