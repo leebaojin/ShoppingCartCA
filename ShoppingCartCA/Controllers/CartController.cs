@@ -14,7 +14,6 @@ namespace ShoppingCartCA.Controllers
             ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "Checkout" });
             return View();
 
-            //test test test
         }
     }
 }
