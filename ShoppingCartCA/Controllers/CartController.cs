@@ -10,6 +10,7 @@ namespace ShoppingCartCA.Controllers
     {
         public IActionResult Index()
         {
+            //Changes were made
             return View();
         }
     }
