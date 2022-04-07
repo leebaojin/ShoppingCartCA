@@ -1,0 +1,41 @@
+﻿@using ShoppingCartCA.Models
+@{
+    LayoutHeader layoutheader = (LayoutHeader)ViewData["layoutheader"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShoppingCartCA</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/shopsite.css" />
+</head>
+<body>
+    <header>
+        <table>
+            <tr>
+                <td class="header-col1">
+                    Hi, @layoutheader.User &nbsp &nbsp &nbsp | &nbsp
+                    @foreach (HeaderLink header in layoutheader.HeaderLinks)
+                    {
+                        @:@Html.ActionLink(header.Title, header.Action, header.Controller) &nbsp | &nbsp
+                    }
+                </td>
+                <td class="header-col2">@Html.ActionLink("Cart: "+layoutheader.CartSize,layoutheader.CartLink.Action,layoutheader.CartLink.Controller) </td>
+            </tr>
+        </table>
+        <hr />
+    </header>
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+</body>
+
+
+</html>
+
