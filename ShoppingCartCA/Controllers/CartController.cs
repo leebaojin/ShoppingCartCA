@@ -11,7 +11,6 @@ namespace ShoppingCartCA.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "Checkout" });
             return View();
         }
     }
