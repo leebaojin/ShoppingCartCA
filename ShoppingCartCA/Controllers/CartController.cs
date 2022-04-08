@@ -22,7 +22,7 @@ namespace ShoppingCartCA.Controllers
 
             ViewData["cartdata"] = dbContext.Products.FirstOrDefault(x => x.Name == ".Net Charts");
 
-            ViewData["allcartitem"] = dbContext.CartDetails.Where(x => x.Customer.Id == Guid.Parse("88ac7cbd-80da-4ff2-a1a5-a324bf648f15")).ToList();
+            ViewData["allcartitem"] = dbContext.CartDetails.Where(x => x.Cart.Id == Guid.Parse("88ac7cbd-80da-4ff2-a1a5-a324bf648f15")).ToList();
             
             return View();
         }

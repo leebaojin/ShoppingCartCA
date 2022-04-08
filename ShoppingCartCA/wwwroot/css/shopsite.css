@@ -61,7 +61,8 @@ body {
     text-align:right;
 }
 
-/*Product display*/
+/*Product display
+-------------------------------------------------- */
 .prod-holder-table{
     display:table;
     width:250px;
@@ -114,10 +115,12 @@ body {
 }
 .cart-head-price {
     display: table-cell;
+    text-align:right;
+    padding-right:10px;
 }
 .cart-head {
-    display:table;
-}
-.cart-head-row {
-    display: table-row;
+    display:table-row;
+    width:95%;
+    border:1px solid black;
+
 }

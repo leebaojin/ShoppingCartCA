@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,6 @@ namespace ShoppingCartCA.Models
         }
         public Guid Id { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public virtual Guid CartId { get; set; }
     }
 }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ShoppingCartCA.Models
 {
-    public class Customer
+    public class Cart
     {
-        public Customer()
+        public Cart()
         {
             Id = new Guid();
             CartDetails = new List<CartDetail>();
@@ -16,11 +16,11 @@ namespace ShoppingCartCA.Models
 
         public virtual Account Account { get; set; }
 
-        public virtual Guid SessionId { get; set; }
+        public virtual Session Session { get; set; }
 
         public virtual ICollection<CartDetail> CartDetails { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+
 
     }
 }

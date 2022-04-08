@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using ShoppingCartCA.Models;
@@ -24,6 +25,8 @@ namespace ShoppingCartCA
         public void Seed()
         {
             SeedProduct();
+            SeedAccount();
+            
         }
 
         private void SeedAccount()
@@ -50,19 +53,26 @@ namespace ShoppingCartCA
                 string combo = username + password;
                 byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
 
-                dbContext.Add(new Account
+                dbContext.Add( new Cart()
                 {
-                    Username = username,
-                    PassHash = hash,
-                    FirstName = FirstName[i],
-                    LastName = LastName[i]
-                });
+                    Account = new Account()
+                    {
+                        Username = username,
+                        PassHash = hash,
+                        FirstName = FirstName[i],
+                        LastName = LastName[i],
+
+                    }
+                }                   
+                    );
 
                 i++;
 
-                dbContext.SaveChanges();
+                
             }
+            dbContext.SaveChanges();
         }
+
 
         private void SeedProduct()
         {

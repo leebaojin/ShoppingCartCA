@@ -6,48 +6,46 @@
     List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
 }
 <div class="cart-head">
-    <div class="cart-head-row">
     <div class="cart-head-title">
         <h2>My Cart</h2>
     </div>
     <div class="cart-head-price">
         Price : $<span id="totalcost">99</span>
     </div>
-    </div>
 </div>
-
 <br>
 <div>
-    @if(allcartitem.Count == 0)
-            {
-@:<p>No Items In Cart</p>
- 
-            }
-            else
-            {
+    @if (allcartitem.Count == 0)
+    {
+        @:<p>No Items In Cart</p>
+
+
+    }
+    else
+    {
         <table class="carttable">
-            
         </table>
-            }
+    }
 </div>
 <style>
-    .itemcell{
-        text-align:center;
-        vertical-align:middle;
-        padding:5px;
-        width:50%;
+    .itemcell {
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
+        width: 50%;
     }
+
     .datacell {
         text-align: left;
         vertical-align: middle;
         padding: 10px;
         width: 50%;
     }
-    .carttable{
+
+    .carttable {
         margin-left: auto;
         margin-right: auto;
     }
-
 </style>
 <div class="showcart">
     <table class="carttable">
