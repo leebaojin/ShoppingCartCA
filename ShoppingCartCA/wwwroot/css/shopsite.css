@@ -110,17 +110,3 @@ body {
     width:200px;
 }
 
-.cart-head-title{
-    display:table-cell;
-}
-.cart-head-price {
-    display: table-cell;
-    text-align:right;
-    padding-right:10px;
-}
-.cart-head {
-    display:table-row;
-    width:95%;
-    border:1px solid black;
-
-}

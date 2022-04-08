@@ -26,7 +26,7 @@ namespace ShoppingCartCA
         {
             SeedProduct();
             SeedAccount();
-            
+            SeedCartDetails();
         }
 
         private void SeedAccount()
@@ -73,7 +73,28 @@ namespace ShoppingCartCA
             dbContext.SaveChanges();
         }
 
+        private void SeedCartDetails()
+        {
+            Cart mycart = dbContext.Carts.FirstOrDefault(x => x.Account.Username == "jeamsee");
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts"),
+                Quantity = 2
+            }) ;
 
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET ML"),
+                Quantity = 1
+            });
+
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Logger"),
+                Quantity = 3
+            });
+            dbContext.SaveChanges();
+        }
         private void SeedProduct()
         {
             //string path = Path.Combine(env.WebRootPath,"pictures");
