@@ -18,6 +18,6 @@ namespace ShoppingCartCA.Models
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public virtual Guid CustomerId { get; set; }
+        public virtual Guid AccountId { get; set; }
     }
 }

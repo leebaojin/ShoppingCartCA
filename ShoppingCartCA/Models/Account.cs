@@ -29,6 +29,8 @@ namespace ShoppingCartCA.Models
         [MaxLength(30)]
         public string LastName { get; set; }
 
-        public virtual Guid CustomerId { get; set; }
+        public virtual Guid CartId { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace ShoppingCartCA.DataModel
 {
     public class SessionAutenticate
     {
-        public static Customer Autenticate(string sessionId, DBContext dbContext)
+        public static Cart Autenticate(string sessionId, DBContext dbContext)
         {
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.SessionId == Guid.Parse(sessionId));
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.Session.Id == Guid.Parse(sessionId));
 
-            return customer;
+            return cart;
         }
     }
 }

@@ -25,6 +25,8 @@ namespace ShoppingCartCA
         public void Seed()
         {
             SeedProduct();
+            SeedAccount();
+            SeedCartDetails();
             SeedOrderAndOrderDetailAndActivationCode();
         }
 
@@ -52,20 +54,48 @@ namespace ShoppingCartCA
                 string combo = username + password;
                 byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
 
-                dbContext.Add(new Account
+                dbContext.Add( new Cart()
                 {
-                    Username = username,
-                    PassHash = hash,
-                    FirstName = FirstName[i],
-                    LastName = LastName[i]
-                });
+                    Account = new Account()
+                    {
+                        Username = username,
+                        PassHash = hash,
+                        FirstName = FirstName[i],
+                        LastName = LastName[i],
+
+                    }
+                }                   
+                    );
 
                 i++;
 
-                dbContext.SaveChanges();
+                
             }
+            dbContext.SaveChanges();
         }
 
+        private void SeedCartDetails()
+        {
+            Cart mycart = dbContext.Carts.FirstOrDefault(x => x.Account.Username == "jeamsee");
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts"),
+                Quantity = 2
+            }) ;
+
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET ML"),
+                Quantity = 1
+            });
+
+            mycart.CartDetails.Add(new CartDetail()
+            {
+                Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Logger"),
+                Quantity = 3
+            });
+            dbContext.SaveChanges();
+        }
         private void SeedProduct()
         {
             //string path = Path.Combine(env.WebRootPath,"pictures");

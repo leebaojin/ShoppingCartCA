@@ -24,10 +24,13 @@ namespace ShoppingCartCA.Views.Shared
             output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
                 product.Desc + "</div>\n</div>";
 
-            //add the button
-            output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                "<input class='prod-button' type='button' action='/' value='$" + 
-                product.Price + " - Add to Cart' /></div>\n</div>";
+            if(lastline == "purchase")
+            {
+                //add the button
+                output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
+                    "<input class='prod-button' type='button' action='/' value='$" +
+                    product.Price + " - Add to Cart' /></div>\n</div>";
+            }
 
             return output;
         }
