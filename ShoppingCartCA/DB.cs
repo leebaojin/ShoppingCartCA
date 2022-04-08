@@ -160,14 +160,15 @@ namespace ShoppingCartCA
             dbContext.SaveChanges();
         }
 
+
         private void SeedOrderAndOrderDetailAndActivationCode()
         {
-            List<Customer> listOfCustomers = dbContext.Customers.ToList();
+            List<Account> listOfAccount = dbContext.Accounts.ToList();
 
-            foreach (Customer c in listOfCustomers)
+            foreach (Account c in listOfAccount)
             {
                 Random random = new Random();
-                int numOfOrdersToGenerate = random.Next(1, 3); 
+                int numOfOrdersToGenerate = random.Next(1, 3);
                 c.Orders = RandomOrder(numOfOrdersToGenerate);
             }
 
@@ -178,14 +179,14 @@ namespace ShoppingCartCA
         {
             List<Order> listOfOrder = new List<Order>();
 
-            for (int i = 0; i < numOfOrdersToGenerate; i++) 
+            for (int i = 0; i < numOfOrdersToGenerate; i++)
             {
                 Random random = new Random();
                 int numOfOrderDetailToGenerate = random.Next(1, 3);
 
                 Order order = new Order
                 {
-                    OrderDate = new DateTime(2022, random.Next(4), random.Next(1, 29)),
+                    OrderDate = new DateTime(2022, random.Next(1, 4), random.Next(1, 29)),
                     OrderDetails = RandomOrderDetail(numOfOrderDetailToGenerate)
                 };
                 listOfOrder.Add(order);
@@ -203,7 +204,7 @@ namespace ShoppingCartCA
                 Random random = new Random();
                 int productQuantity = random.Next(1, 3);
 
-                List<Product> listOfProduct = RandomProduct(productQuantity);                
+                List<Product> listOfProduct = RandomProduct(productQuantity);
 
                 for (int k = 0; k < listOfProduct.Count; k++)
                 {
@@ -214,6 +215,7 @@ namespace ShoppingCartCA
                         PurchasePrice = listOfProduct[k].Price,
                         ActivationCodes = RandomActivationCode(productQuantity, listOfProduct[k])
                     };
+                    listOfOrderDetail.Add(orderDetail);
                 }
             }
 
@@ -246,8 +248,9 @@ namespace ShoppingCartCA
                 {
                     ProductId = product.Id
                 };
+                listOfActivationCode.Add(activationCode);
             }
-            
+
             return listOfActivationCode;
         }
     }
