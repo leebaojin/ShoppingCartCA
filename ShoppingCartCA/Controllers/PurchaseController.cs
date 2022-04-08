@@ -21,10 +21,17 @@ namespace ShoppingCartCA.Controllers
         public IActionResult Index()
         {
             ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "Logout" });
+
+            Customer customer = dbContext.Customers.FirstOrDefault();
+
+            //List<Order> orderList = account.Orders.ToList();
+            ViewBag.customer = customer;
+            //ViewBag.orderList = orderList;
+
             return View();
 
-
         }
-  
+
+
     }
 }

@@ -1,8 +1,12 @@
 ﻿@{
     Layout = "_ShopLayout";
 
-    List<Order> listOfOrder = (List<Order>)ViewBag.listOfOrder;
+    Customer customer = (Customer)ViewBag.customer;
+    List<Order> orders = customer.Orders.ToList();
+    //List<OrderDetail> orderDetails =
 }
+
+
 
 <style>
     table, td, th, tr {
@@ -13,9 +17,80 @@
         text-align: center;
         padding: 8px;
     }
-  
+
     .even_row {
         background-color: burlywood;
     }
 </style>
 
+    <div class="row">
+        <div class="col-sm-12 col-md-4">.g-col-4</div>
+        <div class="col-sm-12 col-md-8">.g-col-8</div>
+    </div>
+@{
+    @customer.Id
+
+    <div class="grid">
+        <br />
+
+        @foreach (Order o in orders)
+        {
+
+            string orderDate = o.OrderDate.ToString("dd MMM yyyy");
+            @orderDate
+            <br />
+
+            List<OrderDetail>
+                orderDetails = o.OrderDetails.ToList();
+
+            foreach (OrderDetail od in orderDetails)
+            {
+                @od.Product.Img
+                <br />
+                @od.Product.Name
+                <br />
+                @od.Product.Desc
+                <br />
+                @od.Product.DownloadFile
+                <br />
+                @od.Quantity
+                <br />
+                List<ActivationCode>
+                    activationCodes = od.ActivationCodes.ToList();
+
+                foreach (ActivationCode ac in activationCodes)
+                {
+                    @ac.Id
+                    <br />
+                }
+                <br />
+            }
+            <hr />
+
+        }
+    </div>
+
+
+}
+
+@*<table>
+        <tr>
+            <td>
+
+                <table>
+                    <tr>
+                        <td>Product</td>
+                        <td>@orderDate</td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td>quantity</td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td>activation code</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>*@
