@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using ShoppingCartCA.Models;
@@ -28,7 +30,40 @@ namespace ShoppingCartCA
 
         private void SeedAccount()
         {
+            if (dbContext.Accounts.Any())
+            {
+                return;   // DB has been seeded
+            }
 
+            HashAlgorithm sha = SHA256.Create();
+
+            string[] usernames = { "jeamsee", "lynnwong", "leliamay" };
+
+            string[] FirstName = { "Jeam", "Lynn", "Lelia" };
+
+            string[] LastName = { "See", "Wong", "May" };
+
+            string password = "mysecret";
+
+            int i = 0;
+
+            foreach (string username in usernames)
+            {
+                string combo = username + password;
+                byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
+
+                dbContext.Add(new Account
+                {
+                    Username = username,
+                    PassHash = hash,
+                    FirstName = FirstName[i],
+                    LastName = LastName[i]
+                });
+
+                i++;
+
+                dbContext.SaveChanges();
+            }
         }
 
         private void SeedProduct()
