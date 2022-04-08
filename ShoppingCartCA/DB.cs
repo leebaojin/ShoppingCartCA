@@ -140,6 +140,8 @@ namespace ShoppingCartCA
                 int numOfOrdersToGenerate = random.Next(1, 3); 
                 c.Orders = RandomOrder(numOfOrdersToGenerate);
             }
+
+            dbContext.SaveChanges();
         }
 
         private List<Order> RandomOrder(int numOfOrdersToGenerate)
