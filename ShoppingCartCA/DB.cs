@@ -153,9 +153,9 @@ namespace ShoppingCartCA
 
         private void SeedOrderAndOrderDetailAndActivationCode()
         {
-            List<Account> listOfAccount = dbContext.Accounts.ToList();
+            List<Customer> listOfCustomer = dbContext.Customers.ToList();
 
-            foreach (Account c in listOfAccount)
+            foreach (Customer c in listOfCustomer)
             {
                 Random random = new Random();
                 int numOfOrdersToGenerate = random.Next(1, 3);
