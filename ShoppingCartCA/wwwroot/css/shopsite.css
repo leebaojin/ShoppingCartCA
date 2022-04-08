@@ -108,3 +108,16 @@ body {
 .prod-img{
     width:200px;
 }
+
+.cart-head-title{
+    display:table-cell;
+}
+.cart-head-price {
+    display: table-cell;
+}
+.cart-head {
+    display:table;
+}
+.cart-head-row {
+    display: table-row;
+}

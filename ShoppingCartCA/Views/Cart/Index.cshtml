@@ -5,12 +5,23 @@
     Product cartitem = (Product)ViewData["cartdata"];
     List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
 }
-<h1>My Cart</h1>
+<div class="cart-head">
+    <div class="cart-head-row">
+    <div class="cart-head-title">
+        <h2>My Cart</h2>
+    </div>
+    <div class="cart-head-price">
+        Price : $<span id="totalcost">99</span>
+    </div>
+    </div>
+</div>
+
 <br>
 <div>
     @if(allcartitem.Count == 0)
             {
 @:<p>No Items In Cart</p>
+ 
             }
             else
             {
@@ -19,4 +30,52 @@
         </table>
             }
 </div>
+<style>
+    .itemcell{
+        text-align:center;
+        vertical-align:middle;
+        padding:5px;
+        width:50%;
+    }
+    .datacell {
+        text-align: left;
+        vertical-align: middle;
+        padding: 10px;
+        width: 50%;
+    }
+    .carttable{
+        margin-left: auto;
+        margin-right: auto;
+    }
 
+</style>
+<div class="showcart">
+    <table class="carttable">
+        <tr>
+            <td class="itemcell">@Html.Raw(ProductDisplay.DisplayItem(cartitem))</td>
+            <td class="datacell">
+                <div>Price : $<span id="price1" unitprice="99">99</span></div>
+                <br />
+                <div>
+                    <input type="button" id="minus1" value="-" />
+                    <input type="text" name="qty" id="qty1" onchange="UpdateCartItem(this)" style="width:30px" />
+                    <input type="button" id="add1" value="+" />
+                    <input type="hidden" id="cartno1" value="1" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    function UpdateCartItem(elem) {
+        //To search for cart item
+        var ele = elem;
+        ele.value = 10;
+    }
+    function SendCartItem(e) {
+
+    }
+</script>

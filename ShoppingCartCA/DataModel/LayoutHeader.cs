@@ -13,7 +13,7 @@ namespace ShoppingCartCA.DataModel
         public HeaderLink CartLink { get; set; }
         public int CartSize { get; set; }
 
-        public LayoutHeader(Customer customer, string[] headerlink)
+        public LayoutHeader(Customer customer, string[] headerlink, bool cartview=true)
         {
             if(customer == null)
             {
@@ -34,9 +34,12 @@ namespace ShoppingCartCA.DataModel
             }
             HeaderLinks = new List<HeaderLink>();
             CreateHeaders(headerlink);
-            CartLink = CreateCart();
-            
+            if (cartview)
+            {
+                CartLink = CreateCart();
+            }
         }
+
         private void CreateHeaders(string[] headerlink)
         {
             foreach(string header in headerlink)

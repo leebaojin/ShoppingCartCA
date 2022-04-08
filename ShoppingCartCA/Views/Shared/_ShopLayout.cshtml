@@ -26,7 +26,13 @@
                             @:@Html.ActionLink(header.Title, header.Action, header.Controller) &nbsp | &nbsp
                         }
                     </td>
-                    <td class="header-col2">@Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller) </td>
+                    <td class="header-col2">
+                        @if (layoutheader.CartLink != null)
+                        {
+                            @Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller, null,
+                                           new { id = "CartSize", value = layoutheader.CartSize })
+                        }
+                    </td>
                 </tr>
             </table>
         </div>
