@@ -1,3 +1,21 @@
 ﻿@{
     Layout = "_ShopLayout";
+
+    List<Order> listOfOrder = (List<Order>)ViewBag.listOfOrder;
 }
+
+<style>
+    table, td, th, tr {
+        border: 1px solid #7e5050;
+    }
+
+    td, th {
+        text-align: center;
+        padding: 8px;
+    }
+  
+    .even_row {
+        background-color: burlywood;
+    }
+</style>
+

@@ -27,6 +27,7 @@ namespace ShoppingCartCA
             SeedProduct();
             SeedAccount();
             SeedCartDetails();
+            SeedOrderAndOrderDetailAndActivationCode();
         }
 
         private void SeedAccount()
@@ -92,21 +93,22 @@ namespace ShoppingCartCA
             string path = "/pictures";
             string path2 = "/document";
 
-            dbContext.Add(new Product() {
+            dbContext.Add(new Product()
+            {
                 Name = ".NET Charts",
                 Desc = "Brings powerful charting capabilities to your .NET applications.",
                 Price = 99,
                 Img = path + "/dotnet_charts_00da522c-3653-491c-8749-7fd8e71ad728.jpg",
-                DownloadFile = path2+ "/dotnet_charts_395ab7e2-2fd0-4629-911c-4f8ddc0858b5.pdf"
-            }) ;
+                DownloadFile = path2 + "/dotnet_charts_395ab7e2-2fd0-4629-911c-4f8ddc0858b5.pdf"
+            });
 
             dbContext.Add(new Product()
             {
                 Name = ".NET PayPal",
                 Desc = "Integrate your .NET apps with PayPal the easy way!",
                 Price = 69,
-                Img = path+ "/dotnet_paypal_b87f5d05-ecba-440d-b43c-5c44b8a19852.jpg",
-                DownloadFile = path2+ "/dotnet_paypal_9163eb84-200f-4225-86e1-bf96637bf0e5.pdf"
+                Img = path + "/dotnet_paypal_b87f5d05-ecba-440d-b43c-5c44b8a19852.jpg",
+                DownloadFile = path2 + "/dotnet_paypal_9163eb84-200f-4225-86e1-bf96637bf0e5.pdf"
             });
 
             dbContext.Add(new Product()
@@ -114,8 +116,8 @@ namespace ShoppingCartCA
                 Name = ".NET ML",
                 Desc = "Supercharged .NET machine learning libraries.",
                 Price = 299,
-                Img = path+ "dotnet_ml_24a58381-f610-400a-9b8d-c4bc290fc46e.jpg",
-                DownloadFile = path2+ "dotnet_ml_b99867c4-75c8-4b8f-b7ea-08e94637b45a.pdf"
+                Img = path + "dotnet_ml_24a58381-f610-400a-9b8d-c4bc290fc46e.jpg",
+                DownloadFile = path2 + "dotnet_ml_b99867c4-75c8-4b8f-b7ea-08e94637b45a.pdf"
             });
 
             dbContext.Add(new Product()
@@ -123,8 +125,8 @@ namespace ShoppingCartCA
                 Name = ".NET Analytics",
                 Desc = "Performs data mining and analytics easily in .NET.",
                 Price = 299,
-                Img = path+ "dotnet_analytics_88ac7cbd-80da-4ff2-a1a5-a324bf648f15.jpg",
-                DownloadFile = path2+ "dotnet_analytics_33c7b0ed-75f3-47ba-89d5-56b674c5e5de.pdf"
+                Img = path + "dotnet_analytics_88ac7cbd-80da-4ff2-a1a5-a324bf648f15.jpg",
+                DownloadFile = path2 + "dotnet_analytics_33c7b0ed-75f3-47ba-89d5-56b674c5e5de.pdf"
             });
 
             dbContext.Add(new Product()
@@ -132,8 +134,8 @@ namespace ShoppingCartCA
                 Name = ".NET Logger",
                 Desc = "Logs and aggregates events easily in your .NET apps.",
                 Price = 49,
-                Img = path+ "dotnet_logger_c45f20ff-8adc-4da3-8c60-ae8c829bc832.jpg",
-                DownloadFile = path2+ "dotnet_logger_d07f437e-5edc-406d-b52d-0c42a55f16e3.pdf"
+                Img = path + "dotnet_logger_c45f20ff-8adc-4da3-8c60-ae8c829bc832.jpg",
+                DownloadFile = path2 + "dotnet_logger_d07f437e-5edc-406d-b52d-0c42a55f16e3.pdf"
             });
 
             dbContext.Add(new Product()
@@ -141,12 +143,105 @@ namespace ShoppingCartCA
                 Name = ".NET Numerics",
                 Desc = "Powerful numerical methods for your .NET simulations.",
                 Price = 199,
-                Img = path+ "notnet_numerics_f43b191e-a6ba-4d3b-8d37-8225686c5ca1.jpg",
-                DownloadFile = path2+ "dotnet_numerics_76d3a7b5-b44e-46b3-950a-3957cb4aa6b4.pdf"
+                Img = path + "notnet_numerics_f43b191e-a6ba-4d3b-8d37-8225686c5ca1.jpg",
+                DownloadFile = path2 + "dotnet_numerics_76d3a7b5-b44e-46b3-950a-3957cb4aa6b4.pdf"
             });
 
             dbContext.SaveChanges();
         }
 
+
+        private void SeedOrderAndOrderDetailAndActivationCode()
+        {
+            List<Account> listOfAccount = dbContext.Accounts.ToList();
+
+            foreach (Account c in listOfAccount)
+            {
+                Random random = new Random();
+                int numOfOrdersToGenerate = random.Next(1, 3);
+                c.Orders = RandomOrder(numOfOrdersToGenerate);
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        private List<Order> RandomOrder(int numOfOrdersToGenerate)
+        {
+            List<Order> listOfOrder = new List<Order>();
+
+            for (int i = 0; i < numOfOrdersToGenerate; i++)
+            {
+                Random random = new Random();
+                int numOfOrderDetailToGenerate = random.Next(1, 3);
+
+                Order order = new Order
+                {
+                    OrderDate = new DateTime(2022, random.Next(1, 4), random.Next(1, 29)),
+                    OrderDetails = RandomOrderDetail(numOfOrderDetailToGenerate)
+                };
+                listOfOrder.Add(order);
+            }
+
+            return listOfOrder;
+        }
+
+        private List<OrderDetail> RandomOrderDetail(int numOfOrderDetailToGenerate)
+        {
+            List<OrderDetail> listOfOrderDetail = new List<OrderDetail>();
+
+            for (int i = 0; i < numOfOrderDetailToGenerate; i++)
+            {
+                Random random = new Random();
+                int productQuantity = random.Next(1, 3);
+
+                List<Product> listOfProduct = RandomProduct(productQuantity);
+
+                for (int k = 0; k < listOfProduct.Count; k++)
+                {
+                    OrderDetail orderDetail = new OrderDetail
+                    {
+                        Quantity = productQuantity,
+                        Product = listOfProduct[k],
+                        PurchasePrice = listOfProduct[k].Price,
+                        ActivationCodes = RandomActivationCode(productQuantity, listOfProduct[k])
+                    };
+                    listOfOrderDetail.Add(orderDetail);
+                }
+            }
+
+            return listOfOrderDetail;
+        }
+
+        private List<Product> RandomProduct(int productQuantity)
+        {
+            List<Product> dbProductList = dbContext.Products.ToList();
+
+            List<Product> listOfProduct = new List<Product>();
+
+            for (int j = 0; j < productQuantity; j++)
+            {
+                Random random = new Random();
+                Product product = dbProductList[random.Next(dbProductList.Count)];
+                listOfProduct.Add(product);
+            }
+
+            return listOfProduct;
+        }
+
+        private List<ActivationCode> RandomActivationCode(int productQuantity, Product product)
+        {
+            List<ActivationCode> listOfActivationCode = new List<ActivationCode>();
+
+            for (int i = 0; i < productQuantity; i++)
+            {
+                ActivationCode activationCode = new ActivationCode
+                {
+                    ProductId = product.Id
+                };
+                listOfActivationCode.Add(activationCode);
+            }
+
+            return listOfActivationCode;
+        }
     }
 }
