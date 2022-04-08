@@ -13,45 +13,58 @@ namespace ShoppingCartCA.DataModel
         public HeaderLink CartLink { get; set; }
         public int CartSize { get; set; }
 
-        public LayoutHeader(Customer customer, string[] headerlink, bool cartview=true)
+        public LayoutHeader(Customer customer, string[] headerlink=null, bool cartview=true)
         {
-            if(customer == null)
+            HeaderLinks = new List<HeaderLink>();
+            if (customer == null)
             {
                 User = "Guest";
                 CartSize = 0;
+                CreateHeaderLogin("Login");
             }
             else
             {
                 if(customer.CustomerDetails == null)
                 {
                     User = "Guest";
+                    CreateHeaderLogin("Login");
                 }
                 else
                 {
-                    User = customer.CustomerDetails.FirstName + customer.CustomerDetails.LastName;
+                    User = customer.CustomerDetails.FirstName + " " + customer.CustomerDetails.LastName;
+                    CreateHeaderLogin("Logout");
                 }
                 CartSize = customer.CartDetails.Count;
             }
-            HeaderLinks = new List<HeaderLink>();
             CreateHeaders(headerlink);
             if (cartview)
             {
                 CartLink = CreateCart();
             }
         }
+        private void CreateHeaderLogin(string headerlink)
+        {
+            switch (headerlink)
+            {
+                case "Login":
+                    HeaderLinks.Add(CreateLogin());
+                    break;
+                case "Logout":
+                    HeaderLinks.Add(CreateLogout());
+                    break;
+            }
+        }
 
         private void CreateHeaders(string[] headerlink)
         {
+            if(headerlink == null)
+            {
+                return;
+            }
             foreach(string header in headerlink)
             {
                 switch(header)
                 {
-                    case "Login":
-                        HeaderLinks.Add(CreateLogin());
-                        break;
-                    case "Logout":
-                        HeaderLinks.Add(CreateLogout());
-                        break;
                     case "Continue Shopping":
                         HeaderLinks.Add(CreateShopping());
                         break;

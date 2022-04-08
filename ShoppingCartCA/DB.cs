@@ -116,8 +116,8 @@ namespace ShoppingCartCA
                 Name = ".NET ML",
                 Desc = "Supercharged .NET machine learning libraries.",
                 Price = 299,
-                Img = path + "dotnet_ml_24a58381-f610-400a-9b8d-c4bc290fc46e.jpg",
-                DownloadFile = path2 + "dotnet_ml_b99867c4-75c8-4b8f-b7ea-08e94637b45a.pdf"
+                Img = path + "/dotnet_ml_24a58381-f610-400a-9b8d-c4bc290fc46e.jpg",
+                DownloadFile = path2 + "/dotnet_ml_b99867c4-75c8-4b8f-b7ea-08e94637b45a.pdf"
             });
 
             dbContext.Add(new Product()
@@ -125,8 +125,8 @@ namespace ShoppingCartCA
                 Name = ".NET Analytics",
                 Desc = "Performs data mining and analytics easily in .NET.",
                 Price = 299,
-                Img = path + "dotnet_analytics_88ac7cbd-80da-4ff2-a1a5-a324bf648f15.jpg",
-                DownloadFile = path2 + "dotnet_analytics_33c7b0ed-75f3-47ba-89d5-56b674c5e5de.pdf"
+                Img = path + "/dotnet_analytics_88ac7cbd-80da-4ff2-a1a5-a324bf648f15.jpg",
+                DownloadFile = path2 + "/dotnet_analytics_33c7b0ed-75f3-47ba-89d5-56b674c5e5de.pdf"
             });
 
             dbContext.Add(new Product()
@@ -134,8 +134,8 @@ namespace ShoppingCartCA
                 Name = ".NET Logger",
                 Desc = "Logs and aggregates events easily in your .NET apps.",
                 Price = 49,
-                Img = path + "dotnet_logger_c45f20ff-8adc-4da3-8c60-ae8c829bc832.jpg",
-                DownloadFile = path2 + "dotnet_logger_d07f437e-5edc-406d-b52d-0c42a55f16e3.pdf"
+                Img = path + "/dotnet_logger_c45f20ff-8adc-4da3-8c60-ae8c829bc832.jpg",
+                DownloadFile = path2 + "/dotnet_logger_d07f437e-5edc-406d-b52d-0c42a55f16e3.pdf"
             });
 
             dbContext.Add(new Product()
@@ -143,8 +143,8 @@ namespace ShoppingCartCA
                 Name = ".NET Numerics",
                 Desc = "Powerful numerical methods for your .NET simulations.",
                 Price = 199,
-                Img = path + "notnet_numerics_f43b191e-a6ba-4d3b-8d37-8225686c5ca1.jpg",
-                DownloadFile = path2 + "dotnet_numerics_76d3a7b5-b44e-46b3-950a-3957cb4aa6b4.pdf"
+                Img = path + "/notnet_numerics_f43b191e-a6ba-4d3b-8d37-8225686c5ca1.jpg",
+                DownloadFile = path2 + "/dotnet_numerics_76d3a7b5-b44e-46b3-950a-3957cb4aa6b4.pdf"
             });
 
             dbContext.SaveChanges();

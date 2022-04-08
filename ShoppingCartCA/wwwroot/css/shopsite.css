@@ -75,7 +75,7 @@ body {
 }
 .prod-col-img {
     display:table-cell;
-    height:150px;
+    height:160px;
     width:200px;
     text-align:center;
     vertical-align:middle;
@@ -85,7 +85,8 @@ body {
     font-size: 22px;
     font-weight: bold;
     text-align: center;
-    padding-top: 3px;
+    padding-top: 2px;
+    padding-bottom:2px;
 }
 .prod-col-dec {
     display: table-cell;
@@ -94,7 +95,9 @@ body {
     text-align: left;
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    height: 5em;
 }
 
 .prod-col-btn {

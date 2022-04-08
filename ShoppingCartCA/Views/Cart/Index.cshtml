@@ -3,6 +3,12 @@
     Layout = "_ShopLayout";
     ViewData["Title"] = "Cart";
     List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
+    double totalprice = 0;
+    foreach(CartDetail cartitem in allcartitem)
+    {
+        totalprice += cartitem.Product.Price * cartitem.Quantity;
+    }
+
 }
 <div class="cart-header">
     <table class="cart-table">
@@ -11,45 +17,57 @@
                 My Cart
             </td>
             <td class="cart-table-price">
-                Price : $<span id="totalcost">99</span>
+                Price : $<span id="totalcost">@String.Format("{0:0.00}",totalprice)</span>
             </td>
         </tr>
     </table>
 </div>
 <br>
-<div>
-    @if (allcartitem.Count == 0)
-    {
-        @:<p>No Items In Cart</p>
-    }
-    else
-    {
-        <table class="carttable">
-        </table>
-    }
-</div>
-
 <div class="showcart">
+    <div>
+        @if (allcartitem.Count == 0)
+        {
+            @:<p>No Items In Cart</p>
+        }
+        else
+        {
     <table class="carttable">
+        @{int itemNo = 0;
+            foreach (CartDetail cartDetail in allcartitem)
+            {
+                string priceId = "price" + itemNo;
+                string qtyId = "Quantity" + itemNo;
+                string buttonminusId = "minus" + itemNo;
+                string buttonaddId = "add" + itemNo;
+                string cartNoId = "cartNo" + itemNo;
+
         <tr>
-            <td class="itemcell">@Html.Raw(ProductDisplay.DisplayItem(allcartitem[0].Product))</td>
+            <td class="itemcell">@Html.Raw(ProductDisplay.DisplayItem(cartDetail.Product))</td>
             <td class="datacell">
-                <div>Price : $<span id="price1" unitprice="99">99</span></div>
+                <div>Price : $<span id="@priceId" name="Price" unitprice="@cartDetail.Product.Price">@String.Format("{0:0.00}", cartDetail.Product.Price*cartDetail.Quantity)</span></div>
                 <br />
                 <div>
-                    <input type="button" id="minus1" value="-" />
-                    <input type="text" name="qty" id="qty1" onchange="UpdateCartItem(this)" style="width:30px" />
-                    <input type="button" id="add1" value="+" />
-                    <input type="hidden" id="cartno1" value="1" />
+                    <input type="button" id="@buttonminusId" value="-" />
+                    <input type="text" name="Quantity" id="@qtyId" onchange="UpdateCartItem(this)" class="qtybox" value="@cartDetail.Quantity"/>
+                    <input type="button" id="@buttonaddId" value="+" />
+                    <input type="hidden" id="@cartNoId" value="@cartDetail.Id" />
                 </div>
             </td>
         </tr>
+                itemNo++;
+            }
+            }
     </table>
+            }
+    </div>
 </div>
 
 
 
 <script type="text/javascript">
+    window.onload(){
+
+    }
     function UpdateCartItem(elem) {
         //To search for cart item
         var ele = elem;
@@ -58,4 +76,5 @@
     function SendCartItem(e) {
 
     }
+    
 </script>

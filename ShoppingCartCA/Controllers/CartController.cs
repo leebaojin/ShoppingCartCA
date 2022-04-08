@@ -18,10 +18,10 @@ namespace ShoppingCartCA.Controllers
         }
         public IActionResult Index()
         {
-            ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "Checkout" },false);
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            ViewData["allcartitem"] = customer.CartDetails;
 
-            ViewData["allcartitem"] = dbContext.CartDetails.Where(x => x.Customer.CustomerDetails.Username == "jeamsee").ToList();
-            
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, false);
             return View();
         }
 
