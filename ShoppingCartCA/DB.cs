@@ -31,11 +31,6 @@ namespace ShoppingCartCA
 
         private void SeedAccount()
         {
-            if (dbContext.Accounts.Any())
-            {
-                return;   // DB has been seeded
-            }
-
             HashAlgorithm sha = SHA256.Create();
 
             string[] usernames = { "jeamsee", "lynnwong", "leliamay" };
@@ -52,20 +47,15 @@ namespace ShoppingCartCA
             {
                 string combo = username + password;
                 byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
-
-                dbContext.Add( new Cart()
-                {
-                    Account = new Account()
+                dbContext.Add(new Customer() { 
+                    CustomerDetails = new CustomerDetail()
                     {
                         Username = username,
                         PassHash = hash,
                         FirstName = FirstName[i],
                         LastName = LastName[i],
-
                     }
-                }                   
-                    );
-
+                });
                 i++;
 
                 
@@ -75,20 +65,20 @@ namespace ShoppingCartCA
 
         private void SeedCartDetails()
         {
-            Cart mycart = dbContext.Carts.FirstOrDefault(x => x.Account.Username == "jeamsee");
-            mycart.CartDetails.Add(new CartDetail()
+            Customer myCustomer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            myCustomer.CartDetails.Add(new CartDetail()
             {
                 Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts"),
                 Quantity = 2
             }) ;
 
-            mycart.CartDetails.Add(new CartDetail()
+            myCustomer.CartDetails.Add(new CartDetail()
             {
                 Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET ML"),
                 Quantity = 1
             });
 
-            mycart.CartDetails.Add(new CartDetail()
+            myCustomer.CartDetails.Add(new CartDetail()
             {
                 Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Logger"),
                 Quantity = 3

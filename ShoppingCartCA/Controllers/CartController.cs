@@ -20,7 +20,7 @@ namespace ShoppingCartCA.Controllers
         {
             ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "Checkout" },false);
 
-            ViewData["allcartitem"] = dbContext.CartDetails.Where(x => x.Cart.Account.Username == "jeamsee").ToList();
+            ViewData["allcartitem"] = dbContext.CartDetails.Where(x => x.Customer.CustomerDetails.Username == "jeamsee").ToList();
             
             return View();
         }

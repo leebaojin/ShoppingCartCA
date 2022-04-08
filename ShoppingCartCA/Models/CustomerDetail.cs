@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShoppingCartCA.Models
 {
-    public class Account
+    public class CustomerDetail
     {
-        public Account()
+        public CustomerDetail()
         {
             Id = new Guid();
         }
@@ -21,16 +21,15 @@ namespace ShoppingCartCA.Models
         [Required]
         public byte[] PassHash { get; set; }
 
-        [Required]
         [MaxLength(30)]
+        [Required]
         public string FirstName { get; set; }
 
-        [Required]
         [MaxLength(30)]
+        [Required]
         public string LastName { get; set; }
 
-        public virtual Guid CartId { get; set; }
+        public virtual Guid CustomerId { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
     }
 }

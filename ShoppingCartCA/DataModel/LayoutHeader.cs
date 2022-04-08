@@ -13,24 +13,24 @@ namespace ShoppingCartCA.DataModel
         public HeaderLink CartLink { get; set; }
         public int CartSize { get; set; }
 
-        public LayoutHeader(Cart cart, string[] headerlink, bool cartview=true)
+        public LayoutHeader(Customer customer, string[] headerlink, bool cartview=true)
         {
-            if(cart == null)
+            if(customer == null)
             {
                 User = "Guest";
                 CartSize = 0;
             }
             else
             {
-                if(cart.Account == null)
+                if(customer.CustomerDetails == null)
                 {
                     User = "Guest";
                 }
                 else
                 {
-                    User = cart.Account.FirstName + cart.Account.LastName;
+                    User = customer.CustomerDetails.FirstName + customer.CustomerDetails.LastName;
                 }
-                CartSize = cart.CartDetails.Count;
+                CartSize = customer.CartDetails.Count;
             }
             HeaderLinks = new List<HeaderLink>();
             CreateHeaders(headerlink);

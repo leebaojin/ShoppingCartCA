@@ -14,6 +14,7 @@ namespace ShoppingCartCA.Models
         }
         public Guid Id { get; set; }
 
-        public virtual Guid CartId { get; set; }
+        public virtual Guid CustomerId { get; set; }
+
     }
 }

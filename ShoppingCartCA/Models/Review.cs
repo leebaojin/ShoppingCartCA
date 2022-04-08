@@ -23,9 +23,9 @@ namespace ShoppingCartCA.Models
         [Required]
         public string Comment { get; set; }
 
-        public virtual Account Account { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public virtual Guid ProductId { get; set; }
+        public virtual Product Product { get; set; }
 
 
     }
