@@ -35,22 +35,22 @@
         @{int itemNo = 0;
             foreach (CartDetail cartDetail in allcartitem)
             {
-                string priceId = "price" + itemNo;
-                string qtyId = "Quantity" + itemNo;
-                string buttonminusId = "minus" + itemNo;
-                string buttonaddId = "add" + itemNo;
-                string cartNoId = "cartNo" + itemNo;
+                string priceId = "price-" + itemNo;
+                string qtyId = "quantity-" + itemNo;
+                string buttonminusId = "minus-" + itemNo;
+                string buttonaddId = "add-" + itemNo;
+                string cartNoId = "cartno-" + itemNo;
 
-        <tr>
+        <tr class="cart-row">
             <td class="itemcell">@Html.Raw(ProductDisplay.DisplayItem(cartDetail.Product))</td>
             <td class="datacell">
-                <div>Price : $<span id="@priceId" name="Price" unitprice="@cartDetail.Product.Price">@String.Format("{0:0.00}", cartDetail.Product.Price*cartDetail.Quantity)</span></div>
+                <div>Price : $<span id="@priceId" name="Price" unitprice=@cartDetail.Product.Price>@String.Format("{0:0.00}", cartDetail.Product.Price*cartDetail.Quantity)</span></div>
                 <br />
                 <div>
-                    <input type="button" id="@buttonminusId" value="-" />
-                    <input type="text" name="Quantity" id="@qtyId" onchange="UpdateCartItem(this)" class="qtybox" value="@cartDetail.Quantity"/>
-                    <input type="button" id="@buttonaddId" value="+" />
-                    <input type="hidden" id="@cartNoId" value="@cartDetail.Id" />
+                    <input type="button" id="@buttonminusId" onclick="UpdateItem(this)" value="-" />
+                    <input type="text" name="Quantity" id="@qtyId" onchange="UpdateItem(this)" class="qtybox" value=@cartDetail.Quantity />
+                    <input type="button" id="@buttonaddId" onclick="UpdateItem(this)" value="+" />
+                    <input type="hidden" name="CartInfo" id="@cartNoId" value="@cartDetail.Id" />
                 </div>
             </td>
         </tr>
@@ -65,16 +65,79 @@
 
 
 <script type="text/javascript">
-    window.onload(){
+    window.onload=function(){
 
     }
-    function UpdateCartItem(elem) {
+
+    function UpdateItem(elem) {
         //To search for cart item
-        var ele = elem;
-        ele.value = 10;
+        var eleId = elem.id;
+        var splitId = eleId.split("-");
+        if (splitId.length == 2) {
+            var eletrigger = splitId[0];
+            var rowId = splitId[1];
+        } else {
+            return;
+        }
+        var qtyele = document.getElementById("quantity-" + rowId);
+        var newval = parseInt(qtyele.value);
+        if (qtyele === null || isNaN(newval)) {
+            qtyele.value = qtyele.defaultValue;
+            return;
+        }
+        if (eletrigger === "minus") {
+            newval--;
+        } else if (eletrigger === "add") {
+            newval++;
+        } 
+        SendCartItem(rowId,newval);
     }
-    function SendCartItem(e) {
 
+    function SendCartItem(rowId, newval) {
+        itemele = document.getElementById("cartno-" + rowId);
+        if (itemele === null) {
+            window.location.href = "~/Cart";
+            return;
+        }
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "/Cart/UpdateCartItem");
+
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                if (this.status != 200) {
+                    return;
+                }
+            }
+
+            let data = JSON.parse(this.responseText);
+
+            if (data.updateSuccess == false) {
+                window.location.href = "/Cart";
+                return;
+            }
+            document.getElementById("totalcost").innerHTML = data.totalprice;
+            qtyele = document.getElementById("quantity-" + data.updateRow);
+            if (data.removeItem != null) {
+                parentrow = qtyele.closest(".cart-row");
+                parentrow.parentNode.removeChild(parentrow);
+            }
+            var x = "price-" + data.updateRow;
+            document.getElementById("price-" + data.updateRow).innerHTML = data.price;
+            qtyele.value = data.newqty;
+            qtyele.defaultValue = data.newqty;
+            
+
+        }
+        let CartUpdateData = {
+            "CartItemId": itemele.value,
+            "Newqty": newval,
+            "UpdateRow": rowId
+        };
+        xhr.send(JSON.stringify(CartUpdateData));
     }
     
 </script>
