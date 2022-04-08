@@ -1,0 +1,30 @@
+﻿@using ShoppingCartCA.Views.Shared;
+@{
+    Layout = "_ShopLayout";
+    ViewData["Title"] = "Cart";
+    Product cartitem = (Product)ViewData["cartdata"];
+}
+<div class='prod-holder-table'>
+    <div class='prod-holder-row'>
+        <div class='prod-col-img'>
+            <img class='prod-img' src='@cartitem.Img' />
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-title'>
+            @cartitem.Name;
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-dec'>
+            @cartitem.Desc
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-btn'>
+            <input class='prod-button' type='button' action='/' value='$@cartitem.Price - Add to Cart' />
+        </div>
+    </div>
+</div>
+
+@Html.Raw(ProductDisplay.DisplayItem(cartitem))
