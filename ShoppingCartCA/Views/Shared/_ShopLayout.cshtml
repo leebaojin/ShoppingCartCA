@@ -20,18 +20,15 @@
         <hr />
         <div class="headerdiv">
             <table class="headertable">
-                <tr>
+                <tr class="header-row">
                     @if (layoutheader == null)
                     {
                     <td class="header-col1">
                         Hi, Guest &nbsp &nbsp &nbsp | &nbsp @Html.ActionLink("Login", "Index", "Login") &nbsp | &nbsp
                     </td>
                         <td class="header-col2">
-                            @if (layoutheader.CartLink != null)
-                            {
                                 @Html.ActionLink("Cart: " + "0","Index", "Cart", null,
                                                new { id = "CartSize", value = 0 })
-                            }
                         </td>
                     }
                     else

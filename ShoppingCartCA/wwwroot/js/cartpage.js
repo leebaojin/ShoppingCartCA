@@ -32,7 +32,7 @@ function UpdateItem(elem) {
 function SendCartItem(rowId, newval) {
     itemele = document.getElementById("cartno-" + rowId);
     if (itemele === null) {
-        window.location.href = "~/Cart";
+        window.location.href = "/Cart";
         return;
     }
 

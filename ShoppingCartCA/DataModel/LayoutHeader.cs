@@ -34,9 +34,9 @@ namespace ShoppingCartCA.DataModel
                     User = customer.CustomerDetails.FirstName + " " + customer.CustomerDetails.LastName;
                     CreateHeaderLogin("Logout");
                 }
-                CartSize = GetCartSize(customer);
+                CartSize = CartData.GetCartSize(customer);
             }
-            CreateHeaders(headerlink);
+            CreateHeaders(headerlink, customer);
             if (cartview)
             {
                 CartLink = CreateCart();
@@ -55,7 +55,7 @@ namespace ShoppingCartCA.DataModel
             }
         }
 
-        private void CreateHeaders(string[] headerlink)
+        private void CreateHeaders(string[] headerlink, Customer customer)
         {
             if(headerlink == null)
             {
@@ -72,7 +72,10 @@ namespace ShoppingCartCA.DataModel
                         HeaderLinks.Add(CreateCheckout());
                         break;
                     case "My Purchase":
-                        HeaderLinks.Add(CreateViewPurchase());
+                        if(customer != null && customer.CustomerDetails != null)
+                        {
+                            HeaderLinks.Add(CreateViewPurchase());
+                        } 
                         break;
                     case "My Cart":
                         HeaderLinks.Add(CreateCart());
@@ -136,22 +139,10 @@ namespace ShoppingCartCA.DataModel
             return new HeaderLink()
             {
                 Title = "My Purchase",
-                Controller = "MyPurchase",
+                Controller = "Purchase",
                 Action = "Index"
             };
         }
-
-        private int GetCartSize(Customer customer)
-        {
-            int cartsize = 0;
-
-            foreach(CartDetail cartDetail in customer.CartDetails)
-            {
-                cartsize += cartDetail.Quantity;
-            }
-            return cartsize;
-        }
-
 
     }
 

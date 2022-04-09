@@ -50,15 +50,22 @@ body {
     width:95%;
     margin-left:auto;
     margin-right:auto;
+    border:none;
 }
 
-.header-col1{
-    width:80%;
+.header-row {
+    border: none;
+}
+
+.header-col1 {
+    width: 80%;
     text-align: left;
+    border: none;
 }
 
-.header-col2{
-    text-align:right;
+.header-col2 {
+    text-align: right;
+    border: none;
 }
 
 /*Product display
@@ -106,10 +113,14 @@ body {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-.prod-button{
-    width:80%;
+.prod-button {
+    width: 80%;
+    box-shadow: 2px 3px;
 }
 .prod-img{
     width:200px;
+}
+.prod-findtxt {
+    background-color: #FFFF5D;
 }
 
