@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ShoppingCartCA.Models;
+using ShoppingCartCA.DataModel;
+using System.Text;
 
 namespace ShoppingCartCA.Views.Shared
 {
-    public class ProductDisplay
+    public class DisplayAid
     {
-        public static string DisplayItem(Product product,string lastline = null)
+        public static string DisplayProduct(Product product,string lastbutton = null)
         {
             string output = "<div class='prod-holder-table'>\n";
 
@@ -24,15 +26,21 @@ namespace ShoppingCartCA.Views.Shared
             output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
                 product.Desc + "</div>\n</div>";
 
-            if(lastline == "purchase")
+            if(lastbutton == "Purchase")
             {
                 //add the button
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                    "<input class='prod-button' type='button' action='/' value='$" +
+                    "<input class='prod-button' type='button' onclick='AddCart('" + @product.Id + "') value='$" +
                     product.Price + " - Add to Cart' /></div>\n</div>";
+            }else if(lastbutton == "Download")
+            {
+                output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
+                    "<a href='"+ product.DownloadFile + "' download='"+product.DownloadName+"'>"+
+                    "<input class='prod-button' type='button' value='Download' /></div>\n</div>";
             }
 
             return output;
         }
+
     }
 }

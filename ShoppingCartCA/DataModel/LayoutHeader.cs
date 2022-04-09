@@ -34,7 +34,7 @@ namespace ShoppingCartCA.DataModel
                     User = customer.CustomerDetails.FirstName + " " + customer.CustomerDetails.LastName;
                     CreateHeaderLogin("Logout");
                 }
-                CartSize = customer.CartDetails.Count;
+                CartSize = GetCartSize(customer);
             }
             CreateHeaders(headerlink);
             if (cartview)
@@ -139,6 +139,17 @@ namespace ShoppingCartCA.DataModel
                 Controller = "MyPurchase",
                 Action = "Index"
             };
+        }
+
+        private int GetCartSize(Customer customer)
+        {
+            int cartsize = 0;
+
+            foreach(CartDetail cartDetail in customer.CartDetails)
+            {
+                cartsize += cartDetail.Quantity;
+            }
+            return cartsize;
         }
 
 

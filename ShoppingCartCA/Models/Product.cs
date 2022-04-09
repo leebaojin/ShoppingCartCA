@@ -19,7 +19,7 @@ namespace ShoppingCartCA.Models
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string Name { get; set; }
 
         [Required]
@@ -35,6 +35,10 @@ namespace ShoppingCartCA.Models
         [MaxLength(300)]
         [Required]
         public string DownloadFile { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string DownloadName { get; set; }
 
         [Required]
         public double Price { get; set; }

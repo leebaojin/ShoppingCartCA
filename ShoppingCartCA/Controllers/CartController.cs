@@ -114,5 +114,11 @@ namespace ShoppingCartCA.Controllers
                 totalprice = String.Format("{0:0.00}", totalcost)
             });
         }
+
+        public IActionResult Testing()
+        {
+            ViewData["cartdata"] = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts");
+            return View("template");
+        }
     }
 }
