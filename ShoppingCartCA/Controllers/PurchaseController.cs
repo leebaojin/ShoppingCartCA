@@ -22,16 +22,17 @@ namespace ShoppingCartCA.Controllers
         {
             ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping"});
 
-            Customer customer = dbContext.Customers.FirstOrDefault();
+            //Customer customer = dbContext.Customers.FirstOrDefault();
 
-            //List<Order> orderList = account.Orders.ToList();
+            Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            if (customer == null)
+            {
+                return RedirectToAction("Index", "Logout");
+            }
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, true);
             ViewBag.customer = customer;
-            //ViewBag.orderList = orderList;
-
+ 
             return View();
-
         }
-
-
     }
 }
