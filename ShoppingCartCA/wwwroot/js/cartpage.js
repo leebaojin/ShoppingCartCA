@@ -75,3 +75,46 @@ function SendCartItem(rowId, newval) {
     };
     xhr.send(JSON.stringify(CartUpdateData));
 }
+
+
+function AddToCart(prodId) {
+    if (prodId == null) {
+        return;
+    }
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "../Cart/AddToCart");
+
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8;");
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status !== 200) {
+                return;
+            }
+
+            let data = JSON.parse(this.responseText);
+
+            if (data.addSuccess != true) {
+                window.href = "../Home";
+                return;
+            }
+
+            cartele = document.getElementById("CartSize");
+            if (cartele != null) {
+                cartele.innerHTML = "Cart : " + data.cartqty;
+                cartele.value = data.cartqty;
+            }
+
+            alert("Added to cart");
+
+        }
+    }
+    let DataCartProduct = {
+        "ProdId": prodId,
+    };
+
+    xhr.send(JSON.stringify(DataCartProduct));
+}
+

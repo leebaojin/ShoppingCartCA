@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "_ShopLayout";
+    ViewData["Title"] = "ProdDetail";
+    Product product = (Product)ViewData["productdisplay"];
+
+}
+@section StyleScript{
+    <link rel="stylesheet" href="~/css/cartpage.css" />
+}
+<style>
+    .viewprd-disp{
+    }
+    .viewprd-cellimg {
+        padding:15px;
+        text-align:center;
+    }
+    .viewprd-img{
+        width:300px;
+    }
+    .viewprd-celldata{
+        padding-left:30px;
+    }
+    #quantity {
+        width: 40px;
+        text-align: center;
+    }
+    .to-submit {
+        background-color: #E74A19;
+        color:white;
+        padding:5px 15px 5px 15px;
+        border:none;
+        border-radius:5px;
+    }
+    .viewprd-disp-destitle{
+        font-size:20px;
+        padding:10px 10px 10px 10px;
+        font-weight:bold;
+    }
+    .viewprd-disp-des{
+        font-size:14px;
+        padding-left:10px;
+        height:6em;
+    }
+</style>
+
+<div class="viewprd-head">
+    <h2>@product.Name</h2>
+</div>
+<br />
+
+<div class="viewprd-disp">
+    <table>
+        <tr>
+            <td class="viewprd-cellimg"><img class="viewprd-img" src="@product.Img" /></td>
+            <td class="viewprd-celldata">
+                <div>Price : $<span id="price" name="price">@String.Format("{0:0.00}", product.Price)</span></div>
+                <br />
+                <div>
+                    <form id="purchaseform" action="Cart/AddCart" method="POST">
+                        <input type="button" id="buttonminus" onclick="MinusItem('quantity')" value="-" />
+                        <input type="text" name="quantity" id="quantity" onchange="ValidateItem(this)" value=1 />
+                        <input type="button" id="buttonplus" onclick="AddItem('quantity')" value="+" />
+                        <br />
+                        <br />
+                        <input class="to-submit" type="submit" value="Add To Cart" />
+                        <input type="hidden" name="prodId" value="@product.Id" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr col-span="2">
+            <td>
+                <div class="viewprd-disp-destitle">Description</div>
+                <div class="viewprd-disp-des">@product.Desc</div>
+            </td>
+        </tr>
+    </table>
+</div>
+<hr/>
+<div class="viewprd-similar">
+
+</div>
+
+<div class="viewprd-review">
+
+</div>

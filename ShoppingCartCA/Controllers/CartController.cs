@@ -20,8 +20,8 @@ namespace ShoppingCartCA.Controllers
         {
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
             ViewData["allcartitem"] = customer.CartDetails;
-
             ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, false);
+            
             return View();
         }
 
@@ -114,6 +114,24 @@ namespace ShoppingCartCA.Controllers
                 removeItem = true,
                 totalprice = String.Format("{0:0.00}", totalcost)
             });
+        }
+
+        [Route("Home/ProdDetail")]
+        public IActionResult ProdDetail(string prodId)
+        {
+            if (prodId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            Product product = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(prodId));
+            if(product == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewData["productdisplay"] = product;
+            ViewData["review"] = null;
+            ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "My Cart" }, false);
+            return View();
         }
 
         public IActionResult Testing()

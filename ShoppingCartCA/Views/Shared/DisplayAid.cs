@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using ShoppingCartCA.Models;
 using ShoppingCartCA.DataModel;
 using System.Text;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ShoppingCartCA.Views.Shared
 {
     public class DisplayAid
     {
-        public static string DisplayProduct(Product product,string lastbutton = null, string searchVal = null)
+        public static string DisplayProduct(Product product,string lastbutton = null,string searchVal = null)
         {
             if(product == null)
             {
@@ -19,7 +22,7 @@ namespace ShoppingCartCA.Views.Shared
             string displayName = DisplaySearch(product.Name, searchVal);
             string displayDesc = DisplaySearch(product.Desc, searchVal);
 
-            string output = "<div class='prod-holder-table'>\n";
+            string output = "<div class='prod-holder'><div class='prod-holder-table'>\n";
 
             //add the product image
             output += "<div class='prod-holder-row'>\n<div class='prod-col-img'>\n" +
@@ -29,24 +32,29 @@ namespace ShoppingCartCA.Views.Shared
             output += "<div class='prod-holder-row'>\n<div class='prod-col-title'>\n" +
                 displayName + "</div>\n</div>";
 
+            //Create the more link
+            string morelink = " <a class='prod-morebtn' href='Home/ProdDetail?prodId="+product.Id+"'>...more</a>";
+
             //add the product 
             output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
-                displayDesc + "</div>\n</div>";
+                displayDesc + morelink + "</div>\n</div>";
 
             if(lastbutton == "Purchase")
             {
                 //add the button
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                    "<input class='prod-button' type='button' onclick='AddToCart(\"" + @product.Id + "\")' value='$" +
-                    product.Price + " - Add to Cart' /></div>\n</div>";
+                    "<button class='prod-button' onclick='AddToCart(\"" + @product.Id + "\")'>" +
+                    "$ " + product.Price+ " -  <i class='fa fa-shopping-cart'></i> Add to Cart</button>" +
+                    "</div>\n</div>";
             }else if(lastbutton == "Download")
             {
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
                     "<a href='"+ product.DownloadFile + "' download='"+product.DownloadName+"'>"+
-                    "<input class='prod-button' type='button' value='Download' /></div>\n</div>";
+                    "<button class='prod-button' value='Download'> Download</button><i class='fa fa-download'></i> Download</button>" +
+                    "</div>\n</div>";
             }
 
-            output += "</div>";
+            output += "</div></div>";
 
             return output;
         }

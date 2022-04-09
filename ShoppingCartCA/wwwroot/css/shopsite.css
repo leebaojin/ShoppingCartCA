@@ -70,22 +70,27 @@ body {
 
 /*Product display
 -------------------------------------------------- */
+.prod-holder {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 250px;
+}
 .prod-holder-table{
     display:table;
     width:250px;
     height:auto;
-    border: 2px solid black;
-    padding:3px;
+    padding:3px 3px 5px 3px;
 }
-.prod-holder-row{
-    display:table-row;
+.prod-holder-row {
+    display: table-row;
+    border-radius: 10px;
 }
 .prod-col-img {
-    display:table-cell;
-    height:160px;
-    width:200px;
-    text-align:center;
-    vertical-align:middle;
+    display: table-cell;
+    height: 160px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
 }
 .prod-col-title {
     display: table-cell;
@@ -93,7 +98,7 @@ body {
     font-weight: bold;
     text-align: center;
     padding-top: 2px;
-    padding-bottom:2px;
+    padding-bottom: 2px;
 }
 .prod-col-dec {
     display: table-cell;
@@ -103,19 +108,22 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 2px;
-    padding-bottom: 2px;
-    height: 5em;
+    height: 5.5em;
 }
 
 .prod-col-btn {
     display: table-cell;
     text-align: center;
-    padding-top: 5px;
+    padding-top: 2px;
     padding-bottom: 5px;
 }
 .prod-button {
     width: 80%;
     box-shadow: 2px 3px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #6B99E3;
+    border: none;
 }
 .prod-img{
     width:200px;
@@ -123,4 +131,6 @@ body {
 .prod-findtxt {
     background-color: #FFFF5D;
 }
-
+.prod-morebtn{
+    font-size:12px;
+}
