@@ -45,16 +45,17 @@ namespace ShoppingCartCA.Views.Shared
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
                     "<button class='prod-button' onclick='AddToCart(\"" + @product.Id + "\")'>" +
                     "$ " + product.Price+ " -  <i class='fa fa-shopping-cart'></i> Add to Cart</button>" +
-                    "</div>\n</div>";
+                    "\n</div>\n</div>";
             }else if(lastbutton == "Download")
             {
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
                     "<a href='"+ product.DownloadFile + "' download='"+product.DownloadName+"'>"+
-                    "<button class='prod-button' value='Download'> Download</button><i class='fa fa-download'></i> Download</button>" +
-                    "</div>\n</div>";
+                    "<button class='prod-button' value='Download'>" +
+                    "<i class='fa fa-download'></i> Download</button>" +
+                    "\n</div>\n</div>";
             }
 
-            output += "</div></div>";
+            output += "\n</div>\n</div>";
 
             return output;
         }
