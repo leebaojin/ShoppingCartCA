@@ -10,11 +10,14 @@ namespace ShoppingCartCA.Models
     {
         public Session()
         {
-            Id = new Guid();
+            Id = new Guid();			
+			Timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
         public Guid Id { get; set; }
+		
+		public long Timestamp { get; set; }
 
-        public virtual Guid CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
     }
 }

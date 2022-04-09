@@ -21,7 +21,18 @@ namespace ShoppingCartCA.Controllers
 
         public IActionResult Index()
         {
-            ViewData["layoutheader"] = new LayoutHeader(null,new string[]{ "My Cart" });
+			string sessionId = Request.Cookies["SessionId"];
+
+            if(sessionId != null)
+            {
+                Customer customer = SessionAutenticate.Autenticate(sessionId, dbContext);
+
+                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Cart" });
+            }
+            else
+            {
+                ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Cart" });
+            }            
             return View();
         }
 

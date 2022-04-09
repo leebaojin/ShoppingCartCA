@@ -17,7 +17,7 @@ namespace ShoppingCartCA.Models
 
         public virtual CustomerDetail CustomerDetails { get; set; }
 
-        public virtual Session Session { get; set; }
+        // public virtual Session Session { get; set; }
 
         public virtual ICollection<CartDetail> CartDetails { get; set; }
 

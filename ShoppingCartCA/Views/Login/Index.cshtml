@@ -2,4 +2,21 @@
     ViewData["Title"] = "Login";
     Layout = "_LoginLayout";
 }
-<h1>Login Page</h1>
+
+
+<div class="card mycard">
+    <form action="/Login/Login" method="POST">
+        <!-- Username input -->
+        <div class="form-outline mb-4">
+            <input type="text" id="form2Example1" class="form-control" placeholder="Username" name="username"/>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" class="form-control" placeholder="Password" name="password"/>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+    </form>
+</div>

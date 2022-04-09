@@ -99,8 +99,8 @@ namespace ShoppingCartCA.DataModel
             return new HeaderLink()
             {
                 Title = "Logout",
-                Controller = "Login",
-                Action = "Logout"
+                Controller = "Logout",
+                Action = "Index"
             };
         }
 
