@@ -48,7 +48,8 @@ namespace ShoppingCartCA
             {
                 string combo = username + password;
                 byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
-                dbContext.Add(new Customer() { 
+                dbContext.Add(new Customer()
+                {
                     CustomerDetails = new CustomerDetail()
                     {
                         Username = username,
@@ -59,7 +60,7 @@ namespace ShoppingCartCA
                 });
                 i++;
 
-                
+
             }
             dbContext.SaveChanges();
         }
@@ -71,7 +72,7 @@ namespace ShoppingCartCA
             {
                 Product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts"),
                 Quantity = 2
-            }) ;
+            });
 
             myCustomer.CartDetails.Add(new CartDetail()
             {
@@ -164,7 +165,7 @@ namespace ShoppingCartCA
             foreach (Customer c in listOfCustomer)
             {
                 Random random = new Random();
-                int numOfOrdersToGenerate = random.Next(1, 3);
+                int numOfOrdersToGenerate = random.Next(2, 4);
                 c.Orders = RandomOrder(numOfOrdersToGenerate);
             }
 
@@ -195,24 +196,22 @@ namespace ShoppingCartCA
         {
             List<OrderDetail> listOfOrderDetail = new List<OrderDetail>();
 
+            List<Product> listOfProduct = RandomProduct(numOfOrderDetailToGenerate);
+
             for (int i = 0; i < numOfOrderDetailToGenerate; i++)
             {
                 Random random = new Random();
                 int productQuantity = random.Next(1, 3);
-
-                List<Product> listOfProduct = RandomProduct(productQuantity);
-
-                for (int k = 0; k < listOfProduct.Count; k++)
+                
+                OrderDetail orderDetail = new OrderDetail
                 {
-                    OrderDetail orderDetail = new OrderDetail
-                    {
-                        Quantity = productQuantity,
-                        Product = listOfProduct[k],
-                        PurchasePrice = listOfProduct[k].Price,
-                        ActivationCodes = RandomActivationCode(productQuantity, listOfProduct[k])
-                    };
-                    listOfOrderDetail.Add(orderDetail);
-                }
+                    Quantity = productQuantity,
+                    Product = listOfProduct[i],
+                    PurchasePrice = listOfProduct[i].Price,
+                    ActivationCodes = RandomActivationCode(productQuantity, listOfProduct[i])
+                };
+                listOfOrderDetail.Add(orderDetail);
+
             }
 
             return listOfOrderDetail;
@@ -224,11 +223,13 @@ namespace ShoppingCartCA
 
             List<Product> listOfProduct = new List<Product>();
 
+            Random random = new Random();
+            int rnd = random.Next(0, dbProductList.Count - productQuantity);
             for (int j = 0; j < productQuantity; j++)
             {
-                Random random = new Random();
-                Product product = dbProductList[random.Next(dbProductList.Count)];
+                Product product = dbProductList[rnd + j];
                 listOfProduct.Add(product);
+
             }
 
             return listOfProduct;
