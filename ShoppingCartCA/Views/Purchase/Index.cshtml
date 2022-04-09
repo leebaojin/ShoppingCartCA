@@ -12,6 +12,12 @@
     .downloadButton {
         width: 100%;
     }
+
+    .order-container {
+        border: 1px solid;
+        border-radius: 25px;
+        padding: 10px;
+    }
 </style>
 
 @{
@@ -19,7 +25,10 @@
     <br />
     @foreach (Order o in orders)
     {
-        List<OrderDetail> orderDetails = o.OrderDetails.ToList();
+
+<div class="order-container">
+
+    @{List<OrderDetail> orderDetails = o.OrderDetails.ToList();
         @foreach (OrderDetail od in orderDetails)
         {
             string orderDate = o.OrderDate.ToString("dd MMM yyyy");
@@ -35,22 +44,42 @@
                     </a>
                 </div>
                 <div class="col-md-8">
-                    @orderDate
-                    <br />
-                    <br />
-                    @od.Quantity
-                    <br />
-                    <br />
-                    @foreach (ActivationCode ac in activationCodes)
-                    {
-                        @ac.Id
-                        <br />
-                        <br />
-                    }
+                    <div class="row">
+                        <div class="col-md-3">Purchased On:</div>
+                        <div class="col-md-6">@orderDate</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Quantity:</div>
+                        <div class="col-md-6">@od.Quantity</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Activation Code:</div>
+                        <div class="col-md-6">
+                            @if (activationCodes.Count > 1)
+                            {
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        @foreach (ActivationCode ac in activationCodes)
+                                        {
+                                            <option>@ac.Id</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            else
+                            {
+                                @activationCodes[0].Id
+                            }
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <br />
         }
-        <hr />
+    }
+</div>
+        <br />
     }
 }
