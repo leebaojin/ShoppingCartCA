@@ -77,8 +77,12 @@ function SendCartItem(rowId, newval) {
 }
 
 
-function AddToCart(prodId) {
-    if (prodId == null) {
+function AddToCart(prodId,qtyIn) {
+    if (prodId === null) {
+        return;
+    }
+    let qty = parseInt(qtyIn);
+    if (isNaN(qty) || qty <= 0) {
         return;
     }
 
@@ -113,6 +117,7 @@ function AddToCart(prodId) {
     }
     let DataCartProduct = {
         "ProdId": prodId,
+        "Quantity": qty
     };
 
     xhr.send(JSON.stringify(DataCartProduct));

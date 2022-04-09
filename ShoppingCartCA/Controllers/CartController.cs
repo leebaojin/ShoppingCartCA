@@ -40,6 +40,10 @@ namespace ShoppingCartCA.Controllers
             {
                 return Json(new { addSuccess = false });
             }
+            if(datacartproduct.Quantity <= 0)
+            {
+                return Json(new { addSuccess = false });
+            }
             
             //To autenticate the session
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
@@ -58,12 +62,12 @@ namespace ShoppingCartCA.Controllers
                 customer.CartDetails.Add(new CartDetail()
                 {
                     Product = newProduct,
-                    Quantity = 1
-                });
+                    Quantity = datacartproduct.Quantity
+                }) ;
             }
             else
             {
-                cartDetail.Quantity++;
+                cartDetail.Quantity += datacartproduct.Quantity;
             }
             dbContext.SaveChanges();
 
@@ -140,20 +144,24 @@ namespace ShoppingCartCA.Controllers
         }
 
         [Route("Home/ProdDetail")]
-        public IActionResult ProdDetail(string prodId)
+        public IActionResult ProdDetail(string prdId)
         {
-            if (prodId == null)
+            //Use of prdId instead of prodId to avoid clash with the AddToCart
+
+            //Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            if (prdId == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            Product product = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(prodId));
+            Product product = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(prdId));
             if(product == null)
             {
                 return RedirectToAction("Index", "Home");
             }
             ViewData["productdisplay"] = product;
             ViewData["review"] = null;
-            ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping", "My Cart" }, false);
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "My Cart" }, true);
             return View();
         }
 
