@@ -9,88 +9,48 @@
 
 
 <style>
-    table, td, th, tr {
-        border: 1px solid #7e5050;
-    }
-
-    td, th {
-        text-align: center;
-        padding: 8px;
-    }
-
-    .even_row {
-        background-color: burlywood;
+    .downloadButton {
+        width: 100%;
     }
 </style>
 
-    <div class="row">
-        <div class="col-sm-12 col-md-4">.g-col-4</div>
-        <div class="col-sm-12 col-md-8">.g-col-8</div>
-    </div>
 @{
     @customer.Id
-
-    <div class="grid">
-        <br />
-
-        @foreach (Order o in orders)
+    <br />
+    @foreach (Order o in orders)
+    {
+        List<OrderDetail> orderDetails = o.OrderDetails.ToList();
+        @foreach (OrderDetail od in orderDetails)
         {
-
             string orderDate = o.OrderDate.ToString("dd MMM yyyy");
-            @orderDate
-            <br />
-
-            List<OrderDetail>
-                orderDetails = o.OrderDetails.ToList();
-
-            foreach (OrderDetail od in orderDetails)
-            {
-                @od.Product.Img
+            List<ActivationCode> activationCodes = od.ActivationCodes.ToList();
+            <div class="row">
                 <br />
-                @od.Product.Name
-                <br />
-                @od.Product.Desc
-                <br />
-                @od.Product.DownloadFile
-                <br />
-                @od.Quantity
-                <br />
-                List<ActivationCode>
-                    activationCodes = od.ActivationCodes.ToList();
-
-                foreach (ActivationCode ac in activationCodes)
-                {
-                    @ac.Id
+                <div class="col-md-4" style="text-align:center">
+                    <img src="@od.Product.Img" alt="@od.Product.Name">
+                    <h4>@od.Product.Name</h4>
+                    <p>@od.Product.Desc</p>
+                    <a class="btn btn-primary downloadButton" href="@od.Product.DownloadFile" download="@od.Product.DownloadName">
+                        <i class="fa fa-download"></i> Download
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    @orderDate
                     <br />
-                }
-                <br />
-            }
-            <hr />
-
+                    <br />
+                    @od.Quantity
+                    <br />
+                    <br />
+                    @foreach (ActivationCode ac in activationCodes)
+                    {
+                        @ac.Id
+                        <br />
+                        <br />
+                    }
+                </div>
+            </div>
+            <br />
         }
-    </div>
-
-
+        <hr />
+    }
 }
-
-@*<table>
-        <tr>
-            <td>
-
-                <table>
-                    <tr>
-                        <td>Product</td>
-                        <td>@orderDate</td>
-                    </tr>
-                    <tr>
-                        <td>Product</td>
-                        <td>quantity</td>
-                    </tr>
-                    <tr>
-                        <td>Product</td>
-                        <td>activation code</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>*@
