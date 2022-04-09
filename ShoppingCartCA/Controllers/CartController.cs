@@ -18,7 +18,11 @@ namespace ShoppingCartCA.Controllers
         }
         public IActionResult Index()
         {
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            if(customer == null)
+            {
+                return RedirectToAction("Index", "Logout");
+            }
             ViewData["allcartitem"] = customer.CartDetails;
             ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, false);
             
@@ -27,7 +31,16 @@ namespace ShoppingCartCA.Controllers
 
         public IActionResult AddToCart([FromBody] DataCartProduct datacartproduct)
         {
-            Guid productId = Guid.Parse(datacartproduct.ProdId);
+            Guid productId;
+            try
+            {
+                productId = Guid.Parse(datacartproduct.ProdId);
+            }
+            catch(Exception e)
+            {
+                return Json(new { addSuccess = false });
+            }
+            
             //To autenticate the session
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
 
@@ -60,12 +73,22 @@ namespace ShoppingCartCA.Controllers
 
         public IActionResult UpdateCartItem([FromBody] DataCartUpdate cartUpdateData )
         {
-
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            //CartDetail cartDetail = dbContext.CartDetails.FirstOrDefault(x => x.Id == Guid.Parse(cartUpdateData.CartItemId));
+            Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            if (customer == null)
+            {
+                return RedirectToAction("Index", "Logout");
+            }
+            Guid cartIdToUpdate;
+            try
+            {
+                cartIdToUpdate = Guid.Parse(cartUpdateData.CartItemId);
+            }
+            catch (Exception e)
+            {
+                return Json(new { updateSuccess = false });
+            }
             bool cartNotUpdated = true;
             double totalcost = 0; double detailCost = 0;
-            Guid cartIdToUpdate = Guid.Parse(cartUpdateData.CartItemId);
 
             if(cartUpdateData.Newqty <= 0)
             {
@@ -82,17 +105,17 @@ namespace ShoppingCartCA.Controllers
             {
                 if(cartNotUpdated && cartDetail.Id == cartIdToUpdate)
                 {
-                        cartDetail.Quantity = cartUpdateData.Newqty;
+                    cartDetail.Quantity = cartUpdateData.Newqty;
                     cartNotUpdated = false;
-                        detailCost = cartDetail.Quantity * cartDetail.Product.Price;
+                    detailCost = cartDetail.Quantity * cartDetail.Product.Price;
                 }
                 totalcost += cartDetail.Quantity * cartDetail.Product.Price;
             }
            
-            //cartDetail.Quantity = cartUpdateData.Newqty;
-
             if (cartNotUpdated)
-            { return Json(new { updateSuccess = false }); }
+            { 
+                return Json(new { updateSuccess = false }); 
+            }
             dbContext.SaveChanges();
 
             if (cartUpdateData.Newqty > 0)
