@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCartCA.Models
 {
-    public class CartUpdateData
+    public class DataCartUpdate
     {
         public string CartItemId { get; set; }
 

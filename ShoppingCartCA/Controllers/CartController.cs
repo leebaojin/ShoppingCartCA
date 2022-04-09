@@ -25,20 +25,21 @@ namespace ShoppingCartCA.Controllers
             return View();
         }
 
-        public IActionResult AddToCart(string productId, int qty=1)
+        public IActionResult AddToCart([FromBody] DataCartProduct datacartproduct)
         {
+            Guid productId = Guid.Parse(datacartproduct.ProdId);
             //To autenticate the session
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
 
             //Check if there is already this product
-            CartDetail cartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == Guid.Parse(productId));
+            CartDetail cartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == productId);
 
             if(cartDetail == null)
             {
-                Product newProduct = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(productId));
+                Product newProduct = dbContext.Products.FirstOrDefault(x => x.Id == productId);
                 if(newProduct == null)
                 {
-                    return Json(new { updateSuccess = false });
+                    return Json(new { addSuccess = false });
                 }
                 //To create new cartdetail and add product in.
                 customer.CartDetails.Add(new CartDetail()
@@ -54,10 +55,10 @@ namespace ShoppingCartCA.Controllers
             dbContext.SaveChanges();
 
             //Return if successful and the new cart quantity
-            return Json(new { updateSuccess = true, cartqty= customer.CartDetails.Count });
+            return Json(new { addSuccess = true, cartqty= CartData.GetCartSize(customer) });
         }
 
-        public IActionResult UpdateCartItem([FromBody] CartUpdateData cartUpdateData )
+        public IActionResult UpdateCartItem([FromBody] DataCartUpdate cartUpdateData )
         {
 
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
@@ -117,8 +118,12 @@ namespace ShoppingCartCA.Controllers
 
         public IActionResult Testing()
         {
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Cart", "My Purchase" });
+
             ViewData["cartdata"] = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts");
             return View("template");
         }
+
     }
 }

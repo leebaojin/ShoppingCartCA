@@ -30,7 +30,7 @@ namespace ShoppingCartCA.Views.Shared
             {
                 //add the button
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                    "<input class='prod-button' type='button' onclick='AddCart('" + @product.Id + "') value='$" +
+                    "<input class='prod-button' type='button' onclick='AddToCart(\"" + @product.Id + "\")' value='$" +
                     product.Price + " - Add to Cart' /></div>\n</div>";
             }else if(lastbutton == "Download")
             {
@@ -38,6 +38,8 @@ namespace ShoppingCartCA.Views.Shared
                     "<a href='"+ product.DownloadFile + "' download='"+product.DownloadName+"'>"+
                     "<input class='prod-button' type='button' value='Download' /></div>\n</div>";
             }
+
+            output += "</div>";
 
             return output;
         }
