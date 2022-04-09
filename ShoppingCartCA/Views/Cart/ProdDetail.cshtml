@@ -6,6 +6,7 @@
 }
 @section StyleScript{
     <link rel="stylesheet" href="~/css/cartpage.css" />
+    <script type="text/javascript" src="~/js/cartpage.js"></script>
 }
 <style>
     .viewprd-disp{
@@ -20,7 +21,7 @@
     .viewprd-celldata{
         padding-left:30px;
     }
-    #quantity {
+    #Quantity {
         width: 40px;
         text-align: center;
     }
@@ -42,6 +43,46 @@
         height:6em;
     }
 </style>
+<script type="text/javascript">
+    window.onload = function () {
+
+    };
+    function ValidateItem(ele) {
+        let qty = parseInt(ele.value);
+        if (isNaN(qty) || qty <= 0) {
+            ele.value = ele.defaultValue;
+            return false;
+        } else {
+            ele.defaultValue = ele.value;
+            return true;
+        }
+    }
+    function ChangeItem(strId,isAdd) {
+        let ele = document.getElementById(strId);
+        if (ele == null) {
+            return;
+        }
+        let qty = parseInt(ele.value);
+        if (isAdd) {
+            qty += 1;
+            ele.value = qty;
+            ele.defaultValue = ele.value;
+        } else {
+            qty -= 1;
+            if (qty > 0) {
+                ele.value = qty
+                ele.defaultValue = ele.value;
+            }  
+        }
+    }
+    function ValidateAdd() {
+        var eleqty = document.getElementById("Quantity");
+        var prdId = document.getElementById("ProdId").value;
+        if (ValidateItem(eleqty)) {
+            AddToCart(prdId, eleqty.value);
+        } 
+    }
+</script>
 
 <div class="viewprd-head">
     <h2>@product.Name</h2>
@@ -56,15 +97,13 @@
                 <div>Price : $<span id="price" name="price">@String.Format("{0:0.00}", product.Price)</span></div>
                 <br />
                 <div>
-                    <form id="purchaseform" action="Cart/AddCart" method="POST">
-                        <input type="button" id="buttonminus" onclick="MinusItem('quantity')" value="-" />
-                        <input type="text" name="quantity" id="quantity" onchange="ValidateItem(this)" value=1 />
-                        <input type="button" id="buttonplus" onclick="AddItem('quantity')" value="+" />
-                        <br />
-                        <br />
-                        <input class="to-submit" type="submit" value="Add To Cart" />
-                        <input type="hidden" name="prodId" value="@product.Id" />
-                    </form>
+                    <input type="button" id="buttonminus" onclick="ChangeItem('Quantity',false)" value="-" />
+                    <input type="text" name="Quantity" id="Quantity" onchange="ValidateItem(this)" value=1 />
+                    <input type="button" id="buttonplus" onclick="ChangeItem('Quantity',true)" value="+" />
+                    <br />
+                    <br />
+                    <button class="to-submit" onclick="ValidateAdd()"><i class='fa fa-shopping-cart'></i> Add to Cart</button>
+                    <input type="hidden" name="ProdId" id="ProdId" value="@product.Id" />
                 </div>
             </td>
         </tr>

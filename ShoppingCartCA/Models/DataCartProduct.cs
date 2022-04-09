@@ -8,5 +8,7 @@ namespace ShoppingCartCA.Models
     public class DataCartProduct
     {
         public string ProdId { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace ShoppingCartCA.Views.Shared
                 displayName + "</div>\n</div>";
 
             //Create the more link
-            string morelink = " <a class='prod-morebtn' href='Home/ProdDetail?prodId="+product.Id+"'>...more</a>";
+            string morelink = " <a class='prod-morebtn' href='../Home/ProdDetail?prdId="+product.Id+"'>...more</a>";
 
             //add the product 
             output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
@@ -43,9 +43,10 @@ namespace ShoppingCartCA.Views.Shared
             {
                 //add the button
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                    "<button class='prod-button' onclick='AddToCart(\"" + @product.Id + "\")'>" +
+                    "<button class='prod-button' onclick='AddToCart(\"" + @product.Id + "\",1)'>" +
                     "$ " + product.Price+ " -  <i class='fa fa-shopping-cart'></i> Add to Cart</button>" +
                     "\n</div>\n</div>";
+
             }else if(lastbutton == "Download")
             {
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
