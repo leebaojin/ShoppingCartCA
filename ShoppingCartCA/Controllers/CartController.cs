@@ -160,6 +160,7 @@ namespace ShoppingCartCA.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ViewData["productdisplay"] = product;
+            ViewData["similarproduct"] = ProductData.GetSimilar(product);
             ViewData["review"] = null;
             ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "My Cart" }, true);
             return View();
@@ -169,7 +170,7 @@ namespace ShoppingCartCA.Controllers
         {
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
             ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Cart", "My Purchase" });
-
+            
             ViewData["cartdata"] = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts");
             return View("template");
         }
