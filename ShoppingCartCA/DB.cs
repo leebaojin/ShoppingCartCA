@@ -281,7 +281,7 @@ namespace ShoppingCartCA
             for (int i = 0; i < numOfOrderDetailToGenerate; i++)
             {
                 Random random = new Random();
-                int productQuantity = random.Next(1, 3);
+                int productQuantity = i + 1;
                 
                 OrderDetail orderDetail = new OrderDetail
                 {
