@@ -145,5 +145,33 @@ namespace ShoppingCartCA.Views.Shared
             return output;
         }
 
+        public static string GenerateStar(int rating)
+        {
+            int withstar;
+            int curr = 0;
+            if(rating < 1 || rating > 5)
+            {
+                withstar = 0;
+            }
+            else
+            {
+                withstar = rating;
+            }
+
+            string output = "<span>";
+            while(curr < withstar)
+            {
+                output += "<span class=\"fa fa-star checked\" id=\"ratestar"+curr+"\"></span>";
+                curr++;
+            }
+            while(curr < 5)
+            {
+                output += "<span class=\"fa fa-star\" id=\"ratestar" + curr + "\"></span>";
+                curr++;
+            }
+            output += "</span>";
+            return output;
+        }
+
     }
 }

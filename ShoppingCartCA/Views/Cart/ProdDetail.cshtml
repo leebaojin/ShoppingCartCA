@@ -5,28 +5,36 @@
     Product product = (Product)ViewData["productdisplay"];
     List<Product> similarProduct = (List<Product>)ViewData["similarproduct"];
 
+    Review cusReview = (Review)ViewData["review"];
+    bool canReview = (bool)ViewData["canreview"];
+
 }
 @section StyleScript{
     <link rel="stylesheet" href="~/css/cartpage.css" />
     <script type="text/javascript" src="~/js/cartpage.js"></script>
 }
 <style>
-    .viewprd-disp{
+    .viewprd-main {
     }
+
     .viewprd-cellimg {
-        padding:15px;
-        text-align:center;
+        padding: 15px;
+        text-align: center;
     }
-    .viewprd-img{
-        width:300px;
+
+    .viewprd-img {
+        width: 300px;
     }
-    .viewprd-celldata{
-        padding-left:30px;
+
+    .viewprd-celldata {
+        padding-left: 30px;
     }
+
     #Quantity {
         width: 40px;
         text-align: center;
     }
+
     .viewprd-add {
         background-color: #E74A19;
         color: white;
@@ -34,28 +42,51 @@
         border: hidden;
         border-radius: 5px;
     }
+
         .viewprd-add:hover {
             background-color: #E95E33;
             color: blue;
             text-decoration: none;
             font-weight: normal;
         }
-    .viewprd-disp-destitle{
-        font-size:20px;
-        padding:10px 10px 10px 10px;
-        font-weight:bold;
+
+
+    .viewprd-disp-des {
+        font-size: 14px;
+        padding-left: 10px;
+        height: 6em;
     }
-    .viewprd-disp-des{
-        font-size:14px;
-        padding-left:10px;
-        height:6em;
+
+    /*Similar products-----------
+        --------------------------*/
+    .viewprd-cat-title {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 6px 6px 6px 6px;
     }
-    .viewprd-similar-title{
-        font-size:18px;
-        font-weight:bold;
-        padding-top:5px;
-        padding-bottom:10px;
+    .viewprd-review{
+        width:95%;
     }
+    #review-body {
+        width: 50%;
+        min-width: 400px;
+        height: 80px;
+        resize:none;
+    }
+
+
+
+    .checked{
+        color: yellow;
+    }
+    .viewprd-rating{
+        padding-top:6px;
+        padding-bottom:6px;
+    }
+
+
+
+
 </style>
 <script type="text/javascript">
     window.onload = function () {
@@ -71,7 +102,7 @@
             return true;
         }
     }
-    function ChangeItem(strId,isAdd) {
+    function ChangeItem(strId, isAdd) {
         let ele = document.getElementById(strId);
         if (ele == null) {
             return;
@@ -86,7 +117,7 @@
             if (qty > 0) {
                 ele.value = qty
                 ele.defaultValue = ele.value;
-            }  
+            }
         }
     }
     function ValidateAdd() {
@@ -94,7 +125,7 @@
         var prdId = document.getElementById("ProdId").value;
         if (ValidateItem(eleqty)) {
             AddToCart(prdId, eleqty.value);
-        } 
+        }
     }
 </script>
 
@@ -103,7 +134,7 @@
 </div>
 <br />
 
-<div class="viewprd-disp">
+<div class="viewprd-main">
     <table>
         <tr>
             <td class="viewprd-cellimg"><img class="viewprd-img" src="@product.Img" /></td>
@@ -123,15 +154,15 @@
         </tr>
         <tr col-span="2">
             <td>
-                <div class="viewprd-disp-destitle">Description</div>
+                <div class="viewprd-cat-title">Description</div>
                 <div class="viewprd-disp-des">@product.Desc</div>
             </td>
         </tr>
     </table>
 </div>
-<hr/>
+<hr />
 <div class="viewprd-similar">
-    <div class="viewprd-similar-title">Similar Products</div>
+    <div class="viewprd-cat-title">Similar Products</div>
     @{
         if (similarProduct == null || similarProduct.Count == 0)
         {
@@ -141,9 +172,9 @@
         {
             <table>
                 <tr>
-                    @foreach(Product sp in similarProduct)
+                    @foreach (Product sp in similarProduct)
                     {
-                    <td>@Html.Raw(DisplayAid.DisplaySmall(sp))</td>
+                        <td>@Html.Raw(DisplayAid.DisplaySmall(sp))</td>
                     }
                 </tr>
             </table>
@@ -152,9 +183,46 @@
 
 </div>
 <hr />
-<div class="viewprd-rating">
+@{
+    if (canReview)
+    {
+    <div class="viewprd-review">
 
-</div>
-<div class="viewprd-review">
+        @if (cusReview == null)
+        {
+            <div class="viewprd-cat-title">How was @product.Name?</div>
+            <div class="viewprd-rating">
+                <span class="viewprd-rating-title">Rating: </span>
+                @Html.Raw(DisplayAid.GenerateStar(0))
+                <span id="notrated"> (Not Rated)</span>
+            </div>
+            <div class="viewprd-cat-body">
+                <textarea id="review-body" placeholder="Give us your feedback"></textarea>
+            </div>
+            <input type="button" id="review-editpost" value="Post" onclick="PostReview()" />
+            <input type="button" id="review-cancel" value="Cancel" onclick="CancelEdit()" style="display:none" />
+        }
+        else
+        {
+            <div class="viewprd-cat-title">Your review</div>
+            <div class="viewprd-rating">
+                <span class="viewprd-rating-title">Rating: </span>
+                @Html.Raw(DisplayAid.GenerateStar(cusReview.Rating))
+                @if (cusReview.Rating < 1)
+                {
+                    <span id="notrated"> (Not Rated)</span>
+                }
+            </div>
+            <div class="viewprd-review-body">
+                <textarea id="review-body" placeholder="Give us your feedback" readonly>@cusReview.Comment</textarea>
+            </div>
+            <input type="button" id="review-editpost" value="Edit" onclick="EditReview()" />
+            <input type="button" id="review-cancel" value="Cancel" onclick="CancelEdit()" style="display:none" />
+        }
+        <div class="viewprd-review-head"></div>
+    </div>
+    }
+}
+<div class="viewprd-rating">
 
 </div>

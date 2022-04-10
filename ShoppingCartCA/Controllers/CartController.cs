@@ -47,6 +47,7 @@ namespace ShoppingCartCA.Controllers
             
             //To autenticate the session
             Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            
 
             //Check if there is already this product
             CartDetail cartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == productId);
@@ -149,7 +150,9 @@ namespace ShoppingCartCA.Controllers
             //Use of prdId instead of prodId to avoid clash with the AddToCart
 
             //Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
+
             if (prdId == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -159,9 +162,20 @@ namespace ShoppingCartCA.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            Review cusReview = ReviewData.GetReview(product, customer);
+            if(cusReview == null)
+            {
+                ViewData["canreview"] = ReviewData.CanReview(product, customer);
+            }
+            else
+            {
+                ViewData["canreview"] = true;
+            }
+
             ViewData["productdisplay"] = product;
             ViewData["similarproduct"] = ProductData.GetSimilar(product);
-            ViewData["review"] = null;
+            ViewData["review"] = cusReview;
             ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "My Cart" }, true);
             return View();
         }

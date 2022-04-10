@@ -85,6 +85,7 @@ cart-header {
 /*Small product for similar display
 ----------------------------------*/
 .small-holder {
+    padding:0px 5px 0px 5px;
 }
 
 .small-prd-tbl {
@@ -93,10 +94,13 @@ cart-header {
     height: auto;
     padding: 1px 1px 2px 1px;
 }
+    .small-prd-tbl:hover > div>div:first-child{
+        width:150px;
+    }
 
-.small-prd-row {
-    display: table-row;
-}
+    .small-prd-row {
+        display: table-row;
+    }
 
 .small-col-img {
     display: table-cell;
@@ -116,7 +120,7 @@ cart-header {
 }
 
 .small-prod-img {
-    width: 120px;
+    width: 98%;
 }
 
 .small-col-price {

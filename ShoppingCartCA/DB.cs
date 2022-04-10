@@ -196,7 +196,7 @@ namespace ShoppingCartCA
             {
                 Customer = customer2,
                 Rating = 3,
-                Comment = commentlist[3]
+                Comment = commentlist[2]
             });
 
             foreach (Order order in customer2.Orders.ToList())
@@ -211,7 +211,7 @@ namespace ShoppingCartCA
                         {
                             Customer = customer2,
                             Rating = rating,
-                            Comment = commentlist[rating]
+                            Comment = commentlist[rating-1]
                         });
                     } 
                 }
