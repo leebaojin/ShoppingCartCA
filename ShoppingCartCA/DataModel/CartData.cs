@@ -18,5 +18,6 @@ namespace ShoppingCartCA.DataModel
             }
             return cartsize;
         }
+
     }
 }

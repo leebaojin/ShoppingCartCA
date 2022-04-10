@@ -33,6 +33,7 @@ namespace ShoppingCartCA.DataModel
                 {
                     User = customer.CustomerDetails.FirstName + " " + customer.CustomerDetails.LastName;
                     CreateHeaderLogin("Logout");
+                    HeaderLinks.Add(CreateViewPurchase());
                 }
                 CartSize = CartData.GetCartSize(customer);
             }
