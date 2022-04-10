@@ -19,7 +19,7 @@ namespace ShoppingCartCA.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchStr)
         {
 			string sessionId = Request.Cookies["SessionId"];
 
@@ -33,9 +33,17 @@ namespace ShoppingCartCA.Controllers
             {
                 ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Cart" });
             }
+
+            if (searchStr == null)
+            {
+                searchStr = "";
+            }
             List<Product> products = dbContext.Products.Where(x =>
-                                    x.Id != null).ToList();
+                                    x.Name.Contains(searchStr)
+                                    ).ToList();
+            
             ViewBag.products = products;
+            ViewData["searchStr"] = searchStr;
             return View();
         }
 
