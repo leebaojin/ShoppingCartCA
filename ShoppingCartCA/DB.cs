@@ -29,6 +29,7 @@ namespace ShoppingCartCA
             SeedCartDetails();
             SeedOrderAndOrderDetailAndActivationCode();
             SeedSimilarProduct();
+            SeedComments();
         }
 
         private void SeedAccount()
@@ -172,6 +173,67 @@ namespace ShoppingCartCA
 
             ml.SimilarProducts.Add(logger);
 
+            dbContext.SaveChanges();
+        }
+
+        public void SeedComments()
+        {
+            Customer customer1 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            Customer customer2 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
+            Customer customer3 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "leliamay");
+
+            Random rnd = new Random();
+            
+            Product productToAdd1 = customer1.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
+            Product productToAdd3 = customer3.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
+
+            string[] commentlist = new string[] {"Poor quanlity. Always crashes. Going to delete.",
+                "The programme feels unstable with bugs.", "Overall ok but the UI is not very firendly.", "Good product. Would recommend it",
+            "Excellent product. It feels naturally with easy to use features. Must Buy."};
+
+            Product myProduct = customer1.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
+            myProduct.Reviews.Add(new Review()
+            {
+                Customer = customer2,
+                Rating = 3,
+                Comment = commentlist[3]
+            });
+
+            foreach (Order order in customer2.Orders.ToList())
+            {
+                foreach(OrderDetail od in order.OrderDetails.ToList())
+                {
+                    int rating = rnd.Next(1, 5);
+                    Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customer2.Id);
+                    if(myreview == null)
+                    {
+                        od.Product.Reviews.Add(new Review()
+                        {
+                            Customer = customer2,
+                            Rating = rating,
+                            Comment = commentlist[rating]
+                        });
+                    } 
+                }
+            }
+
+            foreach (Order order in customer3.Orders.ToList())
+            {
+                foreach (OrderDetail od in order.OrderDetails.ToList())
+                {
+                    int rating = rnd.Next(1, 5);
+                    Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customer2.Id);
+                    if (myreview == null)
+                    {
+                        od.Product.Reviews.Add(new Review()
+                        {
+                            Customer = customer3,
+                            Rating = rating,
+                            Comment = commentlist[rating]
+                        });
+                    }
+                }
+            }
             dbContext.SaveChanges();
         }
 

@@ -12,6 +12,7 @@ namespace ShoppingCartCA.Models
         {
             Id = new Guid();
             Rating = -1; //No rating
+            Timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
         }
         public Guid Id { get; set; }
 
@@ -19,9 +20,10 @@ namespace ShoppingCartCA.Models
         [Range(-1,5)]
         public int Rating { get; set; }
 
-
-        [Required]
         public string Comment { get; set; }
+
+        public long Timestamp { get; set; }
+        //dateTime = dateTime.AddSeconds( unixTimeStamp ).ToLocalTime()
 
         public virtual Customer Customer { get; set; }
 
