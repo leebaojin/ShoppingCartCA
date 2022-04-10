@@ -28,6 +28,7 @@ namespace ShoppingCartCA
             SeedAccount();
             SeedCartDetails();
             SeedOrderAndOrderDetailAndActivationCode();
+            SeedSimilarProduct();
         }
 
         private void SeedAccount()
@@ -153,6 +154,23 @@ namespace ShoppingCartCA
                 DownloadFile = path2 + "/dotnet_numerics_76d3a7b5-b44e-46b3-950a-3957cb4aa6b4.pdf",
                 DownloadName = "dotNet_Numerics"
             });
+
+            dbContext.SaveChanges();
+        }
+
+        public void SeedSimilarProduct()
+        {
+            Product chart = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts");
+            Product analytics = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Analytics");
+            Product numerics = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Numerics");
+            Product ml = dbContext.Products.FirstOrDefault(x => x.Name == ".NET ML");
+            Product logger = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Logger");
+
+            chart.SimilarProducts.Add(analytics);
+            chart.SimilarProducts.Add(numerics);
+            numerics.SimilarProducts.Add(analytics);
+
+            ml.SimilarProducts.Add(logger);
 
             dbContext.SaveChanges();
         }

@@ -56,6 +56,7 @@ function SendCartItem(rowId, newval) {
             return;
         }
         document.getElementById("totalcost").innerHTML = data.totalprice;
+        document.getElementById("totalcost2").innerHTML = data.totalprice;
         qtyele = document.getElementById("quantity-" + data.updateRow);
         if (data.removeItem != null) {
             parentrow = qtyele.closest(".cart-row");

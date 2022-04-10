@@ -32,7 +32,10 @@ namespace ShoppingCartCA.Controllers
             else
             {
                 ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Cart" });
-            }            
+            }
+            List<Product> products = dbContext.Products.Where(x =>
+                                    x.Id != null).ToList();
+            ViewBag.products = products;
             return View();
         }
 

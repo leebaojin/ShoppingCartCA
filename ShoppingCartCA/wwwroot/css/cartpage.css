@@ -6,7 +6,7 @@
 .cart-table-title {
     font-weight:bold;
     font-size:18px;
-    width: 75%;
+    width: 60%;
 
 }
 .cart-table-price {
@@ -17,21 +17,38 @@
 }
 .cart-table {
     width: 100%;
+    min-width:500px;
 }
 
 cart-header {
     width: 100%;
 
 }
+.cart-table-checkout {
+    padding-top: 10px;
+}
 
+.cart-checkoutbtn {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #E74A19;
+    color: white;
+}
+    .cart-checkoutbtn:hover {
+        background-color: #E95E33;
+        color: blue;
+        text-decoration: none;
+        font-weight: normal;
+    }
 /*Table Css
 ----------------------------------*/
-    .itemcell {
-        text-align: center;
-        vertical-align: middle;
-        padding: 5px;
-        width: 50%;
-    }
+.itemcell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    width: 50%;
+    align-items: center;
+}
 
     .datacell {
         text-align: left;
@@ -40,12 +57,71 @@ cart-header {
         width: 50%;
     }
 
-    .carttable {
-        margin-left: auto;
-        margin-right: auto;
-    }
+.carttable {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    border-spacing:0px 15px;
+    width:95%;
+    min-width:400px;
+    max-width:800px;
+}
+.cart-col {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+}
 
     .qtybox{
         width:40px;
         text-align:center;
     }
+
+.cart-row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/*Small product for similar display
+----------------------------------*/
+.small-holder {
+}
+
+.small-prd-tbl {
+    display: table;
+    width: 140px;
+    height: auto;
+    padding: 1px 1px 2px 1px;
+}
+
+.small-prd-row {
+    display: table-row;
+}
+
+.small-col-img {
+    display: table-cell;
+    height: 90px;
+    width: 120px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.small-col-title {
+    display: table-cell;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.small-prod-img {
+    width: 120px;
+}
+
+.small-col-price {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+    color: #E3471D;
+}

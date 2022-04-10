@@ -1,7 +1,9 @@
-﻿@{
+﻿@using ShoppingCartCA.Views.Shared;
+@{
     Layout = "_ShopLayout";
     ViewData["Title"] = "ProdDetail";
     Product product = (Product)ViewData["productdisplay"];
+    List<Product> similarProduct = (List<Product>)ViewData["similarproduct"];
 
 }
 @section StyleScript{
@@ -25,13 +27,19 @@
         width: 40px;
         text-align: center;
     }
-    .to-submit {
+    .viewprd-add {
         background-color: #E74A19;
-        color:white;
-        padding:5px 15px 5px 15px;
-        border:none;
-        border-radius:5px;
+        color: white;
+        padding: 5px 15px 5px 15px;
+        border: hidden;
+        border-radius: 5px;
     }
+        .viewprd-add:hover {
+            background-color: #E95E33;
+            color: blue;
+            text-decoration: none;
+            font-weight: normal;
+        }
     .viewprd-disp-destitle{
         font-size:20px;
         padding:10px 10px 10px 10px;
@@ -41,6 +49,12 @@
         font-size:14px;
         padding-left:10px;
         height:6em;
+    }
+    .viewprd-similar-title{
+        font-size:18px;
+        font-weight:bold;
+        padding-top:5px;
+        padding-bottom:10px;
     }
 </style>
 <script type="text/javascript">
@@ -102,7 +116,7 @@
                     <input type="button" id="buttonplus" onclick="ChangeItem('Quantity',true)" value="+" />
                     <br />
                     <br />
-                    <button class="to-submit" onclick="ValidateAdd()"><i class='fa fa-shopping-cart'></i> Add to Cart</button>
+                    <button class="viewprd-add" onclick="ValidateAdd()"><i class='fa fa-shopping-cart'></i> Add to Cart</button>
                     <input type="hidden" name="ProdId" id="ProdId" value="@product.Id" />
                 </div>
             </td>
@@ -117,9 +131,30 @@
 </div>
 <hr/>
 <div class="viewprd-similar">
+    <div class="viewprd-similar-title">Similar Products</div>
+    @{
+        if (similarProduct == null || similarProduct.Count == 0)
+        {
+            @:<div class="viewprd-similar-dys">None</div>
+        }
+        else
+        {
+            <table>
+                <tr>
+                    @foreach(Product sp in similarProduct)
+                    {
+                    <td>@Html.Raw(DisplayAid.DisplaySmall(sp))</td>
+                    }
+                </tr>
+            </table>
+        }
+    }
 
 </div>
+<hr />
+<div class="viewprd-rating">
 
+</div>
 <div class="viewprd-review">
 
 </div>

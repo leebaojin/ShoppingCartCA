@@ -6,10 +6,55 @@
 }
 @section StyleScript{
     <script type="text/javascript" src="~/js/cartpage.js"></script>
+    <link rel="stylesheet" href="~/css/cartpage.css" />
 }
 @Html.Raw(DisplayAid.DisplayProduct(cartitem, "Purchase", "chart"))
 
 <br />
+
+<div class='small-holder'>
+    <div class='small-prd-tbl'>
+        <div class='small-prd-row'>
+            <div class='small-col-img'>
+                <img class='small-prod-img' src='@cartitem.Img' />
+            </div>
+        </div>
+        <div class='small-prd-row'>
+            <div class='small-col-title'>
+                    @cartitem.Name
+            </div>
+        </div>
+        <div class='small-prd-row'>
+            <div class='small-col-price'>
+                $@cartitem.Price
+            </div>
+        </div>   
+    </div>
+</div>
+<br />
+<br />
+<div class='small-prod'>
+    <div class='prod-holder-row'>
+        <div class='prod-col-img'>
+            <img class='prod-img' src='@cartitem.Img' />
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-title'>
+            @cartitem.Name;
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-dec'>
+            @cartitem.Desc
+        </div>
+    </div>
+    <div class='prod-holder-row'>
+        <div class='prod-col-btn'>
+            <input class='prod-button' type='button' action='/' value='$@cartitem.Price - Add to Cart' />
+        </div>
+    </div>
+</div>
 
 <div class='prod-holder-table'>
     <div class='prod-holder-row'>
@@ -33,4 +78,3 @@
         </div>
     </div>
 </div>
-
