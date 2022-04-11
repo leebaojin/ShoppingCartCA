@@ -22,16 +22,16 @@ namespace ShoppingCartCA.Controllers
         public IActionResult Index(string searchStr)
         {
 			string sessionId = Request.Cookies["SessionId"];
+            Customer customer = SessionAutenticate.Autenticate(sessionId, dbContext);
 
-            if(sessionId != null)
+            if (customer != null)
             {
-                Customer customer = SessionAutenticate.Autenticate(sessionId, dbContext);
-
                 ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchase" });
             }
             else
             {
-                ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Cart" });
+                string cartCookie = Request.Cookies["shoppingcarttemp4"];
+                ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Purchase" },true, cartCookie);
             }
 
             if (searchStr == null)

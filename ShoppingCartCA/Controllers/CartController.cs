@@ -35,13 +35,21 @@ namespace ShoppingCartCA.Controllers
             Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
             //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
 
+            bool succeed;
+            int cartQty = 0;
             if (customer == null)
             {
-                return Json(new { addSuccess = false });
+                string cartCookie = Request.Cookies["shoppingcarttemp4"];
+                VisitorCart visitorCart = new VisitorCart(dbContext, cartCookie);
+                succeed = visitorCart.AddItem(datacartproduct.ProdId, datacartproduct.Quantity);
+                cartQty = visitorCart.GetCartQuantity();
             }
-
-            //Update cart
-            bool succeed = CartData.AddToCart(customer, datacartproduct.ProdId, datacartproduct.Quantity, dbContext);
+            else
+            {
+                //Update cart
+                succeed = CartData.AddToCart(customer, datacartproduct.ProdId, datacartproduct.Quantity, dbContext);
+            }
+            
 
             if (!succeed)
             {
@@ -49,9 +57,17 @@ namespace ShoppingCartCA.Controllers
                 return Json(new { addSuccess = false });
             }
 
-            //Return if successful and the new cart quantity
-            return Json(new { addSuccess = true, cartqty= CartData.GetCartSize(customer) });
+            if (customer != null)
+            {
+                cartQty = CartData.GetCartSize(customer);
+            }
+
+
+                //Return if successful and the new cart quantity
+                return Json(new { addSuccess = true, cartqty= cartQty});
         }
+
+        
 
         public IActionResult UpdateCartItem([FromBody] DataCartUpdate cartUpdateData )
         {
