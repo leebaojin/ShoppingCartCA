@@ -33,7 +33,6 @@ namespace ShoppingCartCA.DataModel
                 {
                     User = customer.CustomerDetails.FirstName + " " + customer.CustomerDetails.LastName;
                     CreateHeaderLogin("Logout");
-                    HeaderLinks.Add(CreateViewPurchase());
                 }
                 CartSize = CartData.GetCartSize(customer);
             }
@@ -69,17 +68,11 @@ namespace ShoppingCartCA.DataModel
                     case "Continue Shopping":
                         HeaderLinks.Add(CreateShopping());
                         break;
-                    case "Checkout":
-                        HeaderLinks.Add(CreateCheckout());
-                        break;
                     case "My Purchase":
                         if(customer != null && customer.CustomerDetails != null)
                         {
                             HeaderLinks.Add(CreateViewPurchase());
                         } 
-                        break;
-                    case "My Cart":
-                        HeaderLinks.Add(CreateCart());
                         break;
                 }
             }

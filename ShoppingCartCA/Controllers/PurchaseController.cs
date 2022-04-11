@@ -29,7 +29,7 @@ namespace ShoppingCartCA.Controllers
             {
                 return RedirectToAction("Index", "Logout");
             }
-            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, true);
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping"}, true);
             ViewBag.customer = customer;
  
             return View();

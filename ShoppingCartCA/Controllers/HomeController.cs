@@ -27,7 +27,7 @@ namespace ShoppingCartCA.Controllers
             {
                 Customer customer = SessionAutenticate.Autenticate(sessionId, dbContext);
 
-                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Cart" });
+                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchase" });
             }
             else
             {
@@ -39,7 +39,7 @@ namespace ShoppingCartCA.Controllers
                 searchStr = "";
             }
             List<Product> products = dbContext.Products.Where(x =>
-                                    x.Name.Contains(searchStr)
+                                    x.Name.Contains(searchStr) || x.Desc.Contains(searchStr)
                                     ).ToList();
             
             ViewBag.products = products;
