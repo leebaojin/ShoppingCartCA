@@ -36,8 +36,11 @@ function UpdateItem(elem) {
 function SendCartItem(rowId, newval) {
     itemele = document.getElementById("cartno-" + rowId);
     if (itemele === null) {
-        window.location.href = "../Cart";
-        return;
+        prdele = document.getElementById("prodno-" + rowId);
+        if (prdele == null) {
+            window.location.href = "../Cart";
+            return;
+        }
     }
 
     let xhr = new XMLHttpRequest();
@@ -75,12 +78,25 @@ function SendCartItem(rowId, newval) {
         }
 
     }
-    let CartUpdateData = {
-        "CartItemId": itemele.value,
-        "Newqty": newval,
-        "UpdateRow": rowId
-    };
-    xhr.send(JSON.stringify(CartUpdateData));
+    if (itemele == null) {
+        let CartUpdateData = {
+            "CartItemId": "0",
+            "Newqty": newval,
+            "UpdateRow": rowId,
+            "ProdItemId": prdele.value
+        };
+        xhr.send(JSON.stringify(CartUpdateData));
+    }
+    else {
+        let CartUpdateData = {
+            "CartItemId": itemele.value,
+            "Newqty": newval,
+            "UpdateRow": rowId,
+            "ProdItemId": "0"
+        };
+        xhr.send(JSON.stringify(CartUpdateData));
+    }
+    
 }
 
 

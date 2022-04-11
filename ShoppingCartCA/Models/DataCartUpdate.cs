@@ -12,5 +12,7 @@ namespace ShoppingCartCA.Models
         public int Newqty { get; set; }
 
         public string UpdateRow { get; set; }
+
+        public string ProdItemId { get; set; }
     }
 }

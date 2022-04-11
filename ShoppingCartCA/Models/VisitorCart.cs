@@ -7,9 +7,31 @@ namespace ShoppingCartCA.Models
 {
     public class VisitorCart
     {
-        public bool errFound { get; set; }
+        public bool ErrFound { get; set; }
 
         public string cartCookieString { get; set; }
+
+        private double totalCost;
+        public double TotalCost {
+            get
+            {
+                if(totalCost <= 0)
+                {
+                    this.PopulateList();
+                }
+                return totalCost;
+            }}
+
+        private List<CartDetail> visitorCartList;
+        public List<CartDetail> VisitorCartList {
+            get { 
+            if(visitorCartList.Count == 0)
+                {
+                    this.PopulateList();
+                }
+                return visitorCartList;
+            
+            } }
 
         private readonly DBContext dbContext;
 
@@ -28,20 +50,48 @@ namespace ShoppingCartCA.Models
                 cartCookieString = cartCookie;
             }
             this.dbContext = dbContext;
+            totalCost = 0;
+            visitorCartList = new List<CartDetail>();
         }
 
         public bool AddItem(string productId, int qty)
         {
+            if(qty <= 0)
+            {
+                return false;
+            }
+
+            return UpdateCartItem(productId, qty);
+        }
+
+        public bool UpdateItem(string productId, int qty)
+        {
+            //Note that quantity can be 0.
+            //Item will be removed as a result.
+            if (qty < 0)
+            {
+                return false;
+            }
+
+            return UpdateCartItem(productId, qty, true);
+        }
+
+
+        private bool UpdateCartItem(string productId, int qty, bool absQty = false)
+        {
+            //If absQty is true, then the quantity will replace the current quantity
+            //Otherwise, it will just add the quanity to the current quantity
+
             Product product = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(productId));
 
-            if(product == null || qty <= 0)
+            if (product == null)
             {
                 return false;
             }
 
             int indexOfItem = cartCookieString.IndexOf(productId);
 
-            if(indexOfItem == -1)
+            if (indexOfItem == -1)
             {
                 //cookie = productID:qty,
                 cartCookieString += productId + qtySeperator + qty + itemSeperator;
@@ -49,27 +99,54 @@ namespace ShoppingCartCA.Models
             else
             {
                 int indexOfNextItem = cartCookieString.IndexOf(itemSeperator, indexOfItem);
-                if(indexOfNextItem == -1)
+                if (indexOfNextItem == -1)
                 {
                     cartCookieString = "";
                     return false;
                 }
                 string affectedStr = cartCookieString.Substring(indexOfItem, (indexOfNextItem - indexOfItem));
                 string[] affectedStrArr = affectedStr.Split(qtySeperator);
-                if(affectedStrArr.Length != 2)
+                if (affectedStrArr.Length != 2)
                 {
                     cartCookieString = "";
                     return false;
                 }
                 try
                 {
-                    int itemQty = Int32.Parse(affectedStrArr[1]) + qty;
+                    int itemQty;
+                    if (absQty)
+                    {
+                        itemQty = qty;
+                    }
+                    else
+                    {
+                        itemQty = Int32.Parse(affectedStrArr[1]) + qty;
+                    }
 
-                    cartCookieString = cartCookieString.Substring(0, indexOfItem) +
-                        productId + qtySeperator + itemQty + itemSeperator + cartCookieString.Substring(indexOfNextItem);
-                    
+                    if(itemQty > 0)
+                    {
+                        //Modify item if > 0
+                        cartCookieString = cartCookieString.Substring(0, indexOfItem) +
+                                 productId + qtySeperator + itemQty + cartCookieString.Substring(indexOfNextItem);
+                    }
+                    else
+                    {
+                        //Delete item if 0
+                        //The second part of the substring will start 1 index after as the "," will be ignored (removed)
+                        if((indexOfNextItem + 1) == cartCookieString.Length)
+                        {
+                            cartCookieString = cartCookieString.Substring(0, indexOfItem);
+                        }
+                        else
+                        {
+                            cartCookieString = cartCookieString.Substring(0, indexOfItem) + cartCookieString.Substring(indexOfNextItem + 1);
+                        }
+                        
+                    }
+
+
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     cartCookieString = "";
                     return false;
@@ -78,6 +155,50 @@ namespace ShoppingCartCA.Models
             }
             return true;
         }
+
+        public bool PopulateList()
+        {
+            double cost = 0;
+            string[] cartItems = cartCookieString.Split(itemSeperator);
+            for(int i = 0; i<cartItems.Length; i++)
+            {
+                string[] itemDetail = cartItems[i].Split(qtySeperator);
+                if(itemDetail.Length != 2)
+                {
+                    cartCookieString = "";
+                    return false;
+                }
+
+                string productId = itemDetail[0];
+                int prdQty = 0;
+                    try
+                    {
+                        prdQty = Int32.Parse(itemDetail[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        cartCookieString = "";
+                        return false;
+                    }
+
+                Product product = dbContext.Products.FirstOrDefault(x => x.Id == Guid.Parse(productId));
+                if(product == null || prdQty <= 0)
+                {
+                    cartCookieString = "";
+                    return false;
+                }
+
+                visitorCartList.Add(new CartDetail
+                {
+                    Product = product,
+                    Quantity = prdQty
+                }) ;
+                cost += product.Price * prdQty;
+            }
+            totalCost = cost;
+            return true;
+        }
+
 
         public int GetCartQuantity()
         {
@@ -91,4 +212,5 @@ namespace ShoppingCartCA.Models
             return cookieString.Split(itemSeperator).Length - 1;
         }
     }
+
 }

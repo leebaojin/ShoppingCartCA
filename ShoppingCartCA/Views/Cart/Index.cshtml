@@ -3,6 +3,9 @@
     Layout = "_ShopLayout";
     ViewData["Title"] = "Cart";
     List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
+
+    bool customerKnown = (bool)ViewData["customerknown"];
+
     double totalprice = 0;
     foreach (CartDetail cartitem in allcartitem)
     {
@@ -14,6 +17,7 @@
     <link rel="stylesheet" href="~/css/cartpage.css" />
     <script type="text/javascript" src="~/js/cartpage.js"></script>
 }
+@*Display of the header*@
 <div class="cart-header">
     <table class="cart-table">
         <tr>
@@ -21,12 +25,14 @@
                 <h3>My Cart <i class='fa fa-shopping-cart'></i></h3>
             </td>
             <td class="cart-table-price">
-                Price : $<span id="totalcost">@String.Format("{0:0.00}", totalprice)</span>
+                Price : $<span id="totalcost" value="@totalprice">@String.Format("{0:0.00}", totalprice)</span>
             </td>
         </tr>
     </table>
 </div>
 <br>
+
+@*Display of the cart*@
 <div class="showcart">
     <div>
         @if (allcartitem.Count == 0)
@@ -45,20 +51,29 @@
                         string buttonaddId = "add-" + itemNo;
                         string cartNoId = "cartno-" + itemNo;
                         string buttonremoveId = "remove-" + itemNo;
+                        string prodNoId = "prodno-" + itemNo;
 
+                        double priceShown = cartDetail.Product.Price * cartDetail.Quantity;
                         <tr class="cart-row">
                             <td class="cart-col">
                                 <table style="width:100%">
                                     <tr>
                                         <td class="itemcell">@Html.Raw(DisplayAid.DisplayProduct(cartDetail.Product, false))</td>
                                         <td class="datacell">
-                                            <div><b>Price :</b> $<span id="@priceId" name="Price" unitprice=@cartDetail.Product.Price>@String.Format("{0:0.00}", cartDetail.Product.Price * cartDetail.Quantity)</span></div>
+                                            <div><b>Price :</b> $<span id="@priceId" unitprice=@cartDetail.Product.Price value="@priceShown">@String.Format("{0:0.00}", priceShown)</span></div>
                                             <br />
                                             <div>
                                                 <input type="button" id="@buttonminusId" onclick="UpdateItem(this)" value="-" />
-                                                <input type="text" name="Quantity" id="@qtyId" onchange="UpdateItem(this)" class="qtybox" value=@cartDetail.Quantity />
+                                                <input type="text" id="@qtyId" onchange="UpdateItem(this)" class="qtybox" value=@cartDetail.Quantity />
                                                 <input type="button" id="@buttonaddId" onclick="UpdateItem(this)" value="+" />
-                                                <input type="hidden" name="CartInfo" id="@cartNoId" value="@cartDetail.Id" />
+                                                @if (customerKnown)
+                                                {
+                                                    <input type="hidden" name="CartInfo" id="@cartNoId" value="@cartDetail.Id" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="hidden" name="ProdInfo" id="@prodNoId" value="@cartDetail.Product.Id" />
+                                                }
                                             </div>
                                             <div class="cart-btn-holder">
                                                 <input type="button" class="cart-btn-remove" id="@buttonremoveId" onclick="UpdateItem(this)" value="Remove" />
@@ -78,6 +93,8 @@
 </div>
 
 <br />
+
+@*Display of the lower price and checkout button*@
 @if (allcartitem != null && allcartitem.Count != 0)
 {
     <div class="cart-header">
