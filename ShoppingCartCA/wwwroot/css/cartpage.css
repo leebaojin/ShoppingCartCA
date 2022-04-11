@@ -40,6 +40,7 @@ cart-header {
         text-decoration: none;
         font-weight: normal;
     }
+
 /*Table Css
 ----------------------------------*/
 .itemcell {
@@ -81,6 +82,21 @@ cart-header {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+.cart-btn-remove {
+    background-color: #E74A19;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border: hidden;
+    border-radius: 5px;
+}
+    .cart-btn-remove:hover {
+        background-color: #E95E33;
+        color: blue;
+    }
+    .cart-btn-holder {
+        padding-top: 15px;
+    }
 
 /*Small product for similar display
 ----------------------------------*/
@@ -129,3 +145,7 @@ cart-header {
     font-weight: 500;
     color: #E3471D;
 }
+
+
+/*Buttons shared*/
+

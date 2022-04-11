@@ -43,7 +43,7 @@
                         <td class="header-col2">
                             @if (layoutheader.CartLink != null)
                             {
-                                @Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller, null,
+                            <i class='fa fa-shopping-cart'></i> @Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller, null,
                                                new { id = "CartSize", value = layoutheader.CartSize })
                             }
                         </td>

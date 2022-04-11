@@ -25,9 +25,13 @@ function UpdateItem(elem) {
         newval--;
     } else if (eletrigger === "add") {
         newval++;
+    } else if (eletrigger === "remove") {
+        newval = 0;
     }
     SendCartItem(rowId, newval);
 }
+
+
 
 function SendCartItem(rowId, newval) {
     itemele = document.getElementById("cartno-" + rowId);
@@ -58,15 +62,17 @@ function SendCartItem(rowId, newval) {
         document.getElementById("totalcost").innerHTML = data.totalprice;
         document.getElementById("totalcost2").innerHTML = data.totalprice;
         qtyele = document.getElementById("quantity-" + data.updateRow);
+
         if (data.removeItem != null) {
             parentrow = qtyele.closest(".cart-row");
             parentrow.parentNode.removeChild(parentrow);
-        }
-        var x = "price-" + data.updateRow;
-        document.getElementById("price-" + data.updateRow).innerHTML = data.price;
-        qtyele.value = data.newqty;
-        qtyele.defaultValue = data.newqty;
 
+        } else {
+            document.getElementById("price-" + data.updateRow).innerHTML = data.price;
+            qtyele.value = data.newqty;
+            qtyele.defaultValue = data.newqty;
+
+        }
 
     }
     let CartUpdateData = {

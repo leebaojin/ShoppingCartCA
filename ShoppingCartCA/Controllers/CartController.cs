@@ -31,50 +31,23 @@ namespace ShoppingCartCA.Controllers
 
         public IActionResult AddToCart([FromBody] DataCartProduct datacartproduct)
         {
-            Guid productId;
-            try
-            {
-                productId = Guid.Parse(datacartproduct.ProdId);
-            }
-            catch(Exception e)
-            {
-                return Json(new { addSuccess = false });
-            }
-            if(datacartproduct.Quantity <= 0)
-            {
-                return Json(new { addSuccess = false });
-            }
-
             //To autenticate the session
             Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
             //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+
             if (customer == null)
             {
                 return Json(new { addSuccess = false });
             }
 
-            //Check if there is already this product
-            CartDetail cartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == productId);
+            //Update cart
+            bool succeed = CartData.AddToCart(customer, datacartproduct.ProdId, datacartproduct.Quantity, dbContext);
 
-            if(cartDetail == null)
+            if (!succeed)
             {
-                Product newProduct = dbContext.Products.FirstOrDefault(x => x.Id == productId);
-                if(newProduct == null)
-                {
-                    return Json(new { addSuccess = false });
-                }
-                //To create new cartdetail and add product in.
-                customer.CartDetails.Add(new CartDetail()
-                {
-                    Product = newProduct,
-                    Quantity = datacartproduct.Quantity
-                }) ;
+                //Update failed
+                return Json(new { addSuccess = false });
             }
-            else
-            {
-                cartDetail.Quantity += datacartproduct.Quantity;
-            }
-            dbContext.SaveChanges();
 
             //Return if successful and the new cart quantity
             return Json(new { addSuccess = true, cartqty= CartData.GetCartSize(customer) });

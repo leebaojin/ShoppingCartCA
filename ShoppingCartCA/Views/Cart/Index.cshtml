@@ -44,6 +44,7 @@
                         string buttonminusId = "minus-" + itemNo;
                         string buttonaddId = "add-" + itemNo;
                         string cartNoId = "cartno-" + itemNo;
+                        string buttonremoveId = "remove-" + itemNo;
 
                         <tr class="cart-row">
                             <td class="cart-col">
@@ -58,6 +59,9 @@
                                                 <input type="text" name="Quantity" id="@qtyId" onchange="UpdateItem(this)" class="qtybox" value=@cartDetail.Quantity />
                                                 <input type="button" id="@buttonaddId" onclick="UpdateItem(this)" value="+" />
                                                 <input type="hidden" name="CartInfo" id="@cartNoId" value="@cartDetail.Id" />
+                                            </div>
+                                            <div class="cart-btn-holder">
+                                                <input type="button" class="cart-btn-remove" id="@buttonremoveId" onclick="UpdateItem(this)" value="Remove" />
                                             </div>
                                         </td>
                                     </tr>
