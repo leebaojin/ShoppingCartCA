@@ -43,12 +43,14 @@
                     <div class="row">
                         <br />
                         <div class="col-md-4" style="text-align:center">
-                            <img src="@od.Product.Img" alt="@od.Product.Name">
-                            <h4>@od.Product.Name</h4>
-                            <p>@od.Product.Desc</p>
-                            <a class="btn btn-secondary downloadButton" href="@od.Product.DownloadFile" download="@od.Product.DownloadName">
-                                <i class="fa fa-download"></i> Download
-                            </a>
+                            <a href='../Home/ProdDetail?prdId=@od.Product.Id'>
+                                <img src="@od.Product.Img" alt="@od.Product.Name">
+                                <h4>@od.Product.Name</h4>
+                                <p>@od.Product.Desc</p>
+                                </a>
+                                <a class="btn btn-secondary downloadButton" href="@od.Product.DownloadFile" download="@od.Product.DownloadName">
+                                    <i class="fa fa-download"></i> Download
+                                </a>
                         </div>
                         <div class="col-md-8 center">
                             <div class="row paddingTopBottom">
