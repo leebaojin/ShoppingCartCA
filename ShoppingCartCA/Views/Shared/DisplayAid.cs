@@ -34,8 +34,13 @@ namespace ShoppingCartCA.Views.Shared
             {
                 borderclass = "class='prod-holdercenter'";
             }
+            string morelink = " <a href='../Home/ProdDetail?prdId=" + product.Id + "'>\n";
+            //<a href='../Home/ProdDetail?prdId=@product.Id'>
 
             string output = "<div "+ borderclass +"><div class='prod-holder-table'>\n";
+
+            //add more link
+            output += morelink;
 
             //add the product image
             output += "<div class='prod-holder-row'>\n<div class='prod-col-img'>\n" +
@@ -46,16 +51,17 @@ namespace ShoppingCartCA.Views.Shared
             output += "<div class='prod-holder-row'>\n<div class='prod-col-title'>\n" +
                 displayName + 
                 "</div>\n</div>";
-
-            //Create the more link
-            string morelink = " <a class='prod-morebtn' href='../Home/ProdDetail?prdId="+product.Id+"'>...more</a>";
+           
 
             //add the product 
             output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
-                displayDesc + morelink + 
+                displayDesc + 
                 "</div>\n</div>";
 
-            if(lastbutton == "Purchase")
+            //Close link
+            output += "</a>\n";
+
+            if (lastbutton == "Purchase")
             {
                 //add the button
                 output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
@@ -71,6 +77,8 @@ namespace ShoppingCartCA.Views.Shared
                     "<i class='fa fa-download'></i> Download</button>" +
                     "\n</div>\n</div>";
             }
+
+            
 
             output += "\n</div>\n</div>";
 
@@ -159,14 +167,20 @@ namespace ShoppingCartCA.Views.Shared
             }
 
             string output = "<span>";
-            while(curr < withstar)
+            while (curr < 5)
             {
-                output += "<span class=\"fa fa-star checked\" id=\"ratestar"+curr+"\"></span>";
-                curr++;
-            }
-            while(curr < 5)
-            {
-                output += "<span class=\"fa fa-star\" id=\"ratestar" + curr + "\"></span>";
+                output += "<span ";
+                if (curr < withstar)
+                {
+                    output += "class=\"fa fa-star checked\" ";
+                }
+                else
+                {
+                    output += "class=\"fa fa-star\" ";
+                }
+
+                output += "id=\"ratestar-" + curr + "\" " +
+                    "onclick=\"StarSelect(" + (curr).ToString() + ")\"></span>";
                 curr++;
             }
             output += "</span>";

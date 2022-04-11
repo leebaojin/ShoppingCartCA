@@ -64,29 +64,49 @@
         font-weight: bold;
         padding: 6px 6px 6px 6px;
     }
-    .viewprd-review{
-        width:95%;
+
+    .viewprd-review {
+        width: 95%;
     }
-    #review-body {
+
+    .review-body {
         width: 50%;
         min-width: 400px;
         height: 80px;
-        resize:none;
+        resize: none;
+        border-width: thin;
+        border-radius: 2px;
     }
 
+    #review-body {
+        background-color: #EEEEEE;
+    }
 
+    .viewprd-cat-body {
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
 
-    .checked{
+    .viewprd-rating-btn {
+        padding-top: 10px;
+    }
+
+    .fa-star {
+        font-size: 13px;
+    }
+
+        .fa-star:hover {
+            font-size: 15px;
+        }
+
+    .checked {
         color: yellow;
     }
-    .viewprd-rating{
-        padding-top:6px;
-        padding-bottom:6px;
+
+    .viewprd-rating {
+        padding-top: 6px;
+        padding-bottom: 6px;
     }
-
-
-
-
 </style>
 <script type="text/javascript">
     window.onload = function () {
@@ -96,8 +116,10 @@
         let qty = parseInt(ele.value);
         if (isNaN(qty) || qty <= 0) {
             ele.value = ele.defaultValue;
+            ele.style.borderColor = "red";
             return false;
         } else {
+            ele.style.borderColor = "black";
             ele.defaultValue = ele.value;
             return true;
         }
@@ -107,6 +129,7 @@
         if (ele == null) {
             return;
         }
+        ele.style.borderColor = "black";
         let qty = parseInt(ele.value);
         if (isAdd) {
             qty += 1;
@@ -127,6 +150,70 @@
             AddToCart(prdId, eleqty.value);
         }
     }
+
+
+
+    function StarSelect(num) {
+        if (num < -1 || num >= 5) {
+            return;
+        }
+        if (document.getElementById("commentId").getAttribute("editstate") != "1") {
+            return;
+        }
+        let notratedEle = document.getElementById("notrated");
+        if (notratedEle != null) {
+            notratedEle.style.display = "none";
+        }
+        for (let i = 0; i < 5; i++) {
+            if (i <= num) {
+                document.getElementById("ratestar-" + i).className = "fa fa-star checked";
+            }
+            else {
+                document.getElementById("ratestar-" + i).className = "fa fa-star";
+            }
+        }
+    }
+
+    function EditReview() {
+        let btn = document.getElementById("review-editpost");
+        btn.onclick = PostReview;
+        btn.innerHTML = "Post";
+        let refEle = document.getElementById("commentId");
+        document.getElementById("review-body-temp").innerHTML = document.getElementById("review-body").innerHTML;
+        document.getElementById("review-body").style.display = "none";
+        document.getElementById("review-body-temp").style.display = "block";
+        refEle.setAttribute("editstate", "1");
+        document.getElementById("review-cancel").style.display = "inline-block";
+
+    }
+
+    function CancelEdit() {
+        let btn = document.getElementById("review-editpost");
+        let refEle = document.getElementById("commentId");
+        StarSelect(refEle.getAttribute("starrating"));
+        if (refEle.value == "null") {
+            document.getElementById("review-body-temp").innerHTML = "";
+            document.getElementById("review-body-temp").value = "";
+            let notratedEle = document.getElementById("notrated");
+            if (notratedEle != null) {
+                notratedEle.style.display = "inline-block";
+            }
+        } else {
+            document.getElementById("review-body-temp").innerHTML = document.getElementById("review-body").innerHTML;
+            document.getElementById("review-body-temp").value = document.getElementById("review-body").innerHTML;
+            document.getElementById("review-body-temp").style.display = "none"
+            document.getElementById("review-body").style.display = "block";
+            document.getElementById("review-cancel").style.display = "none";
+            btn.onclick = EditReview;
+            btn.innerHTML = "Edit";
+            refEle.setAttribute("editstate", "0");
+        }
+    }
+
+    function PostReview() {
+
+    }
+
 </script>
 
 <div class="viewprd-head">
@@ -143,7 +230,7 @@
                 <br />
                 <div>
                     <input type="button" id="buttonminus" onclick="ChangeItem('Quantity',false)" value="-" />
-                    <input type="text" name="Quantity" id="Quantity" onchange="ValidateItem(this)" value=1 />
+                    <input type="text" name="Quantity" id="Quantity" onblur="ValidateItem(this)" value=1 />
                     <input type="button" id="buttonplus" onclick="ChangeItem('Quantity',true)" value="+" />
                     <br />
                     <br />
@@ -161,12 +248,14 @@
     </table>
 </div>
 <hr />
+
+@*---------------Section to handle similar products--------------*@
 <div class="viewprd-similar">
     <div class="viewprd-cat-title">Similar Products</div>
     @{
         if (similarProduct == null || similarProduct.Count == 0)
         {
-            @:<div class="viewprd-similar-dys">None</div>
+            @:<div class="viewprd-disp-des">None</div>
         }
         else
         {
@@ -183,44 +272,56 @@
 
 </div>
 <hr />
+
+@*---------------Section to handle review of products--------------*@
 @{
     if (canReview)
     {
-    <div class="viewprd-review">
+        <div class="viewprd-review">
 
-        @if (cusReview == null)
-        {
-            <div class="viewprd-cat-title">How was @product.Name?</div>
-            <div class="viewprd-rating">
-                <span class="viewprd-rating-title">Rating: </span>
-                @Html.Raw(DisplayAid.GenerateStar(0))
-                <span id="notrated"> (Not Rated)</span>
-            </div>
-            <div class="viewprd-cat-body">
-                <textarea id="review-body" placeholder="Give us your feedback"></textarea>
-            </div>
-            <input type="button" id="review-editpost" value="Post" onclick="PostReview()" />
-            <input type="button" id="review-cancel" value="Cancel" onclick="CancelEdit()" style="display:none" />
-        }
-        else
-        {
-            <div class="viewprd-cat-title">Your review</div>
-            <div class="viewprd-rating">
-                <span class="viewprd-rating-title">Rating: </span>
-                @Html.Raw(DisplayAid.GenerateStar(cusReview.Rating))
-                @if (cusReview.Rating < 1)
-                {
+            @if (cusReview == null)
+            {
+                <div class="viewprd-cat-title">How was @product.Name?</div>
+                <div class="viewprd-rating">
+                    <span class="viewprd-rating-title">Rating: </span>
+                    @Html.Raw(DisplayAid.GenerateStar(0))
                     <span id="notrated"> (Not Rated)</span>
-                }
-            </div>
-            <div class="viewprd-review-body">
-                <textarea id="review-body" placeholder="Give us your feedback" readonly>@cusReview.Comment</textarea>
-            </div>
-            <input type="button" id="review-editpost" value="Edit" onclick="EditReview()" />
-            <input type="button" id="review-cancel" value="Cancel" onclick="CancelEdit()" style="display:none" />
-        }
-        <div class="viewprd-review-head"></div>
-    </div>
+                </div>
+                <div class="viewprd-cat-body">
+                    <textarea class="review-body" id="review-body" placeholder="Give us your feedback" style="display:none" readonly></textarea>
+                    <textarea class="review-body" id="review-body-temp" placeholder="Give us your feedback" style="display:block"></textarea>
+                </div>
+                <div class="viewprd-rating-btn">
+                    <button id="review-editpost" onclick="PostReview()">Post</button>
+                    <button id="review-cancel" onclick="CancelEdit()" style="display:inline-block">Cancel</button>
+                </div>
+
+                <input type="hidden" value=null name="commentId" id="commentId" editstate="1" starrating="-1" />
+            }
+            else
+            {
+                <div class="viewprd-cat-title">Your review</div>
+                <div class="viewprd-rating">
+                    <span class="viewprd-rating-title">Rating: </span>
+                    @Html.Raw(DisplayAid.GenerateStar(cusReview.Rating))
+                    @if (cusReview.Rating < 1)
+                    {
+                        <span id="notrated"> (Not Rated)</span>
+                    }
+                </div>
+                <div class="viewprd-review-body">
+                    <textarea class="review-body" id="review-body" placeholder="Give us your feedback" style="display:block" readonly>@cusReview.Comment</textarea>
+                    <textarea class="review-body" id="review-body-temp" placeholder="Give us your feedback" style="display:none"></textarea>
+                </div>
+                <div class="viewprd-rating-btn">
+                    <button id="review-editpost" onclick="EditReview()">Edit</button>
+                    <button id="review-cancel" onclick="CancelEdit()" style="display:none">Cancel</button>
+                </div>
+                <input type="hidden" value="@cusReview.Id" name="commentId" id="commentId" editstate="0" starrating="@(cusReview.Rating-1)" />
+            }
+
+            <div class="viewprd-review-head"></div>
+        </div>
     }
 }
 <div class="viewprd-rating">

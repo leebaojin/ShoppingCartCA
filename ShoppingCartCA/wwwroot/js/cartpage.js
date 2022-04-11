@@ -32,13 +32,13 @@ function UpdateItem(elem) {
 function SendCartItem(rowId, newval) {
     itemele = document.getElementById("cartno-" + rowId);
     if (itemele === null) {
-        window.location.href = "/Cart";
+        window.location.href = "../Cart";
         return;
     }
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "/Cart/UpdateCartItem");
+    xhr.open("POST", "../Cart/UpdateCartItem");
 
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
 
@@ -52,7 +52,7 @@ function SendCartItem(rowId, newval) {
         let data = JSON.parse(this.responseText);
 
         if (data.updateSuccess == false) {
-            window.location.href = "/Cart";
+            window.location.href = "../Cart";
             return;
         }
         document.getElementById("totalcost").innerHTML = data.totalprice;
@@ -102,7 +102,7 @@ function AddToCart(prodId,qtyIn) {
             let data = JSON.parse(this.responseText);
 
             if (data.addSuccess != true) {
-                window.href = "../Home";
+                window.location.href = "../Logout";
                 return;
             }
 

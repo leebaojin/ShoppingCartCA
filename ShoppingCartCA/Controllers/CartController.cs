@@ -24,7 +24,7 @@ namespace ShoppingCartCA.Controllers
                 return RedirectToAction("Index", "Logout");
             }
             ViewData["allcartitem"] = customer.CartDetails;
-            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping", "Checkout" }, false);
+            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping" }, false);
             
             return View();
         }
@@ -44,10 +44,14 @@ namespace ShoppingCartCA.Controllers
             {
                 return Json(new { addSuccess = false });
             }
-            
+
             //To autenticate the session
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            
+            Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
+            if (customer == null)
+            {
+                return Json(new { addSuccess = false });
+            }
 
             //Check if there is already this product
             CartDetail cartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == productId);

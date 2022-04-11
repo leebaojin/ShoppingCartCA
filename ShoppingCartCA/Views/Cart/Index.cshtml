@@ -10,14 +10,6 @@
     }
 
 }
-<style>
-
-</style>
-<script>
-    window.onload = function () {
-        
-    }
-</script>
 @section StyleScript{
     <link rel="stylesheet" href="~/css/cartpage.css" />
     <script type="text/javascript" src="~/js/cartpage.js"></script>
@@ -57,7 +49,7 @@
                             <td class="cart-col">
                                 <table style="width:100%">
                                     <tr>
-                                        <td class="itemcell">@Html.Raw(DisplayAid.DisplayProduct(cartDetail.Product,false))</td>
+                                        <td class="itemcell">@Html.Raw(DisplayAid.DisplayProduct(cartDetail.Product, false))</td>
                                         <td class="datacell">
                                             <div><b>Price :</b> $<span id="@priceId" name="Price" unitprice=@cartDetail.Product.Price>@String.Format("{0:0.00}", cartDetail.Product.Price * cartDetail.Quantity)</span></div>
                                             <br />
@@ -82,22 +74,24 @@
 </div>
 
 <br />
+@if (allcartitem != null && allcartitem.Count != 0)
+{
+    <div class="cart-header">
+        <table class="cart-table">
+            <tr>
+                <td class="cart-table-title">
+                </td>
+                <td class="cart-table-price">
+                    Price : $<span id="totalcost2">@String.Format("{0:0.00}", totalprice)</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right" class="cart-table-checkout">
+                    <a href="../Checkout" class="cart-checkoutbtn">Checkout</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
 
-<div class="cart-header">
-    <table class="cart-table">
-        <tr>
-            <td class="cart-table-title">
-
-            </td>
-            <td class="cart-table-price">
-                Price : $<span id="totalcost2">@String.Format("{0:0.00}", totalprice)</span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right" class="cart-table-checkout">
-                <a href="../Checkout" class="cart-checkoutbtn">Checkout</a>
-            </td>
-        </tr>
-    </table>
-</div>
 
