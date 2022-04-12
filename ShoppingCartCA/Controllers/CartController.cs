@@ -231,11 +231,11 @@ namespace ShoppingCartCA.Controllers
             if(customer == null)
             {
                 string cartCookie = Request.Cookies["shoppingcarttemp4"];
-                ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "My Purchase" }, true, cartCookie);
+                ViewData["layoutheader"] = new LayoutHeader(null, new string[] { "Continue Shopping" }, true, cartCookie);
             }
             else
             {
-                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping" }, true);
+                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchases","Continue Shopping" }, true);
             }
 
             Review cusReview = ReviewData.GetReview(product, customer);

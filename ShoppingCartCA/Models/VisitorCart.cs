@@ -154,7 +154,7 @@ namespace ShoppingCartCA.Models
 
             }
             //Resetting the calculated parameters when there is a change
-            visitorCartList = new List<CartDetail>();
+            visitorCartList.Clear();
             totalCost = 0;
             return true;
         }
