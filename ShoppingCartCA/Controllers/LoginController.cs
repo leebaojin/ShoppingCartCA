@@ -41,7 +41,6 @@ namespace ShoppingCartCA.Controllers
                 }
 
                 // valid Session ID; route to Home page
-
                 return RedirectToAction("Index", "Home");
             }
 

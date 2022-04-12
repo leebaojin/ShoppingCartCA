@@ -52,6 +52,8 @@ namespace ShoppingCartCA
 
             app.UseAuthorization();
 
+            //app.UseMiddleware<LoginChecker>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
