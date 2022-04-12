@@ -135,7 +135,7 @@ function AddToCart(prodId,qtyIn) {
             }
 
             alert("Added to cart");
-
+            return false;
         }
     }
     let DataCartProduct = {

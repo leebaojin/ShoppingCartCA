@@ -260,14 +260,14 @@ namespace ShoppingCartCA.Controllers
         [Route("Home/SendReview")]
         public IActionResult SendReview([FromBody] DataReviewPost dataReviewPost)
         {
-            //Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
+            Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
             //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
+            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
 
             Product product = FindProduct(dataReviewPost.PrdId);
             if (product == null)
             {
-                return RedirectToAction("Index", "Home");
+                return Json(new { postSuccess = false });
             }
 
             bool success = false;

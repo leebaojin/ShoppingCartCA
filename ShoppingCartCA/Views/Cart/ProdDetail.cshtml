@@ -84,7 +84,7 @@
 
             @if (cusReview == null)
             {
-                <div class="viewpd-div-title">How was @product.Name?</div>
+                <div class="viewpd-div-title" id="review-prompt">How was @product.Name?</div>
                 
                     <div class="viewpd-rate">
                         <span class="viewpd-rate-title">Rating: </span>
@@ -104,7 +104,7 @@
             }
             else
             {
-                <div class="viewpd-div-title">Your review</div>
+                <div class="viewpd-div-title" id="review-prompt">Your Review</div>
                 
                     <div class="viewpd-rate">
                         <span class="viewpd-rate-title">Rating: </span>
@@ -145,11 +145,7 @@
             @:@allReview.Count reviews. <span>(@String.Format("{0:0.0}",avgRating)</span> out of <span>5.0 <span class="fa fa-star checked"></span>)</span>
         }
     </div>
-    @if (allReview.Count == 0)
-    {
-        @:<div class="viewprd-disp-des">None</div>
-    }
-    else
+    @if (allReview.Count > 0)
     {
         foreach (Review rw in allReview)
         {
