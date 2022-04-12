@@ -28,33 +28,33 @@ namespace ShoppingCartCA.Views.Shared
             string borderclass;
             if (border)
             {
-                borderclass = "class='prod-holder'";
+                borderclass = "class='pdDys-holder'";
             }
             else
             {
-                borderclass = "class='prod-holdercenter'";
+                borderclass = "class='pdDys-holder-center'";
             }
             string morelink = " <a href='../Home/ProdDetail?prdId=" + product.Id + "'>\n";
             //<a href='../Home/ProdDetail?prdId=@product.Id'>
 
-            string output = "<div "+ borderclass +"><div class='prod-holder-table'>\n";
+            string output = "<div "+ borderclass + "><div class='pdDys-tlb'>\n";
 
             //add more link
             output += morelink;
 
             //add the product image
-            output += "<div class='prod-holder-row'>\n<div class='prod-col-img'>\n" +
-                "<img class='prod-img'src='" + product.Img+ "' />\n" +
+            output += "<div class='pdDys-row'>\n<div class='pdDys-cell-img'>\n" +
+                "<img class='pdDys-img'src='" + product.Img+ "' />\n" +
                 "</div>\n</div>";
 
             //add the product name
-            output += "<div class='prod-holder-row'>\n<div class='prod-col-title'>\n" +
+            output += "<div class='pdDys-row'>\n<div class='pdDys-cell-title'>\n" +
                 displayName + 
                 "</div>\n</div>";
            
 
             //add the product 
-            output += "<div class='prod-holder-row'>\n<div class='prod-col-dec'>\n" +
+            output += "<div class='pdDys-row'>\n<div class='pdDys-cell-desc'>\n" +
                 displayDesc + 
                 "</div>\n</div>";
 
@@ -64,16 +64,16 @@ namespace ShoppingCartCA.Views.Shared
             if (lastbutton == "Purchase")
             {
                 //add the button
-                output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
-                    "<button class='prod-button' onclick='AddToCart(\"" + @product.Id + "\",1)'>" +
+                output += "<div class='pdDys-row'>\n<div class='pdDys-cell-btn'>\n" +
+                    "<button class='pdDys-btn' onclick='AddToCart(\"" + @product.Id + "\",1)'>" +
                     "$ " + product.Price+ " -  <i class='fa fa-shopping-cart'></i> Add to Cart</button>" +
                     "\n</div>\n</div>";
 
             }else if(lastbutton == "Download")
             {
-                output += "<div class='prod-holder-row'>\n<div class='prod-col-btn'>\n" +
+                output += "<div class='pdDys-row'>\n<div class='pdDys-cell-btn'>\n" +
                     "<a href='"+ product.DownloadFile + "' download='"+product.DownloadName+"'>"+
-                    "<button class='prod-button' value='Download'>" +
+                    "<button class='pdDys-btn' value='Download'>" +
                     "<i class='fa fa-download'></i> Download</button>" +
                     "\n</div>\n</div>";
             }
@@ -125,25 +125,25 @@ namespace ShoppingCartCA.Views.Shared
 
         public static string DisplaySmall(Product product)
         {
-            string output = "<div class='small-holder'>\n";
+            string output = "<div class='S-pdDys-holder'>\n";
 
             //Add a link
             output += "<a href='../Home/ProdDetail?prdId=" + product.Id + "'>\n";
 
-            output += "<div class='small-prd-tbl'>\n";
+            output += "<div class='S-pdDys-tbl'>\n";
 
             //Add the image
-            output += "<div class='small-prd-row'>\n<div class='small-col-img'>\n";
-            output += "<img class='small-prod-img' src='"+ product.Img + "' />\n";
+            output += "<div class='S-pdDys-row'>\n<div class='S-pdDys-col-img'>\n";
+            output += "<img class='S-pdDys-img' src='" + product.Img + "' />\n";
             output += "</div>\n</div>\n";
 
             //Add the name
-            output += "<div class='small-prd-row'>\n<div class='small-col-title'>\n";
+            output += "<div class='S-pdDys-row'>\n<div class='S-pdDys-col-title'>\n";
             output += product.Name;
             output += "</div>\n</div>\n";
 
             //Add the price
-            output += "<div class='small-prd-row'>\n<div class='small-col-price'>\n";
+            output += "<div class='S-pdDys-row'>\n<div class='S-pdDys-col-price'>\n";
             output += "$ " + String.Format("{0:0.00}", product.Price);
             output += "</div>\n</div>\n";
 

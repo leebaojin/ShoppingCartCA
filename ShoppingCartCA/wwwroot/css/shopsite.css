@@ -41,64 +41,68 @@ body {
   margin-bottom: 60px;
 }
 
-/*Header Modification*/
-.headerdiv{
+/*Navigation Bar Classes
+---------------------------------------------------*/
+.hnav-holder{
     width: 100%;
     text-align:center;
     font-size:16px;
 }
-.headertable{
+.hnav-tbl{
     width:95%;
     margin-left:auto;
     margin-right:auto;
     border:none;
 }
 
-.header-row {
+.hnav-row {
     border: none;
 }
 
-.header-col1 {
+.hnav-cell-link {
     width: 80%;
     text-align: left;
     border: none;
 }
 
-.header-col2 {
+.hnav-cell-cart {
     text-align: right;
     border: none;
 }
 
 /*Product display
 -------------------------------------------------- */
-.prod-holder {
+.pdDys-holder {
     border: 2px solid black;
     border-radius: 10px;
     width: 250px;
 }
-.prod-holdercenter {
-    margin-left:auto;
-    margin-right:auto;
+.pdDys-holder-center {
+    margin-left: auto;
+    margin-right: auto;
     width: 250px;
 }
-.prod-holder-table{
+.pdDys-tlb{
     display:table;
     width:250px;
     height:auto;
     padding:3px 3px 5px 3px;
 }
-.prod-holder-row {
+.pdDys-row {
     display: table-row;
-    border-radius: 10px;
 }
-.prod-col-img {
+.pdDys-cell-img {
     display: table-cell;
     height: 160px;
     width: 200px;
     text-align: center;
     vertical-align: middle;
 }
-.prod-col-title {
+.pdDys-img {
+    width: 200px;
+}
+
+.pdDys-cell-title {
     display: table-cell;
     font-size: 22px;
     font-weight: bold;
@@ -106,7 +110,7 @@ body {
     padding-top: 2px;
     padding-bottom: 2px;
 }
-.prod-col-dec {
+.pdDys-cell-desc {
     display: table-cell;
     width: 100%;
     font-size: 14px;
@@ -117,13 +121,13 @@ body {
     height: 5.5em;
 }
 
-.prod-col-btn {
+.pdDys-cell-btn {
     display: table-cell;
     text-align: center;
     padding-top: 2px;
     padding-bottom: 5px;
 }
-.prod-button {
+.pdDys-btn {
     width: 80%;
     box-shadow: 2px 3px;
     padding: 5px;
@@ -131,12 +135,8 @@ body {
     background-color: #6B99E3;
     border: none;
 }
-.prod-img{
-    width:200px;
-}
+
 .prod-findtxt {
     background-color: #FFFF5D;
 }
-.prod-morebtn{
-    font-size:12px;
-}
+

@@ -153,6 +153,9 @@ namespace ShoppingCartCA.Models
                 }
 
             }
+            //Resetting the calculated parameters when there is a change
+            visitorCartList = new List<CartDetail>();
+            totalCost = 0;
             return true;
         }
 
@@ -211,6 +214,7 @@ namespace ShoppingCartCA.Models
         {
             return cookieString.Split(itemSeperator).Length - 1;
         }
+
     }
 
 }

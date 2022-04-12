@@ -18,29 +18,29 @@
 <body>
     <header>
         <hr />
-        <div class="headerdiv">
-            <table class="headertable">
-                <tr class="header-row">
+        <div class="hnav-holder">
+            <table class="hnav-tbl">
+                <tr class="hnav-row">
                     @if (layoutheader == null)
                     {
-                    <td class="header-col1">
+                    <td class="hnav-cell-link">
                         Hi, Guest &nbsp &nbsp &nbsp | &nbsp @Html.ActionLink("Login", "Index", "Login") &nbsp | &nbsp
                     </td>
-                        <td class="header-col2">
+                        <td class="hnav-cell-cart">
                                 @Html.ActionLink("Cart: " + "0","Index", "Cart", null,
                                                new { id = "CartSize", value = 0 })
                         </td>
                     }
                     else
                     {
-                        <td class="header-col1">
+                        <td class="hnav-cell-link">
                             Hi, @layoutheader.User &nbsp &nbsp &nbsp | &nbsp
                             @foreach (HeaderLink header in layoutheader.HeaderLinks)
                             {
                                 @:@Html.ActionLink(header.Title, header.Action, header.Controller) &nbsp | &nbsp
                             }
                         </td>
-                        <td class="header-col2">
+                        <td class="hnav-cell-cart">
                             @if (layoutheader.CartLink != null)
                             {
                             <i class='fa fa-shopping-cart'></i> @Html.ActionLink("Cart: " + layoutheader.CartSize, layoutheader.CartLink.Action, layoutheader.CartLink.Controller, null,
