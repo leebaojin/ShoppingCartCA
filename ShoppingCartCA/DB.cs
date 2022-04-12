@@ -36,11 +36,11 @@ namespace ShoppingCartCA
         {
             HashAlgorithm sha = SHA256.Create();
 
-            string[] usernames = { "jeamsee", "lynnwong", "leliamay" };
+            string[] usernames = { "jeamsee", "lynnwong", "leliamay","jamestan" };
 
-            string[] FirstName = { "Jeam", "Lynn", "Lelia" };
+            string[] FirstName = { "Jeam", "Lynn", "Lelia","James" };
 
-            string[] LastName = { "See", "Wong", "May" };
+            string[] LastName = { "See", "Wong", "May","Tan" };
 
             string password = "mysecret";
 
@@ -179,62 +179,64 @@ namespace ShoppingCartCA
         public void SeedComments()
         {
             Customer customer1 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            Customer customer2 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
-            Customer customer3 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "leliamay");
+            //Customer customer2 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
+            //Customer customer3 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "leliamay");
+            //Customer customer4 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jamestan");
 
+            List<Customer> customerList = dbContext.Customers.Where(x => x.CustomerDetails.Username != "jeamsee").ToList();
             Random rnd = new Random();
             
             Product productToAdd1 = customer1.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
-            Product productToAdd3 = customer3.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
 
             string[] commentlist = new string[] {"Poor quanlity. Always crashes. Going to delete.",
                 "The programme feels unstable with bugs.", "Overall ok but the UI is not very firendly.", "Good product. Would recommend it",
             "Excellent product. It feels naturally with easy to use features. Must Buy."};
 
+            string[] commentlist2 = new string[] {"Not very good. Somehow seems broken.",
+                "Won't recommend it unless you like a steep learning curve.", "Ok usable. Not a bad product", "Nice to use. Try it out.",
+            "A good bargin! UI is so intuitive and all the necessary features are there."};
+
             Product myProduct = customer1.Orders.ToList()[0].OrderDetails.ToList()[0].Product;
             myProduct.Reviews.Add(new Review()
             {
-                Customer = customer2,
+                Customer = customer1,
                 Rating = 3,
                 Comment = commentlist[2]
             });
-
-            foreach (Order order in customer2.Orders.ToList())
+            dbContext.SaveChanges();
+            foreach(Customer customerN in customerList) 
             {
-                foreach(OrderDetail od in order.OrderDetails.ToList())
+                foreach (Order order in customerN.Orders.ToList())
                 {
-                    int rating = rnd.Next(1, 5);
-                    Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customer2.Id);
-                    if(myreview == null)
+                    foreach (OrderDetail od in order.OrderDetails.ToList())
                     {
-                        od.Product.Reviews.Add(new Review()
+                        int rating = rnd.Next(1, 5);
+                        int cmt = rnd.Next(1, 2);
+                        string cmtstr;
+                        if(cmt == 1)
                         {
-                            Customer = customer2,
-                            Rating = rating,
-                            Comment = commentlist[rating-1]
-                        });
-                    } 
-                }
-            }
-
-            foreach (Order order in customer3.Orders.ToList())
-            {
-                foreach (OrderDetail od in order.OrderDetails.ToList())
-                {
-                    int rating = rnd.Next(1, 5);
-                    Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customer2.Id);
-                    if (myreview == null)
-                    {
-                        od.Product.Reviews.Add(new Review()
+                            cmtstr = commentlist[rating - 1];
+                        }
+                        else
                         {
-                            Customer = customer3,
-                            Rating = rating,
-                            Comment = commentlist[rating]
-                        });
+                            cmtstr = commentlist2[rating - 1];
+                        }
+                        Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customerN.Id);
+                        if (myreview == null)
+                        {
+                            od.Product.Reviews.Add(new Review()
+                            {
+                                Customer = customerN,
+                                Rating = rating, 
+                                Comment = cmtstr
+                            });
+                        }
+                        dbContext.SaveChanges();
                     }
                 }
             }
-            dbContext.SaveChanges();
+            
+            
         }
 
 

@@ -153,11 +153,11 @@ namespace ShoppingCartCA.Views.Shared
             return output;
         }
 
-        public static string GenerateStar(int rating)
+        public static string GenerateStar(int rating, bool linkgen=true)
         {
             int withstar;
             int curr = 0;
-            if(rating < 1 || rating > 5)
+            if (rating < 1 || rating > 5)
             {
                 withstar = 0;
             }
@@ -179,8 +179,13 @@ namespace ShoppingCartCA.Views.Shared
                     output += "class=\"fa fa-star\" ";
                 }
 
-                output += "id=\"ratestar-" + curr + "\" " +
-                    "onclick=\"StarSelect(" + (curr).ToString() + ")\"></span>";
+                if (linkgen)
+                {
+                    output += "id=\"ratestar-" + curr + "\" " +
+                                "onclick=\"StarSelect(" + (curr).ToString() + ")\"";
+                }
+
+                output += "></span>";
                 curr++;
             }
             output += "</span>";

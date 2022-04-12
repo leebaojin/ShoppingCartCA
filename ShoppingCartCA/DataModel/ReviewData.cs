@@ -11,7 +11,7 @@ namespace ShoppingCartCA.DataModel
         public static Review GetReview(Product product, Customer customer)
         {
             Review review = null;
-            if (customer.CustomerDetails == null)
+            if (customer == null || customer.CustomerDetails == null)
             {
                 return null;
             }
@@ -29,7 +29,7 @@ namespace ShoppingCartCA.DataModel
         public static bool CanReview(Product product, Customer customer)
         {
             //Only customers who purchased the product can review
-            if(customer.CustomerDetails == null)
+            if(customer == null || customer.CustomerDetails == null)
             {
                 return false;
             }
@@ -45,6 +45,21 @@ namespace ShoppingCartCA.DataModel
             }
 
             return false;
+        }
+
+        public static List<Review> GetAllReviewExcept(Product product, Review review = null)
+        {
+            List<Review> allReview = new List<Review>();
+            allReview = product.Reviews.ToList();
+            if (review != null)
+            {
+                IEnumerable<Review> listReview = from rw in allReview
+                                                 where (rw.Id != review.Id)
+                                                 select rw;
+                allReview = listReview.ToList();
+            }
+
+            return allReview;
         }
     }
 }

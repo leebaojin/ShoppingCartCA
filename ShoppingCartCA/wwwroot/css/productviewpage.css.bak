@@ -1,0 +1,133 @@
+﻿/*------ This document is for the product view page -----*/
+
+   /*Reused style -------------
+        ----------------------------*/
+    .viewpd-holder{
+        width:95%;
+    }
+
+    .viewpd-div-title {
+        font-size: 22px;
+        font-weight: bold;
+        padding: 6px 6px 6px 6px;
+    }
+
+    .viewpd-div-des {
+        font-size: 14px;
+        padding-left: 10px;
+        height: 6em;
+    }
+
+    /*For the product display -------------
+        ----------------------------*/
+    .viewpd-cell-img {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .viewpd-img {
+        width: 300px;
+    }
+
+    .viewpd-cell-data {
+        padding-left: 30px;
+    }
+
+    .viewpd-qty {
+        width: 40px;
+        text-align: center;
+    }
+
+    .viewpd-btn {
+        background-color: #E74A19;
+        color: white;
+        padding: 5px 15px 5px 15px;
+        border: hidden;
+        border-radius: 5px;
+    }
+
+        .viewpd-btn:hover {
+            background-color: #E95E33;
+            color: blue;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+    /*Review body-----------
+        --------------------------*/
+
+    .viewpd-rw-body {
+        width: 50%;
+        min-width: 400px;
+        height: 80px;
+        resize: none;
+        border-width: thin;
+        border-radius: 2px;
+    }
+
+    #review-body {
+        background-color: transparent;
+        border:hidden;
+        padding:5px;
+    }
+
+    .viewprd-cat-body {
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .viewpd-ratebtn-holder {
+        padding-top: 10px;
+    }
+
+    .viewpd-rate {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .fa-star {
+        font-size: 13px;
+        color: #E0E0E0;
+    }
+    div.viewpd-rate > span > span.fa-star {
+        /*This refers only to the fa-star class that is under the viewpd-rate*/
+        font-size: 16px;
+    }
+
+        div.viewpd-rate > span > span.fa-star:hover {
+            /*This refers only to the fa-star class that is under the viewpd-rate*/
+            font-size: 18px;
+        }
+
+    .checked {
+        color: #FFFA00;
+    }
+
+
+    /*User reviews----------------------
+        ----------------------------*/
+    .viewpd-cmt-user{
+        font-size:11px;
+        color:lightgrey;
+    }
+    .viewpd-cmt-holder {
+        padding:5px;
+        border-top:thin solid lightgrey;
+        min-width:400px;
+    }
+    .viewpd-cmt-body {
+        height:80px;
+        padding-left:5px;
+    }
+
+    .viewpd-cmt-no {
+        padding-left: 5px;
+        padding-bottom: 10px;
+        font-size: 11px;
+        color: grey;
+    }
+
+    div.viewpd-cmt-no > span{
+        font-weight:500;
+        font-size:14px;
+    }
