@@ -1,13 +1,11 @@
 ﻿//This is for the Product View Page
 
 function ValidateItem(ele) {
-	let qty = parseInt(ele.value);
-	if (isNaN(qty) || qty <= 0) {
+	let qty = parseInt(ele.value, 10);
+	if (isNaN(ele.value) || qty <= 0) {
 		ele.value = ele.defaultValue;
-		ele.style.borderColor = "red";
 		return false;
 	} else {
-		ele.style.borderColor = "black";
 		ele.defaultValue = ele.value;
 		return true;
 	}
@@ -19,7 +17,7 @@ function ChangeItem(strId, isAdd) {
 		return;
 	}
 	ele.style.borderColor = "black";
-	let qty = parseInt(ele.value);
+	let qty = parseInt(ele.value,10);
 	if (isAdd) {
 		qty += 1;
 		ele.value = qty;

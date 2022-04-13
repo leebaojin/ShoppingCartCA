@@ -16,11 +16,15 @@ function UpdateItem(elem) {
         return;
     }
     var qtyele = document.getElementById("quantity-" + rowId);
-    var newval = parseInt(qtyele.value);
-    if (qtyele === null || isNaN(newval)) {
+    if (qtyele === null) {
+        return;
+    }
+    if (isNaN(qtyele.value)) {
         qtyele.value = qtyele.defaultValue;
         return;
     }
+    var newval = parseInt(qtyele.value,10);
+
     if (eletrigger === "minus") {
         newval--;
     } else if (eletrigger === "add") {
@@ -104,8 +108,11 @@ function AddToCart(prodId,qtyIn) {
     if (prodId === null) {
         return;
     }
-    let qty = parseInt(qtyIn);
-    if (isNaN(qty) || qty <= 0) {
+    if (isNaN(qtyIn)) {
+        return;
+    }
+    let qty = parseInt(qtyIn,10);
+    if (qty <= 0) {
         return;
     }
 
