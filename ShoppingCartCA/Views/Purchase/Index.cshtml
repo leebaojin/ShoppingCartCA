@@ -11,13 +11,13 @@
     @{
         <h3>My Purchases</h3>
         <br />
-        @foreach (Order o in orders)
+        @for (int i = orders.Count - 1; i >= 0; i--)
         {
             <div class="orderContainer">
-                @{List<OrderDetail> orderDetails = o.OrderDetails.ToList();
+                @{List<OrderDetail> orderDetails = orders[i].OrderDetails.ToList();
                     @foreach (OrderDetail od in orderDetails)
                     {
-                        string orderDate = o.OrderDate.ToString("dd MMM yyyy");
+                        string orderDate = orders[i].OrderDate.ToString("dd MMM yyyy");
                         List<ActivationCode> activationCodes = od.ActivationCodes.ToList();
                         <div class="row">
                             <br />
