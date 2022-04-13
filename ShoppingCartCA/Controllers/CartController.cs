@@ -220,8 +220,6 @@ namespace ShoppingCartCA.Controllers
             //Use of prdId instead of prodId to avoid clash with the AddToCart
 
             Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
-            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
 
             Product product = FindProduct(prdId);
             if (product == null)
@@ -261,8 +259,6 @@ namespace ShoppingCartCA.Controllers
         public IActionResult SendReview([FromBody] DataReviewPost dataReviewPost)
         {
             Customer customer = SessionAutenticate.Autenticate(Request.Cookies["SessionId"], dbContext);
-            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            //Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
 
             Product product = FindProduct(dataReviewPost.PrdId);
             if (product == null)

@@ -79,13 +79,38 @@ namespace ShoppingCartCA.Controllers
             dbContext.Sessions.Add(session);
             dbContext.SaveChanges();
 
+            //Merge cart cookie to customer cart 
+            MergeCart(customer);
+
+
             // ask browser to save and send back these cookies next time
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", customerDetail.Username);
 
-            
+
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void MergeCart(Customer customer)
+        {
+            string cartCookie = Request.Cookies["shoppingcarttemp4"];
+            if(cartCookie == null || cartCookie.Length == 0)
+            {
+                return;
+            }
+            if(customer == null)
+            {
+                return;
+            }
+            VisitorCart visitorCart = new VisitorCart(dbContext, cartCookie);
+            visitorCart.PopulateList();
+            List<CartDetail> cartList = visitorCart.VisitorCartList;
+            foreach(CartDetail cd in cartList)
+            {
+                customer.CartDetails.Add(cd);
+            }
+            dbContext.SaveChanges();
         }
     }
 }
