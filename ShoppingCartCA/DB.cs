@@ -32,15 +32,43 @@ namespace ShoppingCartCA
             SeedComments();
         }
 
+        private void SeedDemoAccount()
+        {
+            HashAlgorithm sha = SHA256.Create();
+            string username = "pertertan";
+            string firstName = "Peter";
+            string lastName = "Tan";
+            string password = "mysecret";
+
+            string combo = username + password;
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(combo));
+            Customer customer = new Customer() {
+                CustomerDetails = new CustomerDetail()
+                {
+                    Username = username,
+                    PassHash = hash,
+                    FirstName = firstName,
+                    LastName = lastName
+                }
+            };
+            dbContext.Add(customer);
+            dbContext.SaveChanges();
+
+            customer.Orders.Add(new Order()
+            {
+
+            });
+        }
+
         private void SeedAccount()
         {
             HashAlgorithm sha = SHA256.Create();
 
-            string[] usernames = { "jeamsee", "lynnwong", "leliamay","jamestan" };
+            string[] usernames = { "jeamsee", "lynnwong", "leliamay","jameslow" };
 
             string[] FirstName = { "Jeam", "Lynn", "Lelia","James" };
 
-            string[] LastName = { "See", "Wong", "May","Tan" };
+            string[] LastName = { "See", "Wong", "May","Low"};
 
             string password = "mysecret";
 
@@ -61,8 +89,6 @@ namespace ShoppingCartCA
                     }
                 });
                 i++;
-
-
             }
             dbContext.SaveChanges();
         }
@@ -179,9 +205,6 @@ namespace ShoppingCartCA
         public void SeedComments()
         {
             Customer customer1 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            //Customer customer2 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "lynnwong");
-            //Customer customer3 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "leliamay");
-            //Customer customer4 = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jamestan");
 
             List<Customer> customerList = dbContext.Customers.Where(x => x.CustomerDetails.Username != "jeamsee").ToList();
             Random rnd = new Random();
@@ -212,6 +235,7 @@ namespace ShoppingCartCA
                     {
                         int rating = rnd.Next(1, 5);
                         int cmt = rnd.Next(1, 2);
+                        int timediff = rnd.Next(1, 60);
                         string cmtstr;
                         if(cmt == 1)
                         {
@@ -224,12 +248,14 @@ namespace ShoppingCartCA
                         Review myreview = dbContext.Reviews.FirstOrDefault(x => x.Product.Id == od.Product.Id && x.Customer.Id == customerN.Id);
                         if (myreview == null)
                         {
-                            od.Product.Reviews.Add(new Review()
+                            Review reviewToAdd = new Review()
                             {
                                 Customer = customerN,
-                                Rating = rating, 
+                                Rating = rating,
                                 Comment = cmtstr
-                            });
+                            };
+                            reviewToAdd.Timestamp -= (timediff * 86400); //1 to 60 days difference
+                            od.Product.Reviews.Add(reviewToAdd);
                         }
                         dbContext.SaveChanges();
                     }
