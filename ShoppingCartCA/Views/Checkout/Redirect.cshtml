@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_LoginLayout";
+    ViewData["Title"] = "Redirect";
+}
+
+<p>Purchase Successful! We will redirect you to your Purchases page after <span id="timer">5</span> seconds.</p>
+<p>Click <a href="/Purchase">here</a> to be redirected immediately.</p>
+
+<script>
+    setTimeout(function(){
+       window.location.href = "/Purchase"
+    }, 5000);
+    let element = document.getElementById("timer");
+    console.log(element);
+    setInterval(function () {
+        element.innerText = element.innerText >= 0 ? element.innerText - 1 : 0
+    }, 1000);
+</script>
+
