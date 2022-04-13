@@ -41,7 +41,6 @@ namespace ShoppingCartCA.Controllers
                 ViewData["allcartitem"] = customer.CartDetails;
                 ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping" }, false);
             }
-
             return View();
         }
 
@@ -154,6 +153,7 @@ namespace ShoppingCartCA.Controllers
                 }
                 customer.CartDetails.Remove(cartDetailDelete);
                 cartNotUpdated = false;
+                dbContext.SaveChanges();
             }
             if(customer.CartDetails.Count == 0)
             {
@@ -339,17 +339,6 @@ namespace ShoppingCartCA.Controllers
             review.Rating = dataReviewPost.ReviewRating;
             dbContext.SaveChanges();
             return true;
-
         }
-
-        public IActionResult Testing()
-        {
-            Customer customer = dbContext.Customers.FirstOrDefault(x => x.CustomerDetails.Username == "jeamsee");
-            ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Cart", "My Purchase" });
-            
-            ViewData["cartdata"] = dbContext.Products.FirstOrDefault(x => x.Name == ".NET Charts");
-            return View("template");
-        }
-
     }
 }

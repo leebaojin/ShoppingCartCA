@@ -149,6 +149,7 @@
     {
         foreach (Review rw in allReview)
         {
+            DateTime reviewdate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(rw.Timestamp).ToLocalTime();
             <div class="viewpd-cmt-holder">
                 <div class="viewpd-cmt-head">
                     <div>
@@ -162,7 +163,7 @@
                             @Html.Raw(DisplayAid.GenerateStar(rw.Rating, false))
                         }
                     </div>
-                    <div class="viewpd-cmt-user">By: @rw.Customer.CustomerDetails.FirstName</div>
+                    <div class="viewpd-cmt-user">By: @rw.Customer.CustomerDetails.FirstName &nbsp &nbsp &nbsp (on @reviewdate.ToString("dd-mm-yyyy"))</div>
                 </div>
                 <div class="viewpd-cmt-body">
                     @rw.Comment
@@ -170,5 +171,4 @@
             </div>
         }
     }
-
 </div>

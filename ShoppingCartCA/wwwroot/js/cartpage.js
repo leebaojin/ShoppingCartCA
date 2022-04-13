@@ -54,29 +54,30 @@ function SendCartItem(rowId, newval) {
             if (this.status != 200) {
                 return;
             }
+
+
+            let data = JSON.parse(this.responseText);
+
+            if (data.updateSuccess == false) {
+                window.location.href = "../Cart";
+                return;
+            }
+            document.getElementById("totalcost").innerHTML = data.totalprice;
+            document.getElementById("totalcost2").innerHTML = data.totalprice;
+            qtyele = document.getElementById("quantity-" + data.updateRow);
+
+            if (data.removeItem != null) {
+                parentrow = qtyele.closest(".cart-row");
+                parentrow.parentNode.removeChild(parentrow);
+
+            } else {
+                document.getElementById("price-" + data.updateRow).innerHTML = data.price;
+                qtyele.value = data.newqty;
+                qtyele.defaultValue = data.newqty;
+
+            }
+
         }
-
-        let data = JSON.parse(this.responseText);
-
-        if (data.updateSuccess == false) {
-            window.location.href = "../Cart";
-            return;
-        }
-        document.getElementById("totalcost").innerHTML = data.totalprice;
-        document.getElementById("totalcost2").innerHTML = data.totalprice;
-        qtyele = document.getElementById("quantity-" + data.updateRow);
-
-        if (data.removeItem != null) {
-            parentrow = qtyele.closest(".cart-row");
-            parentrow.parentNode.removeChild(parentrow);
-
-        } else {
-            document.getElementById("price-" + data.updateRow).innerHTML = data.price;
-            qtyele.value = data.newqty;
-            qtyele.defaultValue = data.newqty;
-
-        }
-
     }
     if (itemele == null) {
         let CartUpdateData = {
@@ -96,7 +97,6 @@ function SendCartItem(rowId, newval) {
         };
         xhr.send(JSON.stringify(CartUpdateData));
     }
-    
 }
 
 
