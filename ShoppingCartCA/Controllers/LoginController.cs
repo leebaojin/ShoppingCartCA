@@ -111,6 +111,7 @@ namespace ShoppingCartCA.Controllers
                 customer.CartDetails.Add(cd);
             }
             dbContext.SaveChanges();
+            Response.Cookies.Delete("shoppingcarttemp4");
         }
     }
 }
