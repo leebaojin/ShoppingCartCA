@@ -20,7 +20,7 @@ namespace ShoppingCartCA.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string loginattempt)
         {
             if (Request.Cookies["SessionId"] != null && Request.Cookies["Username"] != null)
             {
@@ -43,6 +43,10 @@ namespace ShoppingCartCA.Controllers
                 // valid Session ID; route to Home page
                 return RedirectToAction("Index", "Home");
             }
+            if (loginattempt == "attempt1")
+            {
+                ViewData["loginfail"] = true;
+            }
 
             // no Session ID; show Login page
             return View();
@@ -64,7 +68,7 @@ namespace ShoppingCartCA.Controllers
 
             if (customerDetail == null)
             {
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("Index", "Login", new { loginattempt = "attempt1" });
             }
 
             Customer customer = dbContext.Customers.FirstOrDefault(x =>

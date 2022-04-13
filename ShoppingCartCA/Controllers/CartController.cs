@@ -39,7 +39,7 @@ namespace ShoppingCartCA.Controllers
             {
                 ViewData["customerknown"] = true;
                 ViewData["allcartitem"] = customer.CartDetails;
-                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "Continue Shopping" }, false);
+                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchase","Continue Shopping" }, false);
             }
             return View();
         }
@@ -233,7 +233,7 @@ namespace ShoppingCartCA.Controllers
             }
             else
             {
-                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchases","Continue Shopping" }, true);
+                ViewData["layoutheader"] = new LayoutHeader(customer, new string[] { "My Purchase","Continue Shopping" }, true);
             }
 
             Review cusReview = ReviewData.GetReview(product, customer);

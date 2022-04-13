@@ -52,16 +52,16 @@
 
         <div class="row">
             <div class="col-md-6"><img src="@cartDetail.Product.Img" alt="@cartDetail.Product.Name" width="50" height="40" /> @cartDetail.Product.Name</div>
-            <div class="col-md-2">$@String.Format("{0:00}", cartDetail.Product.Price)</div>
-            <div class="col-md-2">@cartDetail.Quantity</div>
-            <div class="col-md-2">$@String.Format("{0:00}", subtotal)</div>
+            <div class="col-md-2">$@String.Format("{0:0,0.00}", cartDetail.Product.Price)</div>
+            <div class="col-md-2">@String.Format("{0:0,0}", cartDetail.Quantity)</div>
+            <div class="col-md-2">$@String.Format("{0:0,0.00}", subtotal)</div>
         </div>
         <br />
     }
     <br />
     <div class="row">
         <div class="col-md-8"></div>
-        <div class="col-md-4" align="right"><b>Order Total: $@String.Format("{0:00}", totalprice)</b></div>
+        <div class="col-md-4" align="right"><b>Order Total: $@String.Format("{0:0,0.00}", totalprice)</b></div>
     </div>
     <br />
     <div class="row">
