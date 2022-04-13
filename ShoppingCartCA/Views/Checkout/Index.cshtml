@@ -1,48 +1,82 @@
-﻿@{
+﻿@using ShoppingCartCA.Views.Shared;
+@{
     Layout = "_ShopLayout";
     ViewData["Title"] = "Checkout";
+
+    List<CartDetail> allcartitem = (List<CartDetail>)ViewData["allcartitem"];
+
+    //bool customerKnown = (bool)ViewData["customerknown"];
+
+    double totalprice = 0;
+    foreach (CartDetail cartitem in allcartitem)
+    {
+        totalprice += cartitem.Product.Price * cartitem.Quantity;
+    }
+
 }
-
+@section StyleScript{
+    <link rel="stylesheet" href="~/css/cartpage.css" />
+    <script type="text/javascript" src="~/js/cartpage.js"></script>
+}
 <style>
-    table, td, th, tr {
-        border: 1px solid #0066cc;
-    }
-
-    td, th {
-        text-align: center;
-        padding: 40px;
-    }
-
-    .even_row {
-        background-color: #f5fcff;
+    #centerDiv {
+        max-width: 850px;
+        margin: 0 auto;
     }
 </style>
 
-<table>
-    <tr class="even_row">
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Price</th>
-    </tr>
-    <tr>
-        <td><img src = "~/pictures/dotnet_paypal_b87f5d05-ecba-440d-b43c-5c44b8a19852.jpg" height= "250" width ="200" />PayPal</td>
-        <td>2</td>
-        <td>$138</td>
-    </tr>
-    <tr>
-        <td><img src = "~/pictures/dotnet_charts_00da522c-3653-491c-8749-7fd8e71ad728.jpg" height= "250" width = "200" />.NET Charts</td>
-        <td>4</td>
-        <td>$396</td>
-    </tr>
-    <tr>
-        <td><img src = "~/pictures/dotnet_analytics_88ac7cbd-80da-4ff2-a1a5-a324bf648f15.jpg" height= "250" width ="200" />.NET Analytics</td>
-        <td>2</td>
-        <td>$598</td>
-    </tr>
-    <tr>
-        <td><img src = "~/pictures/dotnet_logger_c45f20ff-8adc-4da3-8c60-ae8c829bc832.jpg" height = "250" width = "200" />.NET Logger</td>
-        <td>1</td>
-        <td>$49</td>
-    </tr>
-</table>
+<div id="centerDiv">
+    <br />
+    <div class="cart-header">
+        <table class="cart-table">
+            <tr>
+                <td class="cart-table-title">
+                    <h3>Checkout</h3>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6"><b>Product</b></div>
+        <div class="col-md-2"><b>Unit Price</b></div>
+        <div class="col-md-2"><b>Quantity</b></div>
+        <div class="col-md-2"><b>Subtotal</b></div>
+    </div>
+    <br />
+    @foreach (CartDetail cartDetail in allcartitem)
+    {
+        double subtotal = cartDetail.Quantity * cartDetail.Product.Price;
+        double priceShown = cartDetail.Product.Price * cartDetail.Quantity;
+
+        <div class="row">
+            <div class="col-md-6"><img src="@cartDetail.Product.Img" alt="@cartDetail.Product.Name" width="50" height="40" /> @cartDetail.Product.Name</div>
+            <div class="col-md-2">$@String.Format("{0:00}", cartDetail.Product.Price)</div>
+            <div class="col-md-2">@cartDetail.Quantity</div>
+            <div class="col-md-2">$@String.Format("{0:00}", subtotal)</div>
+        </div>
+        <br />
+    }
+    <br />
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4" align="right"><b>Order Total: $@String.Format("{0:00}", totalprice)</b></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"><b>Payment Method</b></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2">Visa img</div>
+        <div class="col-md-2">Masters img</div>
+        <div class="col-md-2">PayNow img</div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4" align="right"><a href="../Checkout" class="cart-checkoutbtn">Place Order</a></div>
+    </div>
+</div>
 
