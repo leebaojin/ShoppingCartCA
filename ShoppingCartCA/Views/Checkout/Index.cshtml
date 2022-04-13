@@ -69,14 +69,19 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-md-2">Visa img</div>
-        <div class="col-md-2">Masters img</div>
-        <div class="col-md-2">PayNow img</div>
+        <div class="col-md-4">
+            <img src="/OtherPictures/masterCard.jpg" alt="mastercard" width="50" height="40">
+            <img src="/OtherPictures/visa.png" alt="visa" width="50" height="40">
+            <img src="/OtherPictures/payNow.png" alt="payNow" width="60" height="40">
+            <img src="/OtherPictures/payLah.jpg" alt="payNow" width="50" height="40">
+        </div>
     </div>
     <br />
-    <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4" align="right"><a href="../Checkout" class="btn btn-success">Place Order</a></div>
-    </div>
+    <form id="form" action="/Checkout/SubmitOrder" method="POST">
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4" align="right"><button type="submit" class="btn btn-secondary">Place Order</button></div>
+        </div>
+    </form>
 </div>
 
