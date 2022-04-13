@@ -50,7 +50,7 @@ namespace ShoppingCartCA.DataModel
         public static List<Review> GetAllReviewExcept(Product product, Review review = null)
         {
             List<Review> allReview = new List<Review>();
-            allReview = product.Reviews.ToList();
+            allReview = product.Reviews.OrderByDescending(x => x.Timestamp).ToList();
             if (review != null)
             {
                 IEnumerable<Review> listReview = from rw in allReview

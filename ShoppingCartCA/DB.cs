@@ -30,12 +30,13 @@ namespace ShoppingCartCA
             SeedOrderAndOrderDetailAndActivationCode();
             SeedSimilarProduct();
             SeedComments();
+            SeedDemoAccount();
         }
 
         private void SeedDemoAccount()
         {
             HashAlgorithm sha = SHA256.Create();
-            string username = "pertertan";
+            string username = "petertan";
             string firstName = "Peter";
             string lastName = "Tan";
             string password = "mysecret";
@@ -53,11 +54,27 @@ namespace ShoppingCartCA
             };
             dbContext.Add(customer);
             dbContext.SaveChanges();
+            Product product = dbContext.Products.FirstOrDefault(x => x.Name == ".NET CHARTS");
 
-            customer.Orders.Add(new Order()
+            Order newOrder = new Order()
+            {
+                OrderDate = new DateTime(2022, 4, 1),
+
+            };
+            OrderDetail newOrderDetail = new OrderDetail()
+            {
+                Quantity = 1,
+                Product = product,
+                PurchasePrice = product.Price,
+            };
+            ActivationCode activationCode = new ActivationCode()
             {
 
-            });
+            };
+            newOrderDetail.ActivationCodes.Add(activationCode);
+            newOrder.OrderDetails.Add(newOrderDetail);
+            customer.Orders.Add(newOrder);
+            dbContext.SaveChanges();
         }
 
         private void SeedAccount()

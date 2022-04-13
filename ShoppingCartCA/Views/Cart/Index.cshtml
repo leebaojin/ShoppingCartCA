@@ -25,8 +25,10 @@
                 <h3>My Cart <i class='fa fa-shopping-cart'></i></h3>
             </td>
             <td class="cart-table-price">
-                Price : $<span id="totalcost" value="@totalprice">@String.Format("{0:0.00}", totalprice)</span>
-            </td>
+                @if (allcartitem != null && allcartitem.Count != 0){ 
+                    @:Price: $<span id="totalcost" value="@totalprice">@String.Format("{0:0.00}", totalprice)</span>
+                }
+                </td>
         </tr>
     </table>
 </div>
@@ -76,7 +78,7 @@
                                                 }
                                             </div>
                                             <div class="cart-btn-holder">
-                                                <input type="button" class="cart-btn-remove" id="@buttonremoveId" onclick="UpdateItem(this)" value="Remove" />
+                                                <input type="button" class="btn btn-danger" id="@buttonremoveId" onclick="UpdateItem(this)" value="Remove" />
                                             </div>
                                         </td>
                                     </tr>
@@ -108,7 +110,7 @@
             </tr>
             <tr>
                 <td colspan="2" align="right" class="cart-table-checkout">
-                    <a href="../Checkout" class="cart-checkoutbtn">Checkout</a>
+                    <a href="../Checkout" class="btn btn-success">Checkout</a>
                 </td>
             </tr>
         </table>

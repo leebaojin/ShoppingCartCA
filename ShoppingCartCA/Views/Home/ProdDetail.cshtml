@@ -37,7 +37,7 @@
                     <input type="button" id="buttonplus" onclick="ChangeItem('Quantity',true)" value="+" />
                     <br />
                     <br />
-                    <button class="viewpd-btn" onclick="ValidateAdd()"><i class='fa fa-shopping-cart'></i> Add to Cart</button>
+                    <button class="btn btn-primary" onclick="ValidateAdd()"><i class='fa fa-shopping-cart'></i> Add to Cart</button>
                     <input type="hidden" name="ProdId" id="ProdId" value="@product.Id" />
                 </div>
             </td>
@@ -96,11 +96,11 @@
                         <textarea class="viewpd-rw-body" id="review-body-temp" placeholder="Give us your feedback" style="display:block"></textarea>
                     </div>
                     <div class="viewpd-ratebtn-holder">
-                        <button id="review-editpost" onclick="PostReview()">Post</button>
-                        <button id="review-cancel" onclick="CancelEdit()" style="display:inline-block">Cancel</button>
+                        <button class="btn btn-secondary" id="review-editpost" onclick="PostReview()">Post</button>
+                        <button class="btn btn-secondary" id="review-cancel" onclick="CancelEdit()" style="display:inline-block">Cancel</button>
                     </div>
                 
-                <input type="hidden" value=0 name="commentId" id="commentId" editstate="1" starrating="-1" />
+                <input type="hidden" value="0" name="commentId" id="commentId" editstate="1" starrating="-1" />
             }
             else
             {
@@ -119,8 +119,8 @@
                         <textarea class="viewpd-rw-body" id="review-body-temp" placeholder="Give us your feedback" style="display:none"></textarea>
                     </div>
                     <div class="viewpd-ratebtn-holder">
-                        <button id="review-editpost" onclick="EditReview()">Edit</button>
-                        <button id="review-cancel" onclick="CancelEdit()" style="display:none">Cancel</button>
+                        <button class="btn btn-secondary" id="review-editpost" onclick="EditReview()">Edit</button>
+                        <button class="btn btn-secondary" id="review-cancel" onclick="CancelEdit()" style="display:none">Cancel</button>
                     </div>
                 
                 <input type="hidden" value="@cusReview.Id" name="commentId" id="commentId" editstate="0" starrating="@(cusReview.Rating-1)" />

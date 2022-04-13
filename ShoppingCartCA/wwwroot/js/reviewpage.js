@@ -55,7 +55,7 @@ function CancelEdit() {
 	let btn = document.getElementById("review-editpost");
 	let refEle = document.getElementById("commentId");
 	StarSelect(refEle.getAttribute("starrating"));
-	if (refEle.value == "null") {
+	if (refEle.value == "0") {
 		document.getElementById("review-body-temp").innerHTML = "";
 		document.getElementById("review-body-temp").value = "";
 		let notratedEle = document.getElementById("notrated");

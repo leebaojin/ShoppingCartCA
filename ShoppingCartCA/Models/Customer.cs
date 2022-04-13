@@ -12,6 +12,8 @@ namespace ShoppingCartCA.Models
         {
             Id = new Guid();
             CartDetails = new List<CartDetail>();
+            Orders = new List<Order>();
+
         }
         public Guid Id { get; set; }
 
