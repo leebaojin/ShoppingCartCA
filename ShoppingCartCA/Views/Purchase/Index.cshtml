@@ -4,99 +4,69 @@
     Customer customer = (Customer)ViewBag.customer;
     List<Order> orders = customer.Orders.ToList();
 }
-
-<style>
-    .downloadButton {
-        width: 100%;
-    }
-
-    .orderContainer {
-        border: 1px solid gray;
-        border-radius: 25px;
-        padding: 30px;
-    }
-
-    .center {
-        margin: auto;
-        width: 60%;
-        padding: 35px;
-    }
-
-    .paddingTopBottom {
-        padding: 10px;
-    }
-
-    .imgfit {
-        width: 100%;
-        object-fit: cover;
-    }
-
-    #centerDiv {
-        max-width: 850px; 
-        margin: 0 auto;
-    }
-</style>
-
-    <div id="centerDiv">
-        @{
-            <h3>My Purchases</h3>
-            <br />
-            @foreach (Order o in orders)
-            {
-                <div class="orderContainer">
-                    @{List<OrderDetail> orderDetails = o.OrderDetails.ToList();
-                        @foreach (OrderDetail od in orderDetails)
-                        {
-                            string orderDate = o.OrderDate.ToString("dd MMM yyyy");
-                            List<ActivationCode> activationCodes = od.ActivationCodes.ToList();
-                            <div class="row">
-                                <br />
-                                <div class="col-sm-12 col-md-5 col-lg-4" style="text-align:center">
-                                    <a href='../Home/ProdDetail?prdId=@od.Product.Id'>
-                                        <img class="imgfit" src="@od.Product.Img" alt="@od.Product.Name">
-                                        <h4>@od.Product.Name</h4>
-                                        <p>@od.Product.Desc</p>
-                                    </a>
-                                    <a class="btn btn-secondary downloadButton" href="@od.Product.DownloadFile" download="@od.Product.DownloadName">
-                                        <i class="fa fa-download"></i> Download
-                                    </a>
+@section StyleScript{
+    <link rel="stylesheet" href="~/css/purchaseviewpage.css" />
+}
+<div id="centerDiv">
+    @{
+        <h3>My Purchases</h3>
+        <br />
+        @foreach (Order o in orders)
+        {
+            <div class="orderContainer">
+                @{List<OrderDetail> orderDetails = o.OrderDetails.ToList();
+                    @foreach (OrderDetail od in orderDetails)
+                    {
+                        string orderDate = o.OrderDate.ToString("dd MMM yyyy");
+                        List<ActivationCode> activationCodes = od.ActivationCodes.ToList();
+                        <div class="row">
+                            <br />
+                            <div class="col-sm-12 col-md-5 col-lg-4" style="text-align:center">
+                                <a href='../Home/ProdDetail?prdId=@od.Product.Id'>
+                                    <img class="imgfit" src="@od.Product.Img" alt="@od.Product.Name">
+                                    <h4>@od.Product.Name</h4>
+                                    <p>@od.Product.Desc</p>
+                                </a>
+                                <a class="btn btn-secondary downloadButton" href="@od.Product.DownloadFile" download="@od.Product.DownloadName">
+                                    <i class="fa fa-download"></i> Download
+                                </a>
+                            </div>
+                            <div class="col-sm-12 col-md-7 col-lg-8 center">
+                                <div class="row paddingTopBottom">
+                                    <div class="col-md-4"><b>Purchased On:</b></div>
+                                    <div class="col-md-7">@orderDate</div>
                                 </div>
-                                <div class="col-sm-12 col-md-7 col-lg-8 center">
-                                    <div class="row paddingTopBottom">
-                                        <div class="col-md-4"><b>Purchased On:</b></div>
-                                        <div class="col-md-7">@orderDate</div>
-                                    </div>
-                                    <div class="row paddingTopBottom">
-                                        <div class="col-md-4"><b>Quantity:</b></div>
-                                        <div class="col-md-7">@od.Quantity</div>
-                                    </div>
-                                    <div class="row paddingTopBottom">
-                                        <div class="col-md-4"><b>Activation Code:</b></div>
-                                        <div class="col-md-7">
-                                            @if (activationCodes.Count > 1)
-                                            {
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        @foreach (ActivationCode ac in activationCodes)
-                                                        {
-                                                            <option>@ac.Id</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                @activationCodes[0].Id
-                                            }
-                                        </div>
+                                <div class="row paddingTopBottom">
+                                    <div class="col-md-4"><b>Quantity:</b></div>
+                                    <div class="col-md-7">@od.Quantity</div>
+                                </div>
+                                <div class="row paddingTopBottom">
+                                    <div class="col-md-4"><b>Activation Code:</b></div>
+                                    <div class="col-md-7">
+                                        @if (activationCodes.Count > 1)
+                                        {
+                                            <div class="form-group">
+                                                <select class="form-control">
+                                                    @foreach (ActivationCode ac in activationCodes)
+                                                    {
+                                                        <option>@ac.Id</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @activationCodes[0].Id
+                                        }
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                        }
+                        </div>
+                        <br />
                     }
-                </div>
-                <br />
-            }
+                }
+            </div>
+            <br />
         }
-    </div>
+    }
+</div>

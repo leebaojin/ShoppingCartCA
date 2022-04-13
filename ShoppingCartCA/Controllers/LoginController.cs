@@ -33,7 +33,7 @@ namespace ShoppingCartCA.Controllers
                     x.Username == userName
                 );
 
-                if (session == null && userName == null)
+                if (session == null || userName == null)
                 {
                     // someone has used an invalid Session ID (to fool us?); 
                     // route to Logout controller

@@ -1,0 +1,31 @@
+﻿/*My purchase view css*/
+
+.downloadButton {
+	width: 100%;
+}
+
+.orderContainer {
+	border: 1px solid gray;
+	border-radius: 25px;
+	padding: 30px;
+}
+
+.center {
+	margin: auto;
+	width: 60%;
+	padding: 35px;
+}
+
+.paddingTopBottom {
+	padding: 10px;
+}
+
+.imgfit {
+	width: 100%;
+	object-fit: cover;
+}
+
+#centerDiv {
+	max-width: 850px; 
+	margin: 0 auto;
+}
