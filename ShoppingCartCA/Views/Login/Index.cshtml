@@ -1,8 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Login";
     Layout = "_LoginLayout";
+    bool? loginfail = (bool?)ViewData["loginfail"];
 }
-
+@if(loginfail != null)
+            {
+    <script>
+        window.onload = function () {
+            alert("Invalid Username or Password")
+        };
+    </script>
+            }
 
 <div class="card mycard">
     <form action="/Login/Login" method="POST">
