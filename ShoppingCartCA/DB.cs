@@ -301,17 +301,22 @@ namespace ShoppingCartCA
         {
             List<Order> listOfOrder = new List<Order>();
 
+            Random random = new Random();
+            int day = random.Next(1, 20);
+
             for (int i = 0; i < numOfOrdersToGenerate; i++)
             {
-                Random random = new Random();
                 int numOfOrderDetailToGenerate = random.Next(1, 3);
+                int month = random.Next(1, 4);
 
                 Order order = new Order
                 {
-                    OrderDate = new DateTime(2022, random.Next(1, 4), random.Next(1, 29)),
+                    OrderDate = new DateTime(2022, month, day),
                     OrderDetails = RandomOrderDetail(numOfOrderDetailToGenerate)
                 };
                 listOfOrder.Add(order);
+
+                day++;
             }
 
             return listOfOrder;
