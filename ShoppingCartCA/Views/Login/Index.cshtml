@@ -1,6 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Login";
-    Layout = "_LoginLayout";
+	ViewData["Title"] = "Login";
+	Layout = "_LoginLayout";
+	bool isLoginFail = (bool)ViewData["loginfail"];
 }
 <style>
     body {
@@ -36,8 +37,15 @@
             <input type="password" class="form-control" placeholder="Password" name="password"/>
         </div>
 
+		<!-- Error Message -->
+		@if (isLoginFail)
+		{
+			<p style="color:red;">Invalid username or password. Try again.</p>			
+		}
+			
         <!-- Submit button -->
         <button type="submit" class="btn btn-block btn-primary">Sign in</button>
-    </form>
+
+		</form>
 </div>
 </body>
