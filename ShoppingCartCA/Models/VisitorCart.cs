@@ -205,14 +205,30 @@ namespace ShoppingCartCA.Models
 
         public int GetCartQuantity()
         {
-            //the last array position will be empty
-            return cartCookieString.Split(itemSeperator).Length - 1;
+            return GetCartQty(cartCookieString);
         }
 
         //Static method to be used for situation with only cookie string
         public static int GetCartQty(string cookieString)
         {
-            return cookieString.Split(itemSeperator).Length - 1;
+            int qty = 0;
+            string[] itemarray = cookieString.Split(itemSeperator);
+            foreach(string itemstr in itemarray)
+            {
+                string[] itemdes = itemstr.Split(qtySeperator);
+                if(itemdes.Length == 2)
+                {
+                    try
+                    {
+                        qty += Int32.Parse(itemdes[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+                }
+            }
+            return qty;
         }
 
     }
