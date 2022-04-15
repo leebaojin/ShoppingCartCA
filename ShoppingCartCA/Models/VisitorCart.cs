@@ -141,10 +141,7 @@ namespace ShoppingCartCA.Models
                         {
                             cartCookieString = cartCookieString.Substring(0, indexOfItem) + cartCookieString.Substring(indexOfNextItem + 1);
                         }
-                        
                     }
-
-
                 }
                 catch (Exception e)
                 {
@@ -201,7 +198,6 @@ namespace ShoppingCartCA.Models
             totalCost = cost;
             return true;
         }
-
 
         public int GetCartQuantity()
         {

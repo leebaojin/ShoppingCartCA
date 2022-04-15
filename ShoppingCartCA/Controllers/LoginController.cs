@@ -112,7 +112,15 @@ namespace ShoppingCartCA.Controllers
             List<CartDetail> cartList = visitorCart.VisitorCartList;
             foreach(CartDetail cd in cartList)
             {
-                customer.CartDetails.Add(cd);
+                CartDetail customerCartDetail = customer.CartDetails.FirstOrDefault(x => x.Product.Id == cd.Product.Id);
+                if(customerCartDetail == null)
+                {
+                    customer.CartDetails.Add(cd);
+                }
+                else
+                {
+                    customerCartDetail.Quantity += cd.Quantity;
+                }
             }
             dbContext.SaveChanges();
             Response.Cookies.Delete("shoppingcarttemp4");
