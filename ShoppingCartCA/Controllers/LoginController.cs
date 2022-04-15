@@ -47,6 +47,10 @@ namespace ShoppingCartCA.Controllers
             {
                 ViewData["loginfail"] = true;
             }
+            else
+            {
+                ViewData["loginfail"] = false;
+            }
 
             // no Session ID; show Login page
             return View();
@@ -90,8 +94,6 @@ namespace ShoppingCartCA.Controllers
             // ask browser to save and send back these cookies next time
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", customerDetail.Username);
-
-
 
             return RedirectToAction("Index", "Home");
         }
